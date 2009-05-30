@@ -23,33 +23,28 @@ class calendarClass extends PHPUnit_Framework_TestCase
 	public function testCalendarConstructor() {	
 		$this->c->_rollingmode = true;
 		$this->c->_default_year = 2008;
-		$this->c->setLanguage();
-		
-		$testDateArray = getdate(time());
-		
-		$this->c->Calendar();
-		
+		$this->c->setLanguage();		
+		$testDateArray = getdate(time());		
+		$this->c->Calendar();		
 		$this->assertFalse($this->c->_rollingmode);
 		$this->assertEquals($testDateArray['year'], $this->c->_default_year);
 		$this->assertEquals('January', $this->c->_lang_months['january']);														
 	}
 	
-	public function testGetDayOfWeekIsInteger() {
-		$this->assertType(integer, $this->c->getDayOfWeek());
-	}
-	
 	public function testGetDayOfWeekEqualsCorrectNum() {
 		$this->c->_default_year = 2009;
-		$this->assertEquals(2, $this->c->getDayOfWeek(26, 5));
-	}
-	
-	public function testGetWeekOfMonthIsInteger(){
-		$this->assertType(integer, $this->c->getDayOfWeek());
+		$this->assertEquals(2, $this->c->getDayOfWeek(26, 5),
+							'Error asserting when using default year.');
+		$this->assertEquals(2, $this->c->getDayOfWeek(26, 5, 2009),
+							'Error asserting when using specified year.');
 	}
 	
 	public function testGetWeekOfMonthEqualsCorrectNum() {
 		$this->c->_default_year = 2009;
-		$this->assertEquals(4, $this->c->getWeekOfMonth(26, 5));
+		$this->assertEquals(4, $this->c->getWeekOfMonth(26, 5),
+							'Error asserting when using default year.');
+		$this->assertEquals(4, $this->c->getWeekOfMonth(26, 5, 2009),
+							'Error asserting when using specified year.');
 	}
 	
 	public function testIsLeapYearTrueFalse(){
@@ -57,10 +52,8 @@ class calendarClass extends PHPUnit_Framework_TestCase
 		$this->assertEquals(0, $this->c->isLeapYear(2001));
 	}
 	
-	public function testGetDaysInMonthEqualsCorrectTotal(){
-		
-		$testDays = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-		
+	public function testGetDaysInMonthEqualsCorrectTotal(){		
+		$testDays = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);		
 		foreach ($testDays as $k => $v) {
 			$this->assertEquals($v, $this->c->getDaysInMonth($k + 1, 2009), 
 								'Error asserting that the '.($k + 1).' month of 2009 had '.$v.' days.');
@@ -79,8 +72,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
 			'wednesday' => 'Miércoles',
 			'thursday' => 'Jueves', 
 			'friday' => 'Viernes',
-			'saturday' => 'Sábado');
-		
+			'saturday' => 'Sábado');		
 		$i = 1;
 		foreach ($this->c->_lang_days as $k => $v) {
 			$this->assertEquals($v, $this->c->getDayName($i),
@@ -100,8 +92,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
 			'thursday' => 'Jueves', 
 			'friday' => 'Viernes',
 			'saturday' => 'Sábado',
-			'sunday' => 'Domingo');
-		
+			'sunday' => 'Domingo');		
 		$i = 1;
 		foreach ($this->c->_lang_days as $k => $v) {
 			$this->assertEquals($v, $this->c->getDayName($i),
@@ -111,15 +102,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
 		$this->assertEquals('Lunes', $this->c->getDayName(),
 							'Error asserting default value is '.$k.'.');
 	}
-	public function testGetDayNameEquals() {
-		/*
-		$this->c->_week_start = 'Mon';
-		$this->assertEquals('Sunday', $this->c->getDayName(7));
-		*/
-		throw new PHPUnit_Framework_IncompleteTestError(
-		'This test has not been implemented yet.'
-		);
-	}
+	
 	public function testGetMonthNameTranslates() {
 		$this->c->_lang_months = array (							  
 			'january'   => 'Enero',
@@ -141,7 +124,8 @@ class calendarClass extends PHPUnit_Framework_TestCase
 		}
 		$this->assertEquals('Enero', $this->c->getMonthName());
 	}
-		public function testGetMonthNameDefaultsEnglish() {						
+	
+	public function testGetMonthNameDefaultsEnglish() {						
 		$i = 1;
 		foreach($this->c->_lang_months as $k => $v) {
 			$this->assertEquals($v, $this->c->getMonthName($i));
@@ -149,10 +133,13 @@ class calendarClass extends PHPUnit_Framework_TestCase
 		}
 		$this->assertEquals('January', $this->c->getMonthName());
 	}
+	
 	public function testSetRollingModeToTrue() {
+		$this->c->_rolling_mode = false;
 		$this->c->setRollingMode(true);
 		$this->assertEquals(true, $this->c->_isRollingMode());
 	}
+	
 	public function testSetLanguageTranslates() {				
 		$this->lang_days = array(		
 			'sunday' => 'Domingo', 
@@ -161,8 +148,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
 			'wednesday' => 'Miércoles',
 			'thursday' => 'Jueves', 
 			'friday' => 'Viernes',
-			'saturday' => 'Sábado');	
-		
+			'saturday' => 'Sábado');		
 		$this->lang_months = array (							  
 			'january'   => 'Enero',
             'february'  => 'Febrero',
@@ -175,8 +161,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
             'september' => 'Septiembre',
             'october'   => 'Octubre',
             'november'  => 'Noviembre',
-            'december'  => 'Diciembre');
-	
+            'december'  => 'Diciembre');	
 		$this->c->setLanguage($this->lang_days, $this->lang_month);			
 		foreach ($this->lang_days as $k) {
 			$this->assertEquals($this->lang_days[$k], $this->c->_lang_days[$k], 
@@ -187,6 +172,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
 								'Error translating _lang_months['.$k.'] to Spanish.');
 		}
 	}
+	
 	public function testSetLanguageDefaults() {	
 		$this->lang_days = array(		
 			'sunday' => 'Sunday', 
@@ -195,8 +181,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
 			'wednesday' => 'Wednesday',
 			'thursday' => 'Thursday', 
 			'friday' => 'Friday',
-			'saturday' => 'Saturday');	
-		
+			'saturday' => 'Saturday');		
 		$this->lang_months = array (							  
 			'january'   => 'January',
             'february'  => 'February',
@@ -209,10 +194,8 @@ class calendarClass extends PHPUnit_Framework_TestCase
             'september' => 'September',
             'october'   => 'October',
             'november'  => 'November',
-            'december'  => 'December');
-		
-		$this->c->setLanguage();	
-		
+            'december'  => 'December');		
+		$this->c->setLanguage();		
 		foreach ($this->lang_days as $k => $v) {
 			$this->assertEquals($v, $this->c->_lang_days[$k], 
 								'Error translating _lang_days['.$k.'] to default.');
@@ -222,15 +205,109 @@ class calendarClass extends PHPUnit_Framework_TestCase
 								'Error translating _lang_months['.$k.'] to default.');
 		}
 	}
-	public function testSetCalendarMatrix() {
-		throw new PHPUnit_Framework_IncompleteTestError(
-		'This test has not been implemented yet.'
-		);
+	
+	public function testSetCalendarMatrixWkStartSunDay1() {    	
+		$cur_day = new CalendarDay();
+       	$cur_day->year = 2009;
+        $cur_day->daynumber = 1; 	
+        $week[0][0] = $cur_day;		
+		$this->c->setCalendarMatrix(5, 2009);
+		foreach($week as $k => $v) {
+			$this->assertEquals($week[0][0], $this->c->_matrix[1][6],
+								'Error setting May 1, 2009, test has objects of CalendarDay().');
+		}
 	}
-	public function testGetDayData() {
-		throw new PHPUnit_Framework_IncompleteTestError(
-		'This test has not been implemented yet.'
-		);
+	
+	public function testSetCalendarMatrixWkStartSunDay17() {
+    	
+		$cur_day = new CalendarDay();
+       	$cur_day->year = 2009;
+        $cur_day->daynumber = 17; 	
+        $week[0][0] = $cur_day;		
+		$this->c->setCalendarMatrix(5, 2009);
+		foreach($week as $k => $v) {
+			$this->assertEquals($week[0][0], $this->c->_matrix[4][1],
+								'Error setting May 4, 2009, test has objects of CalendarDay().');
+		}
+	}
+	
+	public function testSetCalendarMatrixWkStartSunDay31() {    	
+		$cur_day = new CalendarDay();
+       	$cur_day->year = 2009;
+        $cur_day->daynumber = 31; 	
+        $week[0][0] = $cur_day;		
+		$this->c->setCalendarMatrix(5, 2009);
+		foreach($week as $k => $v) {
+			$this->assertEquals($week[0][0], $this->c->_matrix[6][1],
+								'Error setting May 31, 2009, test has objects of CalendarDay().');
+		}
+	}
+	
+	public function testSetCalendarMatrixWkStartMonDay1() {
+    	$this->c->_week_start = 'Mon';		
+		$cur_day = new CalendarDay();
+       	$cur_day->year = 2009;
+        $cur_day->daynumber = 1; 	
+        $week[0][0] = $cur_day;		
+		$this->c->setCalendarMatrix(5, 2009);
+		foreach($week as $k => $v) {
+			$this->assertEquals($week[0][0], $this->c->_matrix[1][5],
+								'Error setting May 1, 2009, test has objects of CalendarDay().');
+		}
+	}
+	
+	public function testSetCalendarMatrixWkStartMonDay17() {
+    	$this->c->_week_start = 'Mon';		
+		$cur_day = new CalendarDay();
+       	$cur_day->year = 2009;
+        $cur_day->daynumber = 17; 	
+        $week[0][0] = $cur_day;		
+		$this->c->setCalendarMatrix(5, 2009);
+		foreach($week as $k => $v) {
+			$this->assertEquals($week[0][0], $this->c->_matrix[3][7],
+								'Error setting May 4, 2009, test has objects of CalendarDay().');
+		}
+	}
+	
+	public function testSetCalendarMatrixWkStartMonDay31() {
+    	$this->c->_week_start = 'Mon';		
+		$cur_day = new CalendarDay();
+       	$cur_day->year = 2009;
+        $cur_day->daynumber = 31; 	
+        $week[0][0] = $cur_day;		
+		$this->c->setCalendarMatrix(5, 2009);
+		foreach($week as $k => $v) {
+			$this->assertEquals($week[0][0], $this->c->_matrix[5][7],
+								'Error setting May 31, 2009, test has objects of CalendarDay().');
+		}
+	}
+	
+	public function testSetCalendarMatrixReturnNullPastMonthEndWkStrtSun() {
+		$this->c->setCalendarMatrix(5, 2009);
+		$this->assertNull($this->c->_matrix[6][2]);
+	}
+	
+	public function testSetCalendarMatrixReturnEmptyStringBeforeMonthStartWkStrtMon() {
+		$this->c->_week_start = 'Mon';
+		$this->c->setCalendarMatrix(5, 2009);
+		$this->assertEquals('', $this->c->_matrix[6][1]);
+	}
+	
+	public function testGetDayDataReturnsEmptyStringWithoutMatrixSet() {
+		$this->assertEquals('', $this->c->_matrix[6][1]);
+	}
+	
+	public function testGetDayDataReturnsMatrix() {		
+		$cur_day = new CalendarDay();
+       	$cur_day->year = 2009;
+        $cur_day->daynumber = 31; 	
+        $week[0][0] = $cur_day;
+		
+		$this->c->setCalendarMatrix(5, 2009);
+		foreach($week as $k => $v) {
+			$this->assertEquals($week[0][0], $this->c->_matrix[6][1],
+								'Error returning day data for May 31, 2009, test has objects of CalendarDay');
+		}
 	}
 }    
 
