@@ -47,9 +47,17 @@ class calendarClass extends PHPUnit_Framework_TestCase
 							'Error asserting when using specified year.');
 	}
 	
-	public function testIsLeapYearTrueFalse(){
-		$this->assertEquals(1, $this->c->isLeapYear(2000));	
-		$this->assertEquals(0, $this->c->isLeapYear(2001));
+	public function testIsLeapYear(){
+	    $this->assertEquals(0, $this->c->isLeapYear(1900),
+                              '1900 is NOT a leap year');
+        $this->assertEquals(1, $this->c->isLeapYear(2000),
+                              '2000 is a leap year');
+        $this->assertEquals(0, $this->c->isLeapYear(2001),
+                              '2001 is not a leap year');
+        $this->assertEquals(1, $this->c->isLeapYear(2004),
+                              '2004 is a leap year');
+        $this->assertEquals(0, $this->c->isLeapYear(2100),
+                              '2100 is NOT a leap year');
 	}
 	
 	public function testGetDaysInMonthEqualsCorrectTotal(){		
