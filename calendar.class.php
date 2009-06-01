@@ -177,7 +177,7 @@ class Calendar {
     */
     function getDayOfWeek($day = 1, $month = 1, $year = '')
     {
-	    if (empty($year)) {
+        if (empty($year)) {
             $year = $this->_default_year;
         }
 
@@ -226,14 +226,14 @@ class Calendar {
         }
 
         if (($year % 4) == 0) {
-			if (($year % 100) == 0) {
-				if (($year % 400) == 0) {
-					return 1;
-				} else {
-					return 0;
-				}
-			}
-			return 1;
+            if (($year % 100) == 0) {
+                if (($year % 400) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            return 1;
         } else {
             return 0;
         }
@@ -358,8 +358,8 @@ class Calendar {
     */
     function getMonthName($month = 1)
     {
-	$month = $month - 1;
-	if (empty($this->_lang_months)) $this->setLanguage();
+    $month = $month - 1;
+    if (empty($this->_lang_months)) $this->setLanguage();
 
         switch ($month) {
         case 0:
@@ -492,7 +492,7 @@ class Calendar {
                 } else {
                     $cur_day = new CalendarDay();
                     $cur_day->year = $year;
-                    $cur_day->daynumber = $nextday; 	
+                    $cur_day->daynumber = $nextday;     
                     $week[$aw][$wd] = $cur_day;
 
                     // Bail if we just printed last day
