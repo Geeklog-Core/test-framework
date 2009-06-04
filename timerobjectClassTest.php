@@ -1,12 +1,12 @@
 <?php
 
 /**
-* Simple tests for calendarClassTest
+* Simple tests for timerobjectClassTest
 */
 
 require_once 'PHPUnit/Framework.php';
 
-require_once '../../../geeklog/system/classes/timer.class.php';
+require_once '../../system/classes/timer.class.php';
 
 class timerobjectClass extends PHPUnit_Framework_TestCase 
 {

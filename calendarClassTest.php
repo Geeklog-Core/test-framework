@@ -6,7 +6,7 @@
 
 require_once 'PHPUnit/Framework.php';
 
-require_once '../../../geeklog/system/classes/calendar.class.php';
+require_once '../../system/classes/calendar.class.php';
 
 class calendarClass extends PHPUnit_Framework_TestCase 
 {
