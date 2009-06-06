@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Simple tests pluginClassTest
+* Simple tests for plugin.class.php
 */
 
 require_once 'PHPUnit/Framework.php';
