@@ -115,15 +115,157 @@ class searchcriteriaClass extends PHPUnit_Framework_TestCase
 		$this->assertEquals(true, $this->s->AppendQueryEnable());
 	}
 	
-	public function testBuildSearchSQLWithParamAll() {
+	public function testBuildSearchSQLWithKeytypeAllAndTitles() {
 		$_GET['title'] = 'dummy';
 		$columns['title'] = 'coltitle';
-		$SQL = "AND ((coltitle LIKE '%word1%') AND (coltitle LIKE '%word2%')) ";
-		$dummy = array($SQL, 'FTSQL');
-		$arr = $this->s->buildSearchSQL('all', 'word1 word2', $columns);
-		foreach($dummy as $k => $v) {  
-			$this->assertEquals($v, $arr[$k]);
-		}
+		$SQL = 'A bit of SQL';
+		$dsql = "$SQL AND ((coltitle LIKE '%word1%') AND (coltitle LIKE '%word2%')) ";
+		$ftwords['mssql'] = '"word1" AND "word2"';
+		$ftsql['mysql'] = "$SQL AND MATCH(coltitle) AGAINST ('+word1 +word2' IN BOOLEAN MODE)"; 
+		$ftsql['mssql'] = "$SQL AND CONTAINS((coltitle), '{$ftwords['mssql']}')"; 
+		$dummy = array($dsql, $ftsql);
+		$arr = $this->s->buildSearchSQL('all', 'word1 word2', $columns, 'A bit of SQL ');
+		$this->assertEquals($dummy[0], $arr[0], 
+							'Error asserting that dummy and actual SQL match.');		
+		$this->assertEquals($dummy[1]['mysql'], $arr[1]['mysql'],
+							'Error asserting that $dummy[1][mysql] and $arr[1][mysql] are equal.');
+		$this->assertEquals($dummy[1]['mssql'], $arr[1]['mssql'],
+							'Error asserting that $dummy[1][mssql] and $arr[1][mssql] are equal.');	
+	}
+	
+	public function testBuildSearchSQLWithKeytypeAllAndWithoutTitles() {
+		$columns = array('coltitle1', 'coltitle2');
+		$SQL = 'A bit of SQL';
+		$dsql = "$SQL AND ((coltitle1 LIKE '%word1%' OR coltitle2 LIKE '%word1%') AND (coltitle1 LIKE '%word2%' OR coltitle2 LIKE '%word2%')) ";
+		
+		$ftwords['mssql'] = '"word1" AND "word2"';
+		$ftsql['mysql'] = "$SQL AND MATCH(coltitle1,coltitle2) AGAINST ('+word1 +word2' IN BOOLEAN MODE)"; 
+		$ftsql['mssql'] = "$SQL AND CONTAINS((coltitle1,coltitle2), '{$ftwords['mssql']}')"; 
+		
+		$dummy = array($dsql, $ftsql);
+		
+		$arr = $this->s->buildSearchSQL('all', 'word1 word2', $columns, 'A bit of SQL ');
+		
+		$this->assertEquals($dummy[0], $arr[0], 
+							'Error asserting that dummy and actual SQL match.');		
+		$this->assertEquals($dummy[1]['mysql'], $arr[1]['mysql'],
+							'Error asserting that $dummy[1][mysql] and $arr[1][mysql] are equal.');
+		$this->assertEquals($dummy[1]['mssql'], $arr[1]['mssql'],
+							'Error asserting that $dummy[1][mssql] and $arr[1][mssql] are equal.');	
+	}
+	
+	public function testBuildSearchSQLWithKeytypeAnyAndTitles() {
+		$_GET['title'] = 'dummy';
+		$query = 'word1 word2';
+		$columns['title'] = 'coltitle';
+		$sql = 'A bit of SQL ';
+	
+		$ftwords['mysql'] = $query;
+		$ftwords['mssql'] = '"' . str_replace(' ', '" OR "', $query) . '"';
+		
+		$dsql = "$sql" . "AND ((coltitle LIKE '%word1%') OR  (coltitle LIKE '%word2%')) ";
+		
+		$ftsql['mysql'] = $sql . "AND MATCH(coltitle) AGAINST ('{$ftwords['mysql']}' IN BOOLEAN MODE)";
+        $ftsql['mssql'] = $sql . "AND CONTAINS((coltitle), '{$ftwords['mssql']}')";
+		
+		$dummy = array($dsql, $ftsql);
+		
+		$arr = $this->s->buildSearchSQL('any', 'word1 word2', $columns, 'A bit of SQL ');		
+		
+		$this->assertEquals($dummy[0], $arr[0], 
+							'Error asserting that dummy and actual SQL match.');		
+		$this->assertEquals($dummy[1]['mysql'], $arr[1]['mysql'],
+							'Error asserting that $dummy[1][mysql] and $arr[1][mysql] are equal.');
+		$this->assertEquals($dummy[1]['mssql'], $arr[1]['mssql'],
+							'Error asserting that $dummy[1][mssql] and $arr[1][mssql] are equal.');	
+	}
+	
+	public function testBuildSearchSQLWithKeytypeAnyAndWithoutTitles() {
+		$columns = array('coltitle1', 'coltitle2');
+		$query = 'word1 word2';
+		$sql = 'A bit of SQL';
+		$dsql = "$sql AND ((coltitle1 LIKE '%word1%' OR coltitle2 LIKE '%word1%') OR  (coltitle1 LIKE '%word2%' OR coltitle2 LIKE '%word2%')) ";
+	
+		$ftwords['mysql'] = $query;
+		$ftwords['mssql'] = '"' . str_replace(' ', '" OR "', $query) . '"';
+		
+		$ftsql['mysql'] = "$sql AND MATCH(coltitle1,coltitle2) AGAINST ('{$ftwords['mysql']}' IN BOOLEAN MODE)";
+        $ftsql['mssql'] = "$sql AND CONTAINS((coltitle1,coltitle2), '{$ftwords['mssql']}')";
+		
+		$dummy = array($dsql, $ftsql);
+		
+		$arr = $this->s->buildSearchSQL('any', 'word1 word2', $columns, 'A bit of SQL ');		
+		
+		$this->assertEquals($dummy[0], $arr[0], 
+							'Error asserting that dummy and actual SQL match.');		
+		$this->assertEquals($dummy[1]['mysql'], $arr[1]['mysql'],
+							'Error asserting that $dummy[1][mysql] and $arr[1][mysql] are equal.');
+		$this->assertEquals($dummy[1]['mssql'], $arr[1]['mssql'],
+							'Error asserting that $dummy[1][mssql] and $arr[1][mssql] are equal.');	
+	}
+	
+	public function testBuildSearchSQLWithKeytypeElseAndTitles() {
+		$_GET['title'] = 'dummy';
+		$query = 'word1 word2';
+		$columns['title'] = 'coltitle';
+		$sql = 'A bit of SQL ';
+	
+        $words = array($query);
+        $sep = '   ';
+            
+		if (strpos($query, ' ') !== false) {
+            $ftwords['mysql'] = '"' . $query . '"';
+        } else {
+            $ftwords['mysql'] = $query;
+        }
+			
+        $ftwords['mssql'] = '"' . $query . '"';
+		$ftsql['mysql'] = $sql . "AND MATCH(coltitle) AGAINST ('{$ftwords['mysql']}' IN BOOLEAN MODE)";
+        $ftsql['mssql'] = $sql . "AND CONTAINS((coltitle), '{$ftwords['mssql']}')";
+		
+		$dsql = "$sql" . "AND ((coltitle LIKE '%word1 word2%')) ";
+		
+		$dummy = array($dsql, $ftsql);
+		
+		$arr = $this->s->buildSearchSQL('', 'word1 word2', $columns, 'A bit of SQL ');		
+		
+		$this->assertEquals($dummy[0], $arr[0], 
+							'Error asserting that dummy and actual SQL match.');		
+		$this->assertEquals($dummy[1]['mysql'], $arr[1]['mysql'],
+							'Error asserting that $dummy[1][mysql] and $arr[1][mysql] are equal.');
+		$this->assertEquals($dummy[1]['mssql'], $arr[1]['mssql'],
+							'Error asserting that $dummy[1][mssql] and $arr[1][mssql] are equal.');	
+	}
+	
+		public function testBuildSearchSQLWithKeytypeElseAndWithoutTitles() {
+		$columns = array('coltitle1', 'coltitle2');
+		$query = 'word1 word2';
+		$sql = 'A bit of SQL';
+		$dsql = "$sql AND ((coltitle1 LIKE '%word1 word2%' OR coltitle2 LIKE '%word1 word2%')) ";
+	
+        $words = array($query);
+        $sep = '   ';
+            
+		if (strpos($query, ' ') !== false) {
+            $ftwords['mysql'] = '"' . $query . '"';
+        } else {
+            $ftwords['mysql'] = $query;
+        }
+			
+        $ftwords['mssql'] = '"' . $query . '"';
+		$ftsql['mysql'] = "$sql AND MATCH(coltitle1,coltitle2) AGAINST ('{$ftwords['mysql']}' IN BOOLEAN MODE)";
+        $ftsql['mssql'] = "$sql AND CONTAINS((coltitle1,coltitle2), '{$ftwords['mssql']}')";
+		
+		$dummy = array($dsql, $ftsql);
+		
+		$arr = $this->s->buildSearchSQL('', 'word1 word2', $columns, 'A bit of SQL ');		
+		
+		$this->assertEquals($dummy[0], $arr[0], 
+							'Error asserting that dummy and actual SQL match.');		
+		$this->assertEquals($dummy[1]['mysql'], $arr[1]['mysql'],
+							'Error asserting that $dummy[1][mysql] and $arr[1][mysql] are equal.');
+		$this->assertEquals($dummy[1]['mssql'], $arr[1]['mssql'],
+							'Error asserting that $dummy[1][mssql] and $arr[1][mssql] are equal.');	
 	}
 	
 }
