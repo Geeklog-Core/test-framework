@@ -7,8 +7,8 @@ Configuration for PHPUnit tests
 * Sets paths for PHPUnit, as tests need to be able to run without
 * an install, but local setups can differ.
 *
-* @param    string  $location    root folder either public_html 
-                                   or outside webroot
+* @param    string  $location   set root folder for public_html, 
+*                                main geeklog install, or admin
 * @return   string  $path       username or empty string
 *
 */
