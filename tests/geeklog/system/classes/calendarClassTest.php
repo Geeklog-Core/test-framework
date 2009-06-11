@@ -8,7 +8,7 @@ require_once 'PHPUnit/Framework.php';
 require_once '../config.php';
 require_once getPath('restricted').'/system/classes/calendar.class.php';
 
-class geeklog_system_classes_calendarClass extends PHPUnit_Framework_TestCase 
+class calendarClass extends PHPUnit_Framework_TestCase 
 {
     private $c;
     
