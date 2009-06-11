@@ -12,7 +12,6 @@ require_once 'php_file_tree.php';
 <script src="jquery.js" type="text/javascript"></script>
 <script src="php_file_tree_jquery.js" type="text/javascript"></script>
 <link href="default.css" rel="stylesheet" type="text/css" />
-<link href="parseXML.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="head">
@@ -73,18 +72,13 @@ require_once 'php_file_tree.php';
         // Parse XML
         $file = 'logs/log.xml';
         $log = simplexml_load_file($file) or die ("Unable to load XML file!"); 
-        
         $test_results = array();
-        $class_results = array();
-        $n = 0;
-        foreach($log->testsuite->testsuite as $k => $v) {
-            $n++; // TRYING TO COUNT TEST SUITES
-            $k = '$log->testsuite->'.testsuite.$n.'->testcase';
-            echo $k;
-            //print_r($log->$testsuite);
-              foreach($log->testsuite->testsuite->testcase as $testcase) {
+              foreach($log->xpath("//testcase") as $testcase) {
                 $result = array();
                 $result['name'] = (string)$testcase['name'];
+                $result['time'] = (string)$testcase['time'];
+                $result['assertions'] = (string)$testcase['assertions'];
+                $result['line'] = (string)$testcase['line'];
                 if(isset($testcase->{'failure'})) {
                     $result['result'] = 'Fail';
                     $result['message'] = (string)$testcase->{'failure'};
@@ -94,32 +88,36 @@ require_once 'php_file_tree.php';
                 }
                 $test_results[] = $result; 
             }    
-            //var_dump($test_results);            
-            $class_results[] = $test_results;
-        }
-        //print_r($class_results);
         ?>
         <table cellspacing="0" class="test_results">
             <thead>
                 <tr>
                     <th>Test Name</th>
                     <th>Result</th>
+                    <th>Time</th>
+                    <th>Line</th>
+                    <th>Assertions</th>
                     <th>Message</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($class_results as $class_result1): ?>
-                <?php foreach($class_result1 as $class_result): ?>
+                <?php 
+                $n = 0;
+                foreach($test_results as $test_result): 
+                $n++;
+                ?>
                 <tr>
-                    <td><div class="width"><?php echo wordwrap($class_result['name'], 47, "<br />\n", true); ?></div></td>
-                    <?php if($class_result['result'] == 'Fail') : ?>
+                    <td><div class="width"><?php echo '<strong>'.$n.'</strong> '.wordwrap($test_result['name'], 47, "<br />\n", true); ?></div></td>
+                    <?php if($test_result['result'] == 'Fail') : ?>
                     <td class="test_fail"/>
                     <?php else: ?>
                     <td class="test_pass"/>
                     <?php endif; ?>
-                    <td><?php echo wordwrap($class_result['message'], 47, "<br />\n", true); ?></td>
+                    <td><?php echo $test_result['time']; ?></td>
+                    <td><?php echo $test_result['line']; ?></td>
+                    <td><?php echo $test_result['assertions']; ?></td>
+                    <td><?php echo wordwrap($test_result['message'], 47, "<br />\n", true); ?></td>
                 </tr>
-                <?php endforeach; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
