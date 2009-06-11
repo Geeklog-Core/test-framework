@@ -14,17 +14,24 @@ Configuration for PHPUnit tests
 */
 
 function getPath($location) {
-    if($location == 'public') {
-        // Should be /path/to/public_html root
-        $path = 'c:/xampplite/htdocs/geeklog/public_html';
-    } elseif($location == 'restricted') {
-        // Should be /path/to/install root
-        $path = 'c:/xampplite/htdocs/geeklog';
-    } elseif($location == 'admin') {
-        // Shohuld be path/to/admin root
-        $path = 'c:/xampplite/htdocs/geeklog/public_html/admin';
+    switch($location) {
+		case 'public':
+			// Should be /path/to/public_html root
+			$path = 'c:/xampplite/htdocs/geeklog/public_html';
+			return $path;
+  		case 'restricted':
+			// Should be /path/to/install root
+			$path = 'c:/xampplite/htdocs/geeklog';
+			return $path;
+		case 'gui':
+			//Should be path to public_html/tests/tests/geeklog
+			$path = 'c:/xampplite/htdocs/geeklog/public_html/gsoc-2009-sclark/tests';
+			return $path;
+    	case 'admin':
+			// Shohuld be path/to/admin root
+			$path = 'c:/xampplite/htdocs/geeklog/public_html/admin';
+			return $path;
     }
-    return $path;
 }
 
 ?>
