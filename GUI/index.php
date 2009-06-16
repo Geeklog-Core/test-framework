@@ -26,7 +26,7 @@ require_once 'php_file_tree.php';
     <div id="browse">
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
-            <?php echo php_file_tree(getPath('gui').'/', "[link]"); ?>
+            <?php echo php_file_tree(getPath('tests').'/tests/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
     </div>
@@ -39,7 +39,7 @@ require_once 'php_file_tree.php';
     <div id="browse">
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
-            <?php echo php_file_tree(getPath('gui').'/', "[link]"); ?>
+            <?php echo php_file_tree(getPath('tests').'/tests/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
     </div>
