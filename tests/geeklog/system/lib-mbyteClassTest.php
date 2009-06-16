@@ -11,12 +11,17 @@ require_once getPath('tests').'/databases/xmldb.class.php';
 
 class libmbyteClass extends PHPUnit_Framework_TestCase 
 {
+	protected $x;
 	
     protected function setUp() {
-		$xml = new Xmldb;
-		$this->xml->getCONF();
-        global $_CONF;
+		$this->x = new Xmldb;
+		global $_CONF;
+		$_CONF = $this->x->getCONF();
     }
+	
+	public function testMBYTE_languageList() {
+		$this->assertEquals('english', MBYTE_languageList());
+	}
 	
 }
 

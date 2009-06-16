@@ -24,7 +24,7 @@ function getPath($location) {
             $path = 'c:/xampplite/htdocs/geeklog';
             return $path;
         case 'tests':
-            //Should be path/to/tests package
+            //Should be path/to/testpackage root
             $path = 'c:/xampplite/htdocs/geeklog/public_html/gsoc-2009-sclark';
             return $path;
         case 'admin':

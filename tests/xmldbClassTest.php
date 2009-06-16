@@ -8,13 +8,12 @@ require_once 'PHPUnit/Framework.php';
 require_once '../config.php';
 require_once getPath('tests').'/databases/xmldb.class.php';
 
-class xmldbClass extends PHPUnit_Framework_TestCase 
+class xmldbClassTest extends PHPUnit_Framework_TestCase 
 {
     private $x;
     
     protected function setUp() {
         $this->x = new Xmldb;
-        $this->xml = $this->x->loadDb();
     }
     
     public function testGetCONF() {
@@ -35,21 +34,21 @@ class xmldbClass extends PHPUnit_Framework_TestCase
                     'mail_settings' => 'a:8:{s:7:"backend";s:4:"mail";s:13:"sendmail_path";s:17:"/usr/bin/sendmail";s:13:"sendmail_args";s:0:"";s:4:"host";s:16:"smtp.example.com";s:4:"port";s:2:"25";s:4:"auth";b:0;s:8:"username";s:13:"smtp-username";s:8:"password";s:13:"smtp-password";}',
                     'fs_syndication' => 'N;',
                     'backend' => 'i:1;',
-                    'rdf_file' => 's:51:"C:/xampplite/htdocs/public_html/backend/geeklog.rss";',
+                    'rdf_file' => 's:51:&quot;'.getPath('public').'/backend/geeklog.rss&quot;;;',
                     'rdf_limit' => 'i:10;',
                     'rdf_storytext' => 'i:1;',
                     'rdf_language' => 's:5:"en-gb";',
                     'syndication_max_headlines' => 'i:0;',
                     'fs_paths' => 'N;',
-                    'path_html' => 's:32:"C:/xampplite/htdocs/public_html/";',
-                    'path_log' => 's:26:"c:/xampplite/geeklog/logs/";',
-                    'path_language' => 's:30:"c:/xampplite/geeklog/language/";',
-                    'backup_path' => 's:29:"c:/xampplite/geeklog/backups/";',
-                    'path_data' => 's:26:"c:/xampplite/geeklog/data/";',
-                    'path_images' => 's:39:"C:/xampplite/htdocs/public_html/images/";',
+                    'path_html' => 's:32:&quot;'.getPath('public').'/&quot;;',
+                    'path_log' => 's:26:&quot;'.getPath('restricted').'/logs/&quot;;',
+                    'path_language' => 's:30:"'.getPath('restricted').'/language/";',
+                    'backup_path' => 's:29:&quot;'.getPath('restricted').'/backups/&quot;;',
+                    'path_data' => 's:26:&quot;'.getPath('restricted').'/data/&quot;;',
+                    'path_images' => 's:39:&quot;'.getPath('public').'/images/&quot;;',
                     'fs_pear' => 'N;',
                     'have_pear' => 'b:0;',
-                    'path_pear' => 's:33:"c:/xampplite/geeklog/system/pear/";',
+                    'path_pear' => 's:33:&quot;'.getPath('restricted').'/system/pear/&quot;;',
                     'fs_mysql' => 'N;',
                     'allow_mysqldump' => 'i:1;',
                     'mysqldump_path' => 's:18:"/usr/bin/mysqldump";',
@@ -90,7 +89,7 @@ class xmldbClass extends PHPUnit_Framework_TestCase
                     'fs_theme' => 'N;',
                     'theme' => 's:12:"professional";',
                     'menu_elements' => 'a:5:{i:0;s:10:"contribute";i:1;s:6:"search";i:2;s:5:"stats";i:3;s:9:"directory";i:4;s:7:"plugins";}',
-                    'path_themes' => 's:39:"C:/xampplite/htdocs/public_html/layout/";',
+                    'path_themes' => 's:39:&quot;'.getPath('public').'/layout/&quot;;',
                     'fs_theme_advanced' => 'N;',
                     'show_right_blocks' => 'b:0;',
                     'showfirstasfeatured' => 'i:0;',
@@ -339,7 +338,7 @@ class xmldbClass extends PHPUnit_Framework_TestCase
         $i = 0;
         foreach($CONF as $k => $v) {
             $i++;
-            $this->assertEquals($dummy[$k], $v, 'Error on line '.$i+20);
+            $this->assertEquals($dummy[$k], $v, 'Failure on line '.$i+20);
         }
     }
     

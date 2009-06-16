@@ -31,7 +31,7 @@
 
 class Xmldb {
     
-    public $xml;
+    private $xml;
     
     /**
     * Constructor, requires config.php for paths
@@ -54,7 +54,39 @@ class Xmldb {
         $xml = $this->loadDb($db);
         $values = $xml->xpath('/geeklog/gl_conf_values');
         foreach($values as $value) {
-            $CONF[(string) $value->name] = (string) $value->value;
+            // Some values are not portable, in the future may be easier to use install utility.
+            // Meanwhile, use switch statements to overwrite necessary config values now.
+            switch((string) $value->name) {
+                case 'rdf_file':
+                    $CONF[(string) $value->name] = 's:51:&quot;'.getPath('public').'/backend/geeklog.rss&quot;;;';
+                    break;
+                case 'path_html':
+                    $CONF[(string) $value->name] = 's:32:&quot;'.getPath('public').'/&quot;;';
+                    break;
+                case 'path_log':
+                    $CONF[(string) $value->name] = 's:26:&quot;'.getPath('restricted').'/logs/&quot;;';
+                    break;
+                case 'path_language':
+                    $CONF[(string) $value->name] = 's:30:"'.getPath('restricted').'/language/";';
+                    break;
+                case 'backup_path':
+                    $CONF[(string) $value->name] = 's:29:&quot;'.getPath('restricted').'/backups/&quot;;';
+                    break;
+                case 'path_data':
+                    $CONF[(string) $value->name] = 's:26:&quot;'.getPath('restricted').'/data/&quot;;';
+                    break;
+                case 'path_images':
+                    $CONF[(string) $value->name] = 's:39:&quot;'.getPath('public').'/images/&quot;;';
+                    break;
+                case 'path_pear':
+                    $CONF[(string) $value->name] = 's:33:&quot;'.getPath('restricted').'/system/pear/&quot;;';
+                    break;
+                case 'path_themes':
+                    $CONF[(string) $value->name] = 's:39:&quot;'.getPath('public').'/layout/&quot;;';
+                    break;
+                default:                
+                    $CONF[(string) $value->name] = (string) $value->value;
+            }
         }
         return $CONF;
     }

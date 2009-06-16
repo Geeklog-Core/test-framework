@@ -608,7 +608,7 @@
     </gl_conf_values>
     <gl_conf_values>
         <name>path_html</name>
-        <value>s:32:&quot;C:/xampplite/htdocs/public_html/&quot;;</value>
+        <value>s:32:&quot;C:/xampplite/htdocs/geeklog/public_html/&quot;;</value>
         <type>text</type>
         <group_name>Core</group_name>
         <default_value>s:0:&quot;&quot;;</default_value>
@@ -619,7 +619,7 @@
     </gl_conf_values>
     <gl_conf_values>
         <name>path_log</name>
-        <value>s:26:&quot;c:/xampplite/geeklog/logs/&quot;;</value>
+        <value>s:26:&quot;c:/xampplite/htdocs/geeklog/logs/&quot;;</value>
         <type>text</type>
         <group_name>Core</group_name>
         <default_value>s:0:&quot;&quot;;</default_value>
