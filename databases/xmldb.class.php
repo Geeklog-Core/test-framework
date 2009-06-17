@@ -58,34 +58,34 @@ class Xmldb {
             // Meanwhile, use switch statements to overwrite necessary config values now.
             switch((string) $value->name) {
                 case 'rdf_file':
-                    $CONF[(string) $value->name] = 's:51:&quot;'.getPath('public').'/backend/geeklog.rss&quot;;;';
+                    $CONF[(string) $value->name] = getPath('public').'/backend/geeklog.rss/';
                     break;
                 case 'path_html':
-                    $CONF[(string) $value->name] = 's:32:&quot;'.getPath('public').'/&quot;;';
+                    $CONF[(string) $value->name] = getPath('public').'/';
                     break;
                 case 'path_log':
-                    $CONF[(string) $value->name] = 's:26:&quot;'.getPath('restricted').'/logs/&quot;;';
+                    $CONF[(string) $value->name] = getPath('restricted').'/logs/';
                     break;
                 case 'path_language':
-                    $CONF[(string) $value->name] = 's:30:"'.getPath('restricted').'/language/";';
+                    $CONF[(string) $value->name] = getPath('restricted').'/language/';
                     break;
                 case 'backup_path':
-                    $CONF[(string) $value->name] = 's:29:&quot;'.getPath('restricted').'/backups/&quot;;';
+                    $CONF[(string) $value->name] = getPath('restricted').'/backups/';
                     break;
                 case 'path_data':
-                    $CONF[(string) $value->name] = 's:26:&quot;'.getPath('restricted').'/data/&quot;;';
+                    $CONF[(string) $value->name] = getPath('restricted').'/data/';
                     break;
                 case 'path_images':
-                    $CONF[(string) $value->name] = 's:39:&quot;'.getPath('public').'/images/&quot;;';
+                    $CONF[(string) $value->name] = getPath('public').'/images/';
                     break;
                 case 'path_pear':
-                    $CONF[(string) $value->name] = 's:33:&quot;'.getPath('restricted').'/system/pear/&quot;;';
+                    $CONF[(string) $value->name] = getPath('restricted').'/system/pear/';
                     break;
                 case 'path_themes':
-                    $CONF[(string) $value->name] = 's:39:&quot;'.getPath('public').'/layout/&quot;;';
+                    $CONF[(string) $value->name] = getPath('public').'/layout/';
                     break;
                 default:                
-                    $CONF[(string) $value->name] = (string) $value->value;
+                    $CONF[(string) $value->name] = unserialize((string) $value->value);
             }
         }
         return $CONF;
