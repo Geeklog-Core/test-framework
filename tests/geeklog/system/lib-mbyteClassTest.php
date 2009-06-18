@@ -115,19 +115,13 @@ class libmbyteClass extends PHPUnit_Framework_TestCase
     public function testMBYTE_checkEnabledUtf8() {
         global $LANG_CHARSET;
         $LANG_CHARSET = 'utf-8';
-        $mb_enabled = true;
         $this->assertTrue(MBYTE_checkEnabled());
-        unset($LANG_CHARSET);
-        unset($mb_enabled);
     }
-    
+
     public function testMBYTE_checkEnabledDefault() {
-        global $LANG_CHARSET;
+           global $LANG_CHARSET;
         $LANG_CHARSET = '';
-        $mb_enabled = true;
-        $this->assertFalse(MBYTE_checkEnabled());
-        unset($LANG_CHARSET);
-        unset($mb_enabled);        
+        $this->assertFalse(MBYTE_checkEnabled());     
     }
 }
 
