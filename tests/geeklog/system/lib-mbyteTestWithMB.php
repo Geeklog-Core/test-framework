@@ -120,42 +120,42 @@ class libmbyteWithMB extends PHPUnit_Framework_TestCase
     }
 	
 	public function testMBYTE_strlen() {
-		$this->assertEquals(6, MBYTE_strlen('string'));
+		$this->assertEquals(9, MBYTE_strlen(utf8_encode('Användare')));
 	}
 	
 	public function testMBYTE_substrWhenLengthNull() {
-		$this->assertEquals('chars.', MBYTE_substr('Ten chars.', 4));
+		$this->assertEquals('ndare', MBYTE_substr(utf8_encode('Användare'), 4));
 	}
 	
 	public function testMBYTE_substrWhenLengthNotNull() {
-		$this->assertEquals('ch', MBYTE_substr('Ten chars.', 4, 2));
+		$this->assertEquals('nd', MBYTE_substr(utf8_encode('Användare'), 4, 2));
 	}
 	
 	public function testMBYTE_strposWhenOffsetNull() {
-		$this->assertEquals(0, MBYTE_strpos('strpos this.', 's'));
+		$this->assertEquals(1, MBYTE_strpos(utf8_encode('Användare'), 'n'));
 	}
 	
-	public function testMBYTE_strposWhenoOffsetNotNull() {
-		$this->assertEquals(5, MBYTE_strpos('strpos this.', 's', 1));
+	public function testMBYTE_strposWhenOffsetNotNull() {
+		$this->assertEquals(4, MBYTE_strpos(utf8_encode('Användare'), 'n', 2));
 	}
 	
 	public function testMBYTE_strtolower() {
-		$this->assertEquals('lowercase', MBYTE_strtolower('LoWErCaSE'));
+		$this->assertEquals(utf8_encode('användare'), MBYTE_strtolower(utf8_encode('ANvändare')));
 	}
 	
 	public function testMBYTE_eregiWhenRegsNull() {
-		$this->assertEquals(3, MBYTE_eregi('pat', 'A pattern'));
+		$this->assertEquals(1, MBYTE_eregi('n', utf8_encode('Användare')));
 	}
 	
 	public function testMBYTE_eregiWhenRegsNotNull() {
-		$dummy[0] = 'Pat';
-		$result = MBYTE_eregi('pat', 'Pat my pattern', &$regs);
+		$dummy[0] = 'n';
+		$result = MBYTE_eregi('n', utf8_encode('Användare'), &$regs);
 		$this->assertEquals($dummy[0], $regs[0], 'Error asserting that correct pattern was matched.');
-		$this->assertEquals(3, $result, 'Error asserting pattern matched was corret length.');
+		$this->assertEquals(1, $result, 'Error asserting pattern matched was corret length.');
 	}
 	
 	public function testMBYTE_eregi_replace() {
-		$this->assertEquals('in my intern', MBYTE_eregi_replace('pat', 'in', 'Pat my pattern'));
+		$this->assertEquals(utf8_encode('Anklevänkledare'), MBYTE_eregi_replace('n', 'nkle', utf8_encode('ANvändare')));
 	}
 }
 

@@ -120,7 +120,7 @@ class libmbyteNoMB extends PHPUnit_Framework_TestCase
     }
 	
 	public function testMBYTE_strlen() {
-		$this->assertEquals('string', MBYTE_strlen('string'));
+		$this->assertEquals(6, MBYTE_strlen('string'));
 	}
 	
 	public function testMBYTE_substrWhenLengthNull() {
