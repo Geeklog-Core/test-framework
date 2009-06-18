@@ -120,7 +120,42 @@ class libmbyteWithMB extends PHPUnit_Framework_TestCase
     }
 	
 	public function testMBYTE_strlen() {
-		
+		$this->assertEquals(6, MBYTE_strlen('string'));
+	}
+	
+	public function testMBYTE_substrWhenLengthNull() {
+		$this->assertEquals('chars.', MBYTE_substr('Ten chars.', 4));
+	}
+	
+	public function testMBYTE_substrWhenLengthNotNull() {
+		$this->assertEquals('ch', MBYTE_substr('Ten chars.', 4, 2));
+	}
+	
+	public function testMBYTE_strposWhenOffsetNull() {
+		$this->assertEquals(0, MBYTE_strpos('strpos this.', 's'));
+	}
+	
+	public function testMBYTE_strposWhenoOffsetNotNull() {
+		$this->assertEquals(5, MBYTE_strpos('strpos this.', 's', 1));
+	}
+	
+	public function testMBYTE_strtolower() {
+		$this->assertEquals('lowercase', MBYTE_strtolower('LoWErCaSE'));
+	}
+	
+	public function testMBYTE_eregiWhenRegsNull() {
+		$this->assertEquals(3, MBYTE_eregi('pat', 'A pattern'));
+	}
+	
+	public function testMBYTE_eregiWhenRegsNotNull() {
+		$dummy[0] = 'Pat';
+		$result = MBYTE_eregi('pat', 'Pat my pattern', &$regs);
+		$this->assertEquals($dummy[0], $regs[0], 'Error asserting that correct pattern was matched.');
+		$this->assertEquals(3, $result, 'Error asserting pattern matched was corret length.');
+	}
+	
+	public function testMBYTE_eregi_replace() {
+		$this->assertEquals('in my intern', MBYTE_eregi_replace('pat', 'in', 'Pat my pattern'));
 	}
 }
 
