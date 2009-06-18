@@ -9,9 +9,8 @@ require_once '../config.php';
 require_once getPath('restricted').'/system/lib-mbyte.php';
 require_once getPath('tests').'/databases/xmldb.class.php';
 
-class libmbyteClass extends PHPUnit_Framework_TestCase 
+class libmbyteWithMB extends PHPUnit_Framework_TestCase 
 {
-    protected $backupGlobals = FALSE;
     
     protected function setUp() {
         $this->x = new Xmldb;
@@ -109,20 +108,20 @@ class libmbyteClass extends PHPUnit_Framework_TestCase
             $this->assertEquals($v, $retval[$k], 'Error asserting dummy '.$v.' is equal to returned '.$retval[$k].'.');
         }
     }
-    
-    /* Somehow variables are getting shared between these */
-    
-    public function testMBYTE_checkEnabledUtf8() {
+	
+	public function testMBYTE_checkEnabledUtf8() {
         global $LANG_CHARSET;
         $LANG_CHARSET = 'utf-8';
-        $this->assertTrue(MBYTE_checkEnabled());
+        $this->assertTrue(MBYTE_checkEnabled('test'));
     }
-
-    public function testMBYTE_checkEnabledDefault() {
-           global $LANG_CHARSET;
-        $LANG_CHARSET = '';
-        $this->assertFalse(MBYTE_checkEnabled());     
+	
+	public function testMBYTE_checkEnabledAlreadySetReturnsTrue() {
+        $this->assertTrue(MBYTE_checkEnabled('test'));     
     }
+	
+	public function testMBYTE_strlen() {
+		
+	}
 }
 
 ?>
