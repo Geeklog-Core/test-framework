@@ -54,6 +54,7 @@ require_once 'gui/php_file_tree.php';
         }
         
         function ShellExec() {
+			require_once 'config.php';
             foreach($_POST['test'] as $k => $v) {
                 phpUnit($v);
             }

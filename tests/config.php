@@ -25,7 +25,7 @@ function getPath($location) {
             $path = 'c:/xampplite/htdocs/geeklog';
             return $path;
         case 'tests':
-            //Should be path/to/tests/ (with children databases and suite)
+            //Should be path/to/tests/ (with children databases, logs, and suite)
             $path = 'c:/xampplite/htdocs/geeklog/public_html/tests/tests';
             return $path;
         case 'admin':

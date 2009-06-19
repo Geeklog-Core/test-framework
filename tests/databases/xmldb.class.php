@@ -58,7 +58,7 @@ class Xmldb {
             // Meanwhile, use switch statements to overwrite necessary config values now.
             switch((string) $value->name) {
                 case 'rdf_file':
-                    $CONF[(string) $value->name] = getPath('public').'/backend/geeklog.rss/';
+                    $CONF[(string) $value->name] = getPath('public').'/backend/geeklog.rss';
                     break;
                 case 'path_html':
                     $CONF[(string) $value->name] = getPath('public').'/';
