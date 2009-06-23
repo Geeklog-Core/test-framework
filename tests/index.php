@@ -26,6 +26,7 @@ require_once 'gui/php_file_tree.php';
     ?>
     <div id="browse">
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
+        Selecting a folder will run all tests inside.
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
             <?php echo php_file_tree(getPath('tests').'/suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
@@ -59,7 +60,7 @@ require_once 'gui/php_file_tree.php';
 			// Echo output
 			foreach($output as $k => $v) {
            		$t = $k + 1;
-            	echo "<p><strong>$t</strong><br /> <strong>Results</strong>: $v </p>";
+            	echo "<div class='output'><strong>$t</strong><br /><strong>Results</strong><pre>:$v</pre></div>";
         	}
         }
         

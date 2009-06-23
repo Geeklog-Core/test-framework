@@ -28,7 +28,8 @@ body, html {
     width:480px;
 }
 #advresults {
-    float:right;
+    float:left;
+	margin-top:50px;
 }
 .right {
     float:right;
@@ -48,7 +49,7 @@ h3 {
     color:#333;
     font:15px/18px Arial, Helvetica, sans-serif;
 }
-p {
+.output {
     border-bottom:1px solid #CCC;
     border-right:1px solid #EEE;
     border-left:1px solid #EEE;
