@@ -6,7 +6,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('tests').'/databases/xmldb.class.php';
+require_once getPath('tests').'/files/databases/xmldb.class.php';
 
 class xmldbClassTest extends PHPUnit_Framework_TestCase 
 {

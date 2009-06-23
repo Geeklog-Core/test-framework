@@ -1,17 +1,17 @@
 <?php 
 
 /**
-* Simple tests for calendarClassTest
+* Simple tests for lib-mbyte
 */
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
+require_once getPath('tests').'/files/databases/xmldb.class.php';
 require_once getPath('root').'/system/lib-mbyte.php';
-require_once getPath('tests').'/databases/xmldb.class.php';
 
-class libmbyteWithMB extends PHPUnit_Framework_TestCase 
+class libmbyteNoMB extends PHPUnit_Framework_TestCase 
 {
-    
+
     protected function setUp() {
         $this->x = new Xmldb;
         global $_CONF;
@@ -108,54 +108,54 @@ class libmbyteWithMB extends PHPUnit_Framework_TestCase
             $this->assertEquals($v, $retval[$k], 'Error asserting dummy '.$v.' is equal to returned '.$retval[$k].'.');
         }
     }
-	
+    
 	public function testMBYTE_checkEnabledUtf8() {
         global $LANG_CHARSET;
         $LANG_CHARSET = 'utf-8';
-        $this->assertTrue(MBYTE_checkEnabled('test'));
+        $this->assertFalse(MBYTE_checkEnabled('test', false));
     }
 	
-	public function testMBYTE_checkEnabledAlreadySetReturnsTrue() {
-        $this->assertTrue(MBYTE_checkEnabled('test'));     
+	public function testMBYTE_checkEnabledAlreadySetReturnsFalse() {
+        $this->assertFalse(MBYTE_checkEnabled('test', false));     
     }
 	
 	public function testMBYTE_strlen() {
-		$this->assertEquals(9, MBYTE_strlen(utf8_encode('Användare')));
+		$this->assertEquals(6, MBYTE_strlen('string'));
 	}
 	
 	public function testMBYTE_substrWhenLengthNull() {
-		$this->assertEquals('ndare', MBYTE_substr(utf8_encode('Användare'), 4));
+		$this->assertEquals('chars.', MBYTE_substr('Ten chars.', 4));
 	}
 	
 	public function testMBYTE_substrWhenLengthNotNull() {
-		$this->assertEquals('nd', MBYTE_substr(utf8_encode('Användare'), 4, 2));
+		$this->assertEquals('ch', MBYTE_substr('Ten chars.', 4, 2));
 	}
 	
 	public function testMBYTE_strposWhenOffsetNull() {
-		$this->assertEquals(1, MBYTE_strpos(utf8_encode('Användare'), 'n'));
+		$this->assertEquals(0, MBYTE_strpos('strpos this.', 's'));
 	}
 	
-	public function testMBYTE_strposWhenOffsetNotNull() {
-		$this->assertEquals(4, MBYTE_strpos(utf8_encode('Användare'), 'n', 2));
+	public function testMBYTE_strposWhenoOffsetNotNull() {
+		$this->assertEquals(5, MBYTE_strpos('strpos this.', 's', 1));
 	}
 	
 	public function testMBYTE_strtolower() {
-		$this->assertEquals(utf8_encode('användare'), MBYTE_strtolower(utf8_encode('ANvändare')));
+		$this->assertEquals('lowercase', MBYTE_strtolower('LoWErCaSE'));
 	}
 	
 	public function testMBYTE_eregiWhenRegsNull() {
-		$this->assertEquals(1, MBYTE_eregi('n', utf8_encode('Användare')));
+		$this->assertEquals(3, MBYTE_eregi('pat', 'A pattern'));
 	}
 	
 	public function testMBYTE_eregiWhenRegsNotNull() {
-		$dummy[0] = 'n';
-		$result = MBYTE_eregi('n', utf8_encode('Användare'), &$regs);
+		$dummy[0] = 'Pat';
+		$result = MBYTE_eregi('pat', 'Pat my pattern', &$regs);
 		$this->assertEquals($dummy[0], $regs[0], 'Error asserting that correct pattern was matched.');
-		$this->assertEquals(1, $result, 'Error asserting pattern matched was corret length.');
+		$this->assertEquals(3, $result, 'Error asserting pattern matched was corret length.');
 	}
 	
 	public function testMBYTE_eregi_replace() {
-		$this->assertEquals(utf8_encode('Anklevänkledare'), MBYTE_eregi_replace('n', 'nkle', utf8_encode('ANvändare')));
+		$this->assertEquals('in my intern', MBYTE_eregi_replace('pat', 'in', 'Pat my pattern'));
 	}
 }
 

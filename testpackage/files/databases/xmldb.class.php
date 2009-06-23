@@ -58,52 +58,50 @@ class Xmldb {
             // Meanwhile, use switch statements to overwrite necessary config values now.
             switch((string) $value->name) {
                 case 'rdf_file':
-                    $CONF[(string) $value->name] = getPath('public').'/backend/geeklog.rss';
+                    $_CONF[(string) $value->name] = getPath('public').'/backend/geeklog.rss';
                     break;
                 case 'path_html':
-                    $CONF[(string) $value->name] = getPath('public').'/';
+                    $_CONF[(string) $value->name] = getPath('public').'/';
                     break;
                 case 'path_log':
-                    $CONF[(string) $value->name] = getPath('root').'/logs/';
+                    $_CONF[(string) $value->name] = getPath('root').'/logs/';
                     break;
                 case 'path_language':
-                    $CONF[(string) $value->name] = getPath('root').'/language/';
+                    $_CONF[(string) $value->name] = getPath('root').'/language/';
                     break;
                 case 'backup_path':
-                    $CONF[(string) $value->name] = getPath('root').'/backups/';
+                    $_CONF[(string) $value->name] = getPath('root').'/backups/';
                     break;
                 case 'path_data':
-                    $CONF[(string) $value->name] = getPath('root').'/data/';
+                    $_CONF[(string) $value->name] = getPath('root').'/data/';
                     break;
                 case 'path_images':
-                    $CONF[(string) $value->name] = getPath('public').'/images/';
+                    $_CONF[(string) $value->name] = getPath('public').'/images/';
                     break;
                 case 'path_pear':
-                    $CONF[(string) $value->name] = getPath('root').'/system/pear/';
+                    $_CONF[(string) $value->name] = getPath('root').'/system/pear/';
                     break;
                 case 'path_themes':
-                    $CONF[(string) $value->name] = getPath('public').'/layout/';
+                    $_CONF[(string) $value->name] = getPath('public').'/layout/';
                     break;
                 default:                
-                    $CONF[(string) $value->name] = unserialize((string) $value->value);
+                    $_CONF[(string) $value->name] = unserialize((string) $value->value);
             }
         }
-        return $CONF;
+        return $_CONF;
     }
     
     /**
     * Loads XML db using simpleXML_load_file
     *
-    * @param    string  $db      XML database to retrieved CONF values from, defaults to default.xml
-    * @return   array   $xml    database in simpleXMl form
-    *
+    * @param    string  $db     XML database to retrieved CONF values from, defaults to default.xml
+    * @return   array   $xml    database parsed with simpleXML 
     */
     function loadDb($db = 'default.xml') {
-        $xml = simplexml_load_file(getPath('tests').'/databases/'.$db) or die ('Unable to load XML file '.$db);
+        $xml = simplexml_load_file(getPath('tests').'/files/databases/'.$db) or die ('Unable to load XML file '.$db);
         return $xml;
     }
     
 }
 
 ?>
-
