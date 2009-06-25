@@ -6,7 +6,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('tests').'/files/databases/xmldb.class.php';
+require_once getPath('tests').'/files/classes/xmldb.class.php';
 require_once getPath('root').'/system/lib-mbyte.php';
 
 class libmbyteNoMB extends PHPUnit_Framework_TestCase 
@@ -14,8 +14,7 @@ class libmbyteNoMB extends PHPUnit_Framework_TestCase
 
     protected function setUp() {
         $this->x = new Xmldb;
-        global $_CONF;
-        $_CONF = $this->x->getCONF();
+        $_CONF = $this->x->get_CONF();
     }
     
     public function testMBYTE_languageListDefault() {

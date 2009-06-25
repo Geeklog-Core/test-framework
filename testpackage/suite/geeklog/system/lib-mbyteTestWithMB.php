@@ -7,18 +7,18 @@
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
 require_once getPath('root').'/system/lib-mbyte.php';
-require_once getPath('tests').'/files/databases/xmldb.class.php';
+require_once getPath('tests').'/files/classes/xmldb.class.php';
 
 class libmbyteWithMB extends PHPUnit_Framework_TestCase 
 {
     
     protected function setUp() {
         $this->x = new Xmldb;
-        global $_CONF;
-        $_CONF = $this->x->getCONF();
+       	$_CONF = $this->x->get_CONF();
     }
     
     public function testMBYTE_languageListDefault() {
+		echo $_CONF['path_language'];
         $dummy = array(
                 'afrikaans_utf-8' => 'Afrikaans',
                 'bosnian_utf-8' => 'Bosnian',

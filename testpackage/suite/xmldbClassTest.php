@@ -6,7 +6,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('tests').'/files/databases/xmldb.class.php';
+require_once getPath('tests').'/files/classes/xmldb.class.php';
 
 class xmldbClassTest extends PHPUnit_Framework_TestCase 
 {
@@ -16,7 +16,7 @@ class xmldbClassTest extends PHPUnit_Framework_TestCase
         $this->x = new Xmldb;
     }
     
-    public function testGetCONF() {
+    public function testGet_CONF() {
         $dummy = array(
                     'sg_site' => unserialize('N;'),
                     'fs_site' => unserialize('N;'),
@@ -334,9 +334,9 @@ class xmldbClassTest extends PHPUnit_Framework_TestCase
                     'fs_freq' => unserialize('N;'),
                     'frequencies' => unserialize('a:3:{s:7:"article";s:5:"daily";s:11:"staticpages";s:6:"weekly";s:8:"calendar";s:5:"daily";}'),
                 );
-        $CONF = $this->x->getCONF();
+        $_CONF = $this->x->get_CONF();
         $i = 0;
-        foreach($CONF as $k => $v) {
+        foreach($_CONF as $k => $v) {
             $i++;
             $this->assertEquals($dummy[$k], $v, 'Failure on line '.$i+20);
         }

@@ -10,15 +10,12 @@ require_once 'gui/php_file_tree.php';
 <script src="gui/jquery.js" type="text/javascript"></script>
 <script src="gui/php_file_tree_jquery.js" type="text/javascript"></script>
 <link href="gui/default.css" rel="stylesheet" type="text/css" />
-			
 </head>
 <body>
 <div id="head">
-    <div id="headwrapper"> 
-    	<span class="right">
-        	<h1>PHPUnit GUI for Geeklog</h1>
-        </span> 
-        <img src="gui/images/geeklog.gif" /> </div>
+    <div id="headwrapper"> <span class="right">
+        <h1>PHPUnit GUI for Geeklog</h1>
+        </span> <img src="gui/images/geeklog.gif" /> </div>
 </div>
 <div id="wrapper">
     <?php 
@@ -48,20 +45,26 @@ require_once 'gui/php_file_tree.php';
     <div id="results">
         <h2><strong>2.</strong> Results</h2>
         <?php        
-		$output = array();
-		
+
+        $output = array();
+        
         function ShellExec() {
-			require_once 'config.php';
-			// Test files and collect output into array
+            require_once 'config.php';
+            // Delete old XML file (so on errors, we don't see old XML results - it's confusing)
+            // If we removed it earlier, it would be impossible to physically examine the XML file
+            // for details if we wanted to
+            @unlink(getPath('tests').'/logs/log.xml');
+            // Test files and collect output into array
             foreach($_POST['test'] as $k => $file) {
-				$testfile = escapeshellarg($file);
-				$output[] = shell_exec("phpunit --log-xml ".getPath('tests')."/logs/log.xml $testfile");
+                $testfile = escapeshellarg($file);
+                $output[] = shell_exec("phpunit --log-xml ".getPath('tests')."/logs/log.xml $testfile");
             }
-			// Echo output
-			foreach($output as $k => $v) {
-           		$t = $k + 1;
-            	echo "<div class='output'><strong>$t</strong><br /><strong>Results</strong><pre>:$v</pre></div>";
-        	}
+            
+            // Echo output
+            foreach($output as $k => $v) {
+                   $t = $k + 1;
+                echo "<div class='output'><strong>$t</strong><br /><strong>Results</strong><pre>:$v</pre></div>";
+            }
         }
         
         ShellExec();
@@ -69,9 +72,9 @@ require_once 'gui/php_file_tree.php';
     </div>
     <div id="advresults">
         <?php
-        // Parse XML
+        // Parse XML and echo table of advanced results
         $file = getPath('tests').'/logs/log.xml';
-        $log = simplexml_load_file($file) or die ("Unable to load XML file!"); 
+        $log = @simplexml_load_file($file) or die ("Unable to load XML file! (this is normal if test did not run correctly)"); 
         $test_results = array();
               foreach($log->xpath("//testcase") as $testcase) {
                 $result = array();

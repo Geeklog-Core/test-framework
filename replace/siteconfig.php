@@ -30,8 +30,8 @@ $_CONF['path'] = 'c:/xampplite/htdocs/geeklog/';
 //$_CONF['path_system'] = $_CONF['path'] . 'system/';
 
 // ... and uncomment this line, replacing path/to/package with the path to
-// your PHPUnit testpackage root (path/to/testpackage/files/).
-$_CONF['path_system'] = 'c:/xampplite/htdocs/geeklog/public_html/tests/testpackage/files/';
+// your PHPUnit testpackage root (path/to/testpackage/files/dummy/).
+$_CONF['path_system'] = 'c:/xampplite/htdocs/geeklog/public_html/tests/testpackage/files/dummy/';
 
 $_CONF['default_charset'] = 'iso-8859-1';
 

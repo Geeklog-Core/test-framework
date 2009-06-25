@@ -1,25 +1,12 @@
 <?php 
 
 /**
-* Simple tests for lib-common
-*/
-
-/*
-* On require, lib-common utilizes:
-* system/classes/config.class.php
-* db-config.php
-* system/databases/mysql.class.php (mssql.class.php)
+* Tests for lib-common
 */
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('tests').'/files/databases/xmldb.class.php';
-
-global $_CONF, $_TABLES, $_DB_table_prefix, $_DB_mysqldump_path;
-		
-$x = new Xmldb;
-global $_CONF;
-$_CONF = $x->getCONF();
+require_once getPath('tests').'/files/classes/xmldb.class.php';
 
 require_once 'c:/xampplite/htdocs/geeklog/public_html/lib-common.php';
 
