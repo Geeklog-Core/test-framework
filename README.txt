@@ -103,7 +103,7 @@ VI. DEVELOPMENT IDEAS
     
     1. The GUI offers the absolute barest of functionalities right now. Some useful additions to it would be:
 		- Make it look nice. It's ugly right now, and that's because my priority right now isn't to design a nice interface.
-        - The page uses AJAX, but the code is terrible - both tests/index.php and tests/runTests.php need to be cleaned. A loader effect, such as a status bar or animation would be good to have while tests are run (it's plain text right now).
+        - The page uses AJAX, but the code is terrible - the code for tests/index.php and tests/runTests.php needs to be cleaned.
 		- There's problems with the layout; things overlap on occasion, and they shouldn't. It would also be nice to have test class names with the appropriate data. The whole interface could use a lot more time. 
         - Graphs and more extensive charts, could be extremely useful when testing on a larger scale. I believe jQuery offers plugins that will do this, and the GUI has jQuery bundled with it. PHPUnit offers a variety of options for collecting test results which I haven't completely looked into.
         - The advanced results table could something of its own 'tree structure' using javascript, to prevent the enormous page that would result from 50+ test classes and make the results more manageable. 

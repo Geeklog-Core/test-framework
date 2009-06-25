@@ -7,6 +7,9 @@ body, html {
     float:left;
     width:480px;
 }
+.loader {
+	margin:100px;
+}
 #head {
     background: url(images/header-bg.png) repeat-x;
     height:85px;
