@@ -103,13 +103,12 @@ VI. DEVELOPMENT IDEAS
     
     1. The GUI offers the absolute barest of functionalities right now. Some useful additions to it would be:
 		- Make it look nice. It's ugly right now, and that's because my priority right now isn't to design a nice interface.
-        - Incorporating AJAX so the page doesn't have to reload when tests are run. 
-        - Making the file tree remain open to its previous state after a test (not a problem if using AJAX). 
+        - The page uses AJAX, but the code is terrible - both tests/index.php and tests/runTests.php need to be cleaned. A loader effect, such as a status bar or animation would be good to have while tests are run (it's plain text right now).
+		- There's problems with the layout; things overlap on occasion, and they shouldn't. It would also be nice to have test class names with the appropriate data. The whole interface could use a lot more time. 
         - Graphs and more extensive charts, could be extremely useful when testing on a larger scale. I believe jQuery offers plugins that will do this, and the GUI has jQuery bundled with it. PHPUnit offers a variety of options for collecting test results which I haven't completely looked into.
         - The advanced results table could something of its own 'tree structure' using javascript, to prevent the enormous page that would result from 50+ test classes and make the results more manageable. 
         - An option to use a text input box to run tests, like a console replacement, would be useful as well: PHPUnit offers a variety of command-line runners that would clutter the interface, should they be offered on a point-and-click basis. 
         - In addition (or alternatively), there could be a row of checkboxes asking which runners the person testing wants to implement (HTML results, XML results, etc.).
-		- An alternative GUI that is run if the user has Javascript disabled would be good, as not everybody will have (or can have) it enabled. This is a low priority however, as I would assume most developers have it enabled or know how to easily enable it.
         
     2. Offering the option to test with or without a SQL database. Right now, the suite is design to run with only an XML database, which keeps it from needing a full Geeklog installation. For live setups, it would be most useful to be able to run the tests with the SQL database.
     

@@ -23,12 +23,15 @@ body, html {
     position:relative;
     width:960px;
 }
-#results {
+#resultswrapper {
     float:right;
+	overflow:visible;
     width:480px;
 }
+#simpleresults {
+}
 #advresults {
-    float:left;
+    float:right;
     margin-top:50px;
 }
 .right {

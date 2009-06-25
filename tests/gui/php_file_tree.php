@@ -54,7 +54,7 @@ function php_file_tree_dir($directory, $return_link, $extensions = array(), $fir
                 if( is_dir("$directory/$this_file") ) {
                     // Directory
                     $link = str_replace("[link]", "$directory/$this_file", $return_link);
-                    $php_file_tree .= "<li class=\"pft-directory\"><input type='checkbox' name='test[]' value=\"$link\"><a href=/tests/gui//&quot;#/&quot;>$this_file</a>";
+                    $php_file_tree .= "<li class=\"pft-directory\"><input type='checkbox' id='test' name='test[]' value=\"$link\"><a href=/tests/gui//&quot;#/&quot;>$this_file</a>";
                     $php_file_tree .= php_file_tree_dir("$directory/$this_file", $return_link ,$extensions, false);
                     $php_file_tree .= "</li>";
                 } else {

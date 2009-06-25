@@ -7,8 +7,9 @@ require_once 'gui/php_file_tree.php';
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Geeklog PHPUnit GUI</title>
-<script src="gui/jquery.js" type="text/javascript"></script>
-<script src="gui/php_file_tree_jquery.js" type="text/javascript"></script>
+<script type="text/JavaScript">
+window.location = "index_js.php"
+</script>
 <link href="gui/default.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -23,13 +24,12 @@ require_once 'gui/php_file_tree.php';
     ?>
     <div id="browse">
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
-        Selecting a folder will run all tests inside.
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
             <?php echo php_file_tree(getPath('tests').'/suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
     </div>
-    <div id="results">
+    <div id="resultswrapper">
         <h2><strong>2.</strong> Results</h2>
     </div>
     <?php
@@ -42,39 +42,36 @@ require_once 'gui/php_file_tree.php';
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
     </div>
-    <div id="results">
+    <div id="resultswrapper">
         <h2><strong>2.</strong> Results</h2>
-        <?php        
-
-        $output = array();
+        <div id="simpleresults">
+            <?php
+        function phpUnit($testfile) {
+            $testfile = escapeshellarg($testfile);
+            global $output;
+            $output[] = shell_exec("phpunit --log-xml ".getPath('tests')."/logs/log.xml $testfile");
+        }
         
         function ShellExec() {
-            require_once 'config.php';
-            // Delete old XML file (so on errors, we don't see old XML results - it's confusing)
-            // If we removed it earlier, it would be impossible to physically examine the XML file
-            // for details if we wanted to
-            @unlink(getPath('tests').'/logs/log.xml');
-            // Test files and collect output into array
-            foreach($_POST['test'] as $k => $file) {
-                $testfile = escapeshellarg($file);
-                $output[] = shell_exec("phpunit --log-xml ".getPath('tests')."/logs/log.xml $testfile");
-            }
-            
-            // Echo output
-            foreach($output as $k => $v) {
-                   $t = $k + 1;
-                echo "<div class='output'><strong>$t</strong><br /><strong>Results</strong><pre>:$v</pre></div>";
+			require_once 'config.php';
+            foreach($_POST['test'] as $k => $v) {
+                phpUnit($v);
             }
         }
         
         ShellExec();
+        
+        foreach($output as $k => $v) {
+            $t = $k + 1;
+            echo "<div class='output'><strong>$t</strong><br /> <strong>Results</strong><pre>$v</pre></p></div>";
+        }
         ?>
-    </div>
-    <div id="advresults">
-        <?php
-        // Parse XML and echo table of advanced results
+        </div>
+        <div id="advresults">
+            <?php
+        // Parse XML
         $file = getPath('tests').'/logs/log.xml';
-        $log = @simplexml_load_file($file) or die ("Unable to load XML file! (this is normal if test did not run correctly)"); 
+        $log = simplexml_load_file($file) or die ("Unable to load XML file!"); 
         $test_results = array();
               foreach($log->xpath("//testcase") as $testcase) {
                 $result = array();
@@ -92,40 +89,41 @@ require_once 'gui/php_file_tree.php';
                 $test_results[] = $result; 
             }    
         ?>
-        <table cellspacing="0" class="test_results">
-            <thead>
-                <tr>
-                    <th>Test Name</th>
-                    <th>Result</th>
-                    <th>Time</th>
-                    <th>Line</th>
-                    <th>Assertions</th>
-                    <th>Message</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
+            <table cellspacing="0" class="test_results">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Result</th>
+                        <th>Time</th>
+                        <th>Line</th>
+                        <th>Assertions</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
                 $n = 0;
                 foreach($test_results as $test_result): 
                 $n++;
                 ?>
-                <tr>
-                    <td><div class="width"><?php echo '<strong>'.$n.'</strong> '.wordwrap($test_result['name'], 47, "<br />\n", true); ?></div></td>
-                    <?php if($test_result['result'] == 'Fail') : ?>
-                    <td class="test_fail"/>
-                    <?php else: ?>
-                    <td class="test_pass"/>
-                    <?php endif; ?>
-                    <td><?php echo $test_result['time']; ?></td>
-                    <td><?php echo $test_result['line']; ?></td>
-                    <td><?php echo $test_result['assertions']; ?></td>
-                    <td><?php echo wordwrap($test_result['message'], 47, "<br />\n", true); ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                    <tr>
+                        <td><div class="width"><?php echo '<strong>'.$n.'</strong> '.wordwrap($test_result['name'], 47, "<br />\n", true); ?></div></td>
+                        <?php if($test_result['result'] == 'Fail') : ?>
+                        <td class="test_fail"/>
+                        <?php else: ?>
+                        <td class="test_pass"/>
+                        <?php endif; ?>
+                        <td><?php echo $test_result['time']; ?></td>
+                        <td><?php echo $test_result['line']; ?></td>
+                        <td><?php echo $test_result['assertions']; ?></td>
+                        <td><?php echo wordwrap($test_result['message'], 47, "<br />\n", true); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php } ?>
     </div>
-    <?php } ?>
 </div>
 </body>
 </html>
