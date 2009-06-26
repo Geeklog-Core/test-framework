@@ -24,14 +24,14 @@ $_CONF['site_enabled'] = true;
 // items in the debug trace.
 // $_CONF['rootdebug'] = true;
 
-$_CONF['path'] = 'c:/xampplite/htdocs/geeklog/';
-
 // If you want to enable the PHPUnit test package, comment out this line...
-//$_CONF['path_system'] = $_CONF['path'] . 'system/';
+//$_CONF['path'] = 'c:/xampplite/htdocs/geeklog/';
 
 // ... and uncomment this line, replacing path/to/package with the path to
 // your PHPUnit testpackage root (path/to/testpackage/files/dummy/).
-$_CONF['path_system'] = 'c:/xampplite/htdocs/geeklog/public_html/tests/testpackage/files/dummy/';
+$_CONF['path'] = 'c:/xampplite/htdocs/geeklog/public_html/tests/testpackage/files/dummy/';
+
+$_CONF['path_system'] = $_CONF['path'] . 'system/';
 
 $_CONF['default_charset'] = 'iso-8859-1';
 
