@@ -14,7 +14,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
 	protected function setUp() {
 
     }
-	/*
+	
 	public function testCreateWithHttpUrl() {
         $url = 'http://www.example.com/image.png';
         $fixture = '<img src="' . $url . '" alt="">';
@@ -25,7 +25,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
 	/**
     * @link http://project.geeklog.net/tracking/view.php?id=881
     */
-	/*
+	
     public function testCreateWithHttpsUrl() {
         $url = 'https://www.example.com/image.png';
         $fixture = '<img src="' . $url . '" alt="">';
@@ -42,7 +42,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
  
         $this->assertFalse(empty($_CONF['layout_url']));
         $this->assertEquals($fixture, COM_createImage($url));
-    }*/
+    }
 }
 
 ?>
