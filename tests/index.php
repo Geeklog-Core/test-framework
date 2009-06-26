@@ -24,6 +24,7 @@ window.location = "index_js.php"
     ?>
     <div id="browse">
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
+        <h3>Selecting a folder will include all tests inside</h3>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
             <?php echo php_file_tree(getPath('tests').'/suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
@@ -37,6 +38,7 @@ window.location = "index_js.php"
     ?>
     <div id="browse">
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
+        <h3>Selecting a folder will include all tests inside</h3>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
             <?php echo php_file_tree(getPath('tests').'/suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
