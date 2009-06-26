@@ -15,7 +15,7 @@ require_once 'gui/php_file_tree.php';
 <div id="head">
     <div id="headwrapper"> <span class="right">
         <h1>PHPUnit GUI for Geeklog</h1>
-        </span> <img src="gui/images/geeklog.gif" /> </div>
+        </span><img src="gui/images/geeklog.gif" /></span>
 </div>
 <div id="wrapper">
     <div id="browse">
@@ -30,7 +30,7 @@ require_once 'gui/php_file_tree.php';
     </div>
     <div id="resultswrapper">
         <h2><strong>2.</strong> Results</h2>
-    </div><img src=""
+    </div>
 </div>
 <script type="text/javascript"> 
  $(document).ready(function(){ 
