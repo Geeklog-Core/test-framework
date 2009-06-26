@@ -97,7 +97,7 @@ td {
 .php-file-tree {
     font-family: Verdana, Helvetica, Arial;
     font-size: 14px;
-    line-height: 17px;
+    line-height: 20px;
 }
 .php-file-tree A {
     color: #000000;
@@ -294,4 +294,3 @@ td {
 .php-file-tree LI.ext-zip {
     list-style-image: url(images/zip.png);
 }
-
