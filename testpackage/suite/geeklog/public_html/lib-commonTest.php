@@ -6,8 +6,8 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('tests').'/files/classes/xmldb.class.php';
-require_once getPath('public').'/lib-common.php';
+require_once getPath('tests').'files/classes/xmldb.class.php';
+require_once getPath('public').'lib-common.php';
 
 class libcommonTest extends PHPUnit_Framework_TestCase 
 {	
@@ -15,21 +15,71 @@ class libcommonTest extends PHPUnit_Framework_TestCase
 	protected function setUp() {
     }
 	
-	public function testGetBlockTemplateWithHeader() {		
+	public function testGetBlockTemplateEmptyBlocknameWithHeader() {		
 		$this->assertEquals('blockheader.thtml', COM_getBlockTemplate('user_block', 'header'));
     }
 	
-	public function testGetBlockTemplateWithOther() {		
+	public function testGetBlockTemplateEmptyBlocknameWithOther() {		
 		$this->assertEquals('blockfooter.thtml', COM_getBlockTemplate('user_block', 'rand'));
     }
 	
-	public function testGetBlockTemplateWithPosition() {	
-		/*global $_BLOCK_TEMPLATE;
-		$_BLOCK_TEMPLATE['_msg_block'] = '';
-		$this->assertEquals('blockheader-right.thtml', COM_getBlockTemplate('_msg_block', 'header', 'right'));*/
-		
-		// Figure out what's going on with blocks
+	public function testGetBlockTemplateWithBlocknamePositionSpecificNoOverride() {	
+		global $_BLOCK_TEMPLATE;
+		$_BLOCK_TEMPLATE['_test_block'] = 'testblock.thtml,testblock.thtml';
+		$this->assertEquals('testblock.thtml', COM_getBlockTemplate('_test_block', 'header', 'right'));
     }
+	
+	public function testGetBlockTemplateWithBlocknamePositionSpecificRequestOverride() {	
+		global $_BLOCK_TEMPLATE;
+		$_BLOCK_TEMPLATE['_test_block'] = 'blockheader.thtml,blockfooter.thtml';
+		$this->assertEquals('blockheader-right.thtml', COM_getBlockTemplate('_test_block', 'header', 'right'));
+    }
+	
+	public function testGetBlockTemplateWithBlocknamePositionSpecificBlock() {	
+		global $_BLOCK_TEMPLATE;
+		$_BLOCK_TEMPLATE['_test_block'] = 'blockheader-right.thtml,blockfooter-right.thtml';
+		$this->assertEquals('blockheader-right.thtml', COM_getBlockTemplate('_test_block', 'header', 'right'));
+    }
+	
+	public function testGetThemesNotAllowed() {
+		global $_CONF;
+		$_CONF['allow_user_themes'] = 0;
+		$arr = COM_getThemes();
+		$this->assertEquals('professional', $arr[1]);		
+	}
+	
+	public function testGetThemesNotAllowedAll() {
+		global $_CONF;
+		$_CONF['allow_user_themes'] = 1;
+		$arr = COM_getThemes();
+		$this->assertEquals('professional', $arr[1]);		
+	}	
+	
+	public function testRenderMenu() {
+		// Line 571
+		global $_CONF;
+		
+		$header = new Template('c:/xampplite/htdocs/geeklog/public_html/layout/professional/');
+   	 	$header->set_file( array(
+			'header'        => 'header.thtml',
+			'menuitem'      => 'menuitem.thtml',
+			'menuitem_last' => 'menuitem_last.thtml',
+			'menuitem_none' => 'menuitem_none.thtml',
+			'leftblocks'    => 'leftblocks.thtml',
+			'rightblocks'   => 'rightblocks.thtml'
+			));
+		$plugin_menu = PLG_getMenuItems();
+		
+		COM_renderMenu($header, $plugin_menu);
+		
+
+		$this->assertEquals(1, $_CONF['menu_elements']);
+		//$this->markTestIncomplete(
+         // 'This test has not been implemented yet.');
+	}
+	
+	public function testDebug() {
+	}
 	
 	public function testCreateWithHttpUrl() {
         $url = 'http://www.example.com/image.png';

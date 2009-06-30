@@ -22,7 +22,7 @@ require_once 'gui/php_file_tree.php';
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
         <h3>Selecting a folder will include all tests inside</h3>
         <form id="testfiles" onsubmit="return false">
-            <?php echo php_file_tree(getPath('tests').'/suite/', "[link]"); ?>
+            <?php echo php_file_tree(getPath('tests').'suite/', "[link]"); ?>
             <p id="submit_button">
                 <input type="submit" value="Test Files" />
             </p>

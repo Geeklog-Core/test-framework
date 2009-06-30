@@ -6,7 +6,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('root').'/system/classes/plugin.class.php';
+require_once getPath('root').'system/classes/plugin.class.php';
 
 class pluginClass extends PHPUnit_Framework_TestCase 
 {

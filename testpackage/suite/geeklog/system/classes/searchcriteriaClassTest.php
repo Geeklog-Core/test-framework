@@ -5,7 +5,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('root').'/system/classes/searchcriteria.class.php';
+require_once getPath('root').'system/classes/searchcriteria.class.php';
 
 class searchcriteriaClass extends PHPUnit_Framework_TestCase 
 {	

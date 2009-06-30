@@ -16,7 +16,7 @@ function ShellExec($data) {
 	$i=0;
 	$ret = true;
 	while($ret) {
-		$ret = @unlink(getPath('tests').'/logs/'.$i.'.xml');
+		$ret = @unlink(getPath('tests').'logs/'.$i.'.xml');
 		$i++;
 	}
 	// Test files and collect output into array;
@@ -42,7 +42,7 @@ function ShellExec($data) {
 function getXMLResults($data) {
 	$class_results = array();
 	foreach($data['test'] as $k => $v) {
-		$file = getPath('tests').'/logs/'.$k.'.xml';
+		$file = getPath('tests').'logs/'.$k.'.xml';
         $log = @simplexml_load_file($file) or die ("<br /><strong>Unable to load XML file! 
 												   (this is normal if test did not run correctly)</strong>"); 
         $test_results = array();
@@ -99,8 +99,8 @@ if(isset($data)) {
                 </tr>
             </thead>
             <tbody>';
-		$n = 0;
 		foreach($test_results as $test_result) {
+			static $n = 0;
 			$n++;
 				echo '<tr>
 				<td><div class="width"><strong>'.$n.'</strong> '.wordwrap($test_result['name'], 47, "<br />\n", true).'</div></td>';

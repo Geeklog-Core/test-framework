@@ -6,8 +6,8 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('tests').'/files/classes/xmldb.class.php';
-require_once getPath('root').'/system/lib-mbyte.php';
+require_once getPath('tests').'files/classes/xmldb.class.php';
+require_once getPath('root').'system/lib-mbyte.php';
 
 class libmbyteNoMB extends PHPUnit_Framework_TestCase 
 {

@@ -26,7 +26,7 @@ window.location = "index_js.php"
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
         <h3>Selecting a folder will include all tests inside</h3>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
-            <?php echo php_file_tree(getPath('tests').'/suite/', "[link]"); ?>
+            <?php echo php_file_tree(getPath('tests').'suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
     </div>
@@ -40,7 +40,7 @@ window.location = "index_js.php"
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
         <h3>Selecting a folder will include all tests inside</h3>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
-            <?php echo php_file_tree(getPath('tests').'/suite/', "[link]"); ?>
+            <?php echo php_file_tree(getPath('tests').'suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
     </div>
@@ -72,7 +72,7 @@ window.location = "index_js.php"
         <div id="advresults">
             <?php
         // Parse XML
-        $file = getPath('tests').'/logs/log.xml';
+        $file = getPath('tests').'logs/log.xml';
         $log = simplexml_load_file($file) or die ("Unable to load XML file!"); 
         $test_results = array();
               foreach($log->xpath("//testcase") as $testcase) {

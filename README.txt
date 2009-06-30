@@ -27,10 +27,10 @@ II. INSTALLATION
 Note: the testpackage folder can go anywhere, but it is not reccomended to have it in an web-accessible directory for security.
 
 4. Open testpackage/config.php. Here are the three paths you need to configure. 
-    A. Under case 'public', enter the path to Geeklog's public_html folder, i.e: 'c:/xampplite/htdocs/public_html'.
-    B. Under case 'root', enter the path to Geeklog's root folder, where the main Geeklog files reside, i.e: 'c:/xampplite/geeklog'.
-    C. Under case 'tests', enter the path to the testpackage folder you just placed,     i.e: 'c:/xampplite/geeklog/testpackage'.
-    Note: Use absolute paths, and don't add trailing slashes!
+    A. Under case 'public', enter the path to Geeklog's public_html folder, i.e: 'c:/xampplite/htdocs/public_html/'.
+    B. Under case 'root', enter the path to Geeklog's root folder, where the main Geeklog files reside, i.e: 'c:/xampplite/geeklog/'.
+    C. Under case 'tests', enter the path to the testpackage folder you just placed,     i.e: 'c:/xampplite/geeklog/testpackage/'.
+    Note: Use absolute paths!
 
 5. Open public_html/tests/config.php. Change the require_once path to /path/to/testpackage/config.php.
 
@@ -110,7 +110,7 @@ VI. DEVELOPMENT IDEAS
         - An option to use a text input box to run tests, like a console replacement, would be useful as well: PHPUnit offers a variety of command-line runners that would clutter the interface, should they be offered on a point-and-click basis. 
         - In addition (or alternatively), there could be a row of checkboxes asking which runners the person testing wants to implement (HTML results, XML results, etc.).
         
-    2. Offering the option to test with or without a SQL database. Right now, the suite is design to run with only an XML database, which keeps it from needing a full Geeklog installation. For live setups, it would be most useful to be able to run the tests with the SQL database.
+    2. Offering the option to test with or without a SQL database. Right now, the suite is design to run with only an XML database, which keeps it from needing a full Geeklog installation. For live setups, it would be most useful to be able to run the tests with the SQL database as well. This could throw complications for tests that involved writing to a database, however...
     
     3. A script that offered to convert the client's SQL database to an XML database would be a useful alternative to the SQL database; perhaps even more effective, as the test suite may eventually be testing entries to the database (and we obviously don't want it to be modifying an existing SQL database). PHPMyAdmin has such a feature. 
     

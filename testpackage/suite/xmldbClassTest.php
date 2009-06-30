@@ -6,7 +6,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'config.php';
-require_once getPath('tests').'/files/classes/xmldb.class.php';
+require_once getPath('tests').'files/classes/xmldb.class.php';
 
 class xmldbClassTest extends PHPUnit_Framework_TestCase 
 {
@@ -34,21 +34,21 @@ class xmldbClassTest extends PHPUnit_Framework_TestCase
                     'mail_settings' => unserialize('a:8:{s:7:"backend";s:4:"mail";s:13:"sendmail_path";s:17:"/usr/bin/sendmail";s:13:"sendmail_args";s:0:"";s:4:"host";s:16:"smtp.example.com";s:4:"port";s:2:"25";s:4:"auth";b:0;s:8:"username";s:13:"smtp-username";s:8:"password";s:13:"smtp-password";}'),
                     'fs_syndication' => unserialize('N;'),
                     'backend' => unserialize('i:1;'),
-                    'rdf_file' => getPath('public').'/backend/geeklog.rss',
+                    'rdf_file' => getPath('public').'backend/geeklog.rss',
                     'rdf_limit' => unserialize('i:10;'),
                     'rdf_storytext' => unserialize('i:1;'),
                     'rdf_language' => unserialize('s:5:"en-gb";'),
                     'syndication_max_headlines' => unserialize('i:0;'),
                     'fs_paths' => unserialize('N;'),
-                    'path_html' => getPath('public').'/',
-                    'path_log' => getPath('root').'/logs/',
-                    'path_language' => getPath('root').'/language/',
-                    'backup_path' => getPath('root').'/backups/',
-                    'path_data' => getPath('root').'/data/',
-                    'path_images' => getPath('public').'/images/',
+                    'path_html' => getPath('public').'',
+                    'path_log' => getPath('root').'logs/',
+                    'path_language' => getPath('root').'language/',
+                    'backup_path' => getPath('root').'backups/',
+                    'path_data' => getPath('root').'data/',
+                    'path_images' => getPath('public').'images/',
                     'fs_pear' => unserialize('N;'),
                     'have_pear' => unserialize('b:0;'),
-                    'path_pear' => getPath('root').'/system/pear/',
+                    'path_pear' => getPath('root').'system/pear/',
                     'fs_mysql' => unserialize('N;'),
                     'allow_mysqldump' => unserialize('i:1;'),
                     'mysqldump_path' => unserialize('s:18:"/usr/bin/mysqldump";'),
@@ -89,7 +89,7 @@ class xmldbClassTest extends PHPUnit_Framework_TestCase
                     'fs_theme' => unserialize('N;'),
                     'theme' => unserialize('s:12:"professional";'),
                     'menu_elements' => unserialize('a:5:{i:0;s:10:"contribute";i:1;s:6:"search";i:2;s:5:"stats";i:3;s:9:"directory";i:4;s:7:"plugins";}'),
-                    'path_themes' => getPath('public').'/layout/',
+                    'path_themes' => getPath('public').'layout/',
                     'fs_theme_advanced' => unserialize('N;'),
                     'show_right_blocks' => unserialize('b:0;'),
                     'showfirstasfeatured' => unserialize('i:0;'),
