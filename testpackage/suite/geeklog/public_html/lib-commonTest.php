@@ -57,28 +57,39 @@ class libcommonTest extends PHPUnit_Framework_TestCase
 	
 	public function testRenderMenu() {
 		// Line 571
-		global $_CONF;
+		// Come back to this after understand functions called inside
 		
-		$header = new Template('c:/xampplite/htdocs/geeklog/public_html/layout/professional/');
-   	 	$header->set_file( array(
-			'header'        => 'header.thtml',
-			'menuitem'      => 'menuitem.thtml',
-			'menuitem_last' => 'menuitem_last.thtml',
-			'menuitem_none' => 'menuitem_none.thtml',
-			'leftblocks'    => 'leftblocks.thtml',
-			'rightblocks'   => 'rightblocks.thtml'
-			));
-		$plugin_menu = PLG_getMenuItems();
 		
-		COM_renderMenu($header, $plugin_menu);
+		//global $_CONF;
 		
-
-		$this->assertEquals(1, $_CONF['menu_elements']);
-		//$this->markTestIncomplete(
-         // 'This test has not been implemented yet.');
+		//$header = new Template('c:/xampplite/htdocs/geeklog/public_html/layout/professional/');
+   	 	//$header->set_file(array('contribute', 'search', 'stats', 'directory', 'plugins'));
+		//$plugin_menu = PLG_getMenuItems();		
+		//COM_renderMenu($header, $plugin_menu);
+		//$this->assertEquals(1, $_CONF['menu_elements']);
+		$this->markTestIncomplete(
+         'This test has not been implemented yet.');
 	}
 	
 	public function testDebug() {
+		// Line 1799
+		$dummy = array('Letter 1' => 'a', 'Letter 2' => 'b');
+		
+		$retval = '<ul><pre><p>---- DEBUG ----</p>';
+		foreach($dummy as $k => $v) { 
+			$retval .= sprintf("<li>%13s [%s]</li>\n", $k, $v);
+		}
+		$retval .= '<p>---------------</p></pre></ul>';
+		
+		$compare = COM_debug($dummy);
+		$this->assertEquals($retval, $compare, "Error asserting $output matched $compare");
+	}
+	
+	public function testRefresh() {
+		// Line 2794
+		$url = 'http://localhost/';
+		$dummy = "<html><head><meta http-equiv=\"refresh\" content=\"0; URL=$url\"></head></html>\n";
+		$this->assertEquals($dummy, COM_refresh($url));
 	}
 	
 	public function testCreateWithHttpUrl() {
