@@ -1796,17 +1796,16 @@ function COM_checkList($table, $selection, $where = '', $selected = '', $fieldna
 *
 */
 
-function COM_debug($A)
+function COM_debug($array)
 {
-    if(!empty($A)) {
-        $retval .= '<pre><p>---- DEBUG ----</p>';
-
-        foreach($A as $k => $v) { 
+	$retval = '';	
+    if(!empty($array)) {
+        $retval = '<ul><pre><p>---- DEBUG ----</p>';
+        foreach($array as $k => $v) { 
             $retval .= sprintf("<li>%13s [%s]</li>\n", $k, $v);
         }
-
-        $retval .= '<p>---------------</p></pre>';
-    }
+        $retval .= '<p>---------------</p></pre></ul>';
+    }	
     return $retval;
 }
 
@@ -2815,52 +2814,49 @@ function COM_userComments( $sid, $title, $type='article', $order='', $mode='', $
 *
 * This will replace 'bad words' with something more appropriate
 *
-* @param        string      $Message        String to check
+* @param	string	$message  String to check
 * @see function COM_checkHTML
-* @return   string  Edited $Message
+* @return   string	$editedMessage	Edited $message
 *
 */
 
-function COM_checkWords( $Message )
+function COM_checkWords($message )
 {
     global $_CONF;
 
-    $EditedMessage = $Message;
+    $editedMessage = $message;
 
-    if( $_CONF['censormode'] != 0 )
-    {
-        if( is_array( $_CONF['censorlist'] ))
+    if($_CONF['censormode'] != 0 && is_array($_CONF['censorlist'])) {
+
+		$replacement = $_CONF['censorreplace'];
+		
+        switch($_CONF['censormode'])
         {
-            $Replacement = $_CONF['censorreplace'];
+        	case 1: # Exact match
+            	$RegExPrefix = '(\s*)';
+                $RegExSuffix = '(\W*)';
+                break;
 
-            switch( $_CONF['censormode'])
-            {
-                case 1: # Exact match
-                    $RegExPrefix = '(\s*)';
-                    $RegExSuffix = '(\W*)';
-                    break;
+            case 2: # Word beginning
+                $RegExPrefix = '(\s*)';
+                $RegExSuffix = '(\w*)';
+                break;
 
-                case 2: # Word beginning
-                    $RegExPrefix = '(\s*)';
-                    $RegExSuffix = '(\w*)';
-                    break;
+            case 3: # Word fragment
+                $RegExPrefix   = '(\w*)';
+                $RegExSuffix   = '(\w*)';
+                break;
+        }
 
-                case 3: # Word fragment
-                    $RegExPrefix   = '(\w*)';
-                    $RegExSuffix   = '(\w*)';
-                    break;
-            }
-
-            foreach ($_CONF['censorlist'] as $c) {
-                if (!empty($c)) {
-                    $EditedMessage = MBYTE_eregi_replace($RegExPrefix . $c
-                        . $RegExSuffix, "\\1$Replacement\\2", $EditedMessage);
-                }
-            }
+        foreach ($_CONF['censorlist'] as $c) {
+           if (!empty($c)) {
+                $editedMessage = MBYTE_eregi_replace($RegExPrefix . $c
+                . $RegExSuffix, "\\1$replacement\\2", $editedMessage);
+           }
         }
     }
-
-    return $EditedMessage;
+	
+    return $editedMessage;
 }
 
 /**
@@ -2877,9 +2873,9 @@ function COM_checkWords( $Message )
 *
 */
 
-function COM_killJS( $Message )
+function COM_killJS($message)
 {
-    return( preg_replace( '/(\s)+[oO][nN](\w*) ?=/', '\1in\2=', $Message ));
+    return(preg_replace('/(\s)+[oO][nN](\w*) ?=/', '\1in\2=', $message));
 }
 
 /**
@@ -2891,14 +2887,14 @@ function COM_killJS( $Message )
 * @see     COM_checkHTML
 *
 */
-function COM_handleCode( $str )
+function COM_handleCode($str)
 {
     $search  = array( '&',     '\\',    '<',    '>',    '[',     ']'     );
     $replace = array( '&amp;', '&#92;', '&lt;', '&gt;', '&#91;', '&#93;' );
 
-    $str = str_replace( $search, $replace, $str );
+    $str = str_replace($search, $replace, $str);
 
-    return( $str );
+    return($str);
 }
 
 /**
@@ -2929,6 +2925,7 @@ function COM_checkHTML( $str, $permissions = 'story.edit' )
     {
         $start_pos = MBYTE_strpos( MBYTE_strtolower( $str ), '[code]' );
         if( $start_pos !== false )
+		
         {
             $end_pos = MBYTE_strpos( MBYTE_strtolower( $str ), '[/code]' );
             if( $end_pos !== false )
@@ -2944,7 +2941,7 @@ function COM_checkHTML( $str, $permissions = 'story.edit' )
                 // Treat the rest of the text as code (so as not to lose any
                 // special characters). However, the calling entity should
                 // better be checking for missing [/code] before calling this
-                // function ...
+                // function ... 
                 $encoded = COM_handleCode( MBYTE_substr( $str, $start_pos + 6 ));
                 $encoded = '<pre><code>' . $encoded . '</code></pre>';
                 $str = MBYTE_substr( $str, 0, $start_pos ) . $encoded;
@@ -3000,15 +2997,16 @@ function COM_checkHTML( $str, $permissions = 'story.edit' )
     if( isset( $_CONF['allowed_protocols'] ) && is_array( $_CONF['allowed_protocols'] ) && ( sizeof( $_CONF['allowed_protocols'] ) > 0 ))
     {
         $filter->SetProtocols( $_CONF['allowed_protocols'] );
+		//var_dump($filter->allowed_protocols);
     }
     else
-    {
+    { 
         $filter->SetProtocols( array( 'http:', 'https:', 'ftp:' ));
     }
 
     if( empty( $permissions) || !SEC_hasRights( $permissions ) ||
             empty( $_CONF['admin_html'] ))
-    {
+    { 
         $html = $_CONF['user_html'];
     }
     else
@@ -3087,10 +3085,10 @@ function COM_makesid()
 *
 * @param    string    $email   Email address to verify
 * @return   boolean            True if valid otherwise false
-*
+*	
 */
 function COM_isEmail( $email )
-{
+{ 
     require_once( 'Mail/RFC822.php' );
 
     $rfc822 = new Mail_RFC822;
