@@ -4,11 +4,6 @@ body, html {
 	padding: 0;
 }
 #browse {
-	float:left;
-	width:480px;
-}
-.loader {
-	margin:100px;
 }
 #head {
 	background: url(images/header-bg.png) repeat-x;
@@ -27,15 +22,18 @@ body, html {
 	width:960px;
 }
 #resultswrapper {
-	float:right;
 	overflow:visible;
 	width:480px;
 }
 #simpleresults {
 }
 #advresults {
-	float:right;
 	margin-top:50px;
+}
+#logslist {
+	position:absolute;
+	top:60px;
+	right:60px;
 }
 .right {
 	float:right;
@@ -61,6 +59,22 @@ h3 {
 	border-left:1px solid #EEE;
 	border-top:1px solid #B6B6B6;
 	padding:10px;
+}
+a:link {
+	color: #333;
+	text-decoration:none;
+}
+a:visited {
+	color: #fff;
+	text-decoration:none;
+}
+a:active {
+	color: #fff;
+	text-decoration:none;
+}
+a:hover {
+	color:#fff;
+	text-decoration:underline;
 }
 /* Specific Table */
 .test_results {

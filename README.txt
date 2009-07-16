@@ -39,7 +39,7 @@ Note: the testpackage folder can go anywhere, but it is not reccomended to have 
  
 III. USE
 
-	1. Running tests
+    1. Running tests
 
     You have two ways you can run your tests. One is by using a simple GUI included with the test package, and the second is by using 
 the command line. 
@@ -60,38 +60,43 @@ assertions made by each test, and the error message (if any).
 (path/to/testclass/testname)', and the test you specify will be run, with the results displayed in the console. If you specify a folder, 
 all tests inside will be run. (WHERE TO FIND INFORMATION ON CONSOLE COMMANDS).
 Note: this will only work if you are in the tests root folder (with config.php). This is because of the path structure.
-	
+    
 
 IV. DETAILS
     (STRUCTURE, HOW TO WRITE TESTS TO WORK WITH FRAMEWORK, ETC.)
-	
-	1. Structure
-	Here is the file structure of the test suite:
-	
-	-testpackage
-		-files
-			-classes
-			-databases
-			-dummy
-		-logs
-		-suite
-			-geeklog
-				-public_html
-				-system
-					-classes
-	-tests
-		-gui
-	
-	2. Working with databases
-	
-	This test package is designed to work with or without a Geeklog install. It does this by using the configuration paths you specified in the installation,
+    
+    1. Structure
+    Here is the file structure of the test suite:
+    
+    -testpackage
+        -files
+            -classes
+            -databases
+            -dummy
+        -logs
+            masterlog.txt
+        -suite
+            -geeklog
+                -public_html
+                -system
+                    -classes
+    -tests
+        -gui
+    
+    2. Working with databases
+    
+    This test package is designed to work with or without a Geeklog install. It does this by using the configuration paths you specified in the installation,
 and by using a XML version of Geeklog's SQL database. To write tests for a file requiring database calls, first ensure that default.xml exists (in testpackage/files/databases). This is the XML version of Geeklog's database, as appears after a fresh install. The class that handles the operations (done with simpleXML and xPath) on the database is xmldb.class.php, under testpackage/files/databases. 
-	
-	You can use xmldb.class.php in three steps.
-	1. Require config.php, i.e: require_once 'config.php'. You should be doing this anyway.
-	2. Require the file, i.e: require_once getPath('tests').'/files/databases/xmldb.class.php'. 
-	3. Create an object, i.e: $this->xml = new Xmldb;
-	4. Call the function you want, providing the database you want to load as the parameter, i.e: $_CONF = $this->xml->get_CONF('database'). If you don't specify a database, it will load default.xml.
+    
+    You can use xmldb.class.php in three steps.
+    1. Require config.php, i.e: require_once 'config.php'. You should be doing this anyway.
+    2. Require the file, i.e: require_once getPath('tests').'/files/databases/xmldb.class.php'. 
+    3. Create an object, i.e: $this->xml = new Xmldb;
+    4. Call the function you want, providing the database you want to load as the parameter, i.e: $_CONF = $this->xml->get_CONF('database'). If you don't specify a database, it will load default.xml.
+    
+    3. Running tests
+    
+    INFORMATION ABOUT JSON LOGS AND HOW THEY'RE USED
 
 
 V. RESOURCES
@@ -102,9 +107,8 @@ VI. DEVELOPMENT IDEAS
     Given the limited amount of time available for me to put together this package, here are some of the things I would like to eventually see (if any aspiring developer wants to continue working on this test package). These are not necessarily in order of importance.
     
     1. The GUI offers the absolute barest of functionalities right now. Some useful additions to it would be:
-		- Make it look nice. It's ugly right now, and that's because my priority right now isn't to design a nice interface.
-        - The page uses AJAX, but the code is terrible - the code for tests/index.php and tests/runTests.php needs to be cleaned.
-		- There's problems with the layout; things overlap on occasion, and they shouldn't. It would also be nice to have test class names with the appropriate data. The whole interface could use a lot more time. 
+        - Make it look nice. It's ugly right now, and that's because my priority right now isn't to design a nice interface.
+        - There's problems with the layout; things overlap on occasion, and they shouldn't.
         - Graphs and more extensive charts, could be extremely useful when testing on a larger scale. I believe jQuery offers plugins that will do this, and the GUI has jQuery bundled with it. PHPUnit offers a variety of options for collecting test results which I haven't completely looked into.
         - The advanced results table could something of its own 'tree structure' using javascript, to prevent the enormous page that would result from 50+ test classes and make the results more manageable. 
         - An option to use a text input box to run tests, like a console replacement, would be useful as well: PHPUnit offers a variety of command-line runners that would clutter the interface, should they be offered on a point-and-click basis. 
