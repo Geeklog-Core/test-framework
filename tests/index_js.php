@@ -57,12 +57,12 @@ require_once getPath('tests').'files/classes/tests.class.php';
           </span> <span id="logs_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Logs are loading...'></span>
           <ul id="logslist">
             <?php 
-					$tests = new Tests;
-					$loglist = $tests->displayLogList(1,5);
-					foreach($loglist as $v) {
-						echo $v;
-					}
-				?>
+                    $tests = new Tests;
+                    $loglist = $tests->displayLogList(1,5);
+                    foreach($loglist as $v) {
+                        echo $v;
+                    }
+                ?>
           </ul>
         </form>
       </div>
@@ -81,57 +81,57 @@ $(function() {
 var $tabs = $('#tabs').tabs();
 
 $(document).ready(function(){ 
-	$("span#logs_loader").hide();
-	$("span#runTests_loader").hide();
+    $("span#logs_loader").hide();
+    $("span#runTests_loader").hide();
 });
 
 // Renders logs from history 
 $("input#logs_submit").click(function() {
-	$("span#logs_button").hide();
-	$("span#logs_loader").show();
-	$.post("viewLogs.php", $("#logs").serialize(), function(json){
-		$("span#logs_loader").hide();	
-		$("span#logs_button").show();
-		var table = eval("(" + json + ")");	
-		$("div#tabs-3").html(table);
-		$tabs.tabs('select', 2);
-		});
+    $("span#logs_button").hide();
+    $("span#logs_loader").show();
+    $.post("viewLogs.php", $("#logs").serialize(), function(json){
+        $("span#logs_loader").hide();    
+        $("span#logs_button").show();
+        var table = eval("(" + json + ")");    
+        $("div#tabs-3").html(table);
+        $tabs.tabs('select', 2);
+        });
 });
 
 // Deletes logs from history 
 $("input#logs_delete").click(function() {
-	$("span#logs_button").hide();
-	$("span#logs_loader").show();
-	$.post("deleteLogs.php", $("#logs").serialize(), function(json){
-		var success = 1;	
-	});
-	$.post("showLogList.php", $("#howMany").serialize(), function(logsList){	
-		$("span#logs_loader").hide();			
-		$("#logslist").html(logsList);
-	});
+    $("span#logs_button").hide();
+    $("span#logs_loader").show();
+    $.post("deleteLogs.php", $("#logs").serialize(), function(json){
+        var success = 1;    
+    });
+    $.post("showLogList.php", $("#howMany").serialize(), function(logsList){    
+        $("span#logs_loader").hide();            
+        $("#logslist").html(logsList);
+    });
 });
 
 // Choose many existing logs to list
 $("input#howMany").keyup(function() {
-	$("span#logs_loader").show();
-	$.post("showLogList.php", $("#howMany").serialize(), function(logsList){	
-		$("span#logs_loader").hide();			
-		$("#logslist").html(logsList);
-		});
+    $("span#logs_loader").show();
+    $.post("showLogList.php", $("#howMany").serialize(), function(logsList){    
+        $("span#logs_loader").hide();            
+        $("#logslist").html(logsList);
+        });
 });
 
 // Run selected tests and return results
 $("input#runTests_submit").click(function() {
-	$("span#runTests_button").hide();
-	$("span#runTests_loader").show();
-	$.post("runTests.php", $("#runTests").serialize(), function(data){	
-		$("span#runTests_loader").hide();	
-		$("span#runTests_button").show();
-		var results = eval("(" + data + ")");
-		$("div#tabs-2").html(results.simple);
+    $("span#runTests_button").hide();
+    $("span#runTests_loader").show();
+    $.post("runTests.php", $("#runTests").serialize(), function(data){    
+        $("span#runTests_loader").hide();    
+        $("span#runTests_button").show();
+        var results = eval("(" + data + ")");
+        $("div#tabs-2").html(results.simple);
         $("div#tabs-3").html(results.advanced);
-		$tabs.tabs('select', 1);
-		});
+        $tabs.tabs('select', 1);
+        });
 });
 </script>
 </body>

@@ -42,18 +42,18 @@ class Tests
         
     /*
     * Runs tests, returns console output. Log name is Unix time at time run.
-    * @param	array   $data			Test files to run, defaults to $POST
-    * @param    int     $JSONresults	Flag if XML results should be collected and displayed, 			                                        default on
+    * @param    array   $data            Test files to run, defaults to $POST
+    * @param    int     $JSONresults    Flag if XML results should be collected and displayed,                                                     default on
     * @param    int     $consoleOutput  Flag if console output should be collected and displayed,                                        default on
-    * @return   array   $retval			Formatted PHPUnit console output and JSON results (if                                        requested)
+    * @return   array   $retval            Formatted PHPUnit console output and JSON results (if                                        requested)
     *
     */
     public function runTests($data = '', $JSONresults = 1, $consoleOutput = 1) {   
         $retval = array();        
 
-		$testid = time();
-		$today = date("F j, Y, g:i a");
-		
+        $testid = time();
+        $today = date("F j, Y, g:i a");
+        
         $success = $this->updateMasterLog($testid);        
         $output = array();
         // Test files and collect console output into array
@@ -105,10 +105,10 @@ class Tests
     
      /*
     * Parses JSON logs to PHP array
-    * @param    string	$test		Test position in log to load (i.e: 1 is last test run), 												    * 								defaults to 1
-    * @param    string	$howMany 	How many tests to get results for, defaults to 1
-    * @param    string	$testid		(Optional) specific test id to load file for
-    * @return   array 	$parsedXML	Parsed data from JSON file
+    * @param    string    $test        Test position in log to load (i.e: 1 is last test run),                                                     *                                 defaults to 1
+    * @param    string    $howMany     How many tests to get results for, defaults to 1
+    * @param    string    $testid        (Optional) specific test id to load file for
+    * @return   array     $parsedXML    Parsed data from JSON file
     *
     */     
     public function getJSONResults($test = 1, $howMany = 1, $testid = '') {
@@ -116,9 +116,9 @@ class Tests
         
         if(empty($testid)) {
             $testentries = $this->readMasterLog($test, $howMany); 
-			foreach($testentries as $entry) {
-				$testentry[] = $entry;
-			}
+            foreach($testentries as $entry) {
+                $testentry[] = $entry;
+            }
         } elseif(!empty($testid)) {
             $testentry['testid'] = $testid;
             $testentry['testtime'] = date("F j, Y, g:i a", $testid);            
@@ -151,7 +151,7 @@ class Tests
                 && substr_count($test_results['suite'], 'suite') == 0) {
                 $suites[$test_results['suite']];                    
             } elseif($test_results['event'] == 'test') {
-                // If array is test, put under corresponding suite (i.e: 				                $suites['calendarclass'][1] = array(test info))
+                // If array is test, put under corresponding suite (i.e:                                 $suites['calendarclass'][1] = array(test info))
                 $suites[$test_results['suite']][] = $test_results;
             }
         }
@@ -216,8 +216,8 @@ class Tests
     
     /*
     * Gets files containing prefix
-    * @param    int     $prefix		Find files containing this prefix (i.e: testid)
-    * @return	array   $ret		Files that had prefix
+    * @param    int     $prefix        Find files containing this prefix (i.e: testid)
+    * @return    array   $ret        Files that had prefix
     *
     */
     public function getFiles($prefix = '') {
@@ -226,12 +226,12 @@ class Tests
             if($handle = opendir(getPath('tests').'logs')) {
                 // Loop over directory
                 while (false !== ($file = readdir($handle))) {
-					if(substr($file, 0, 1) != '.' && $file != 'masterlog.txt') { 
-					// Keep filenames of '.' out
-						if(!empty($prefix) && substr_count($file, $prefix) != 0) {
-							$ret[] = $file;
-						}
-					}
+                    if(substr($file, 0, 1) != '.' && $file != 'masterlog.txt') { 
+                    // Keep filenames of '.' out
+                        if(!empty($prefix) && substr_count($file, $prefix) != 0) {
+                            $ret[] = $file;
+                        }
+                    }
                 }            
                 closedir($handle);
             }    
@@ -246,9 +246,9 @@ class Tests
     /*
     * Checks if directory exists if no directory creates it, 
     * if no file, returns false
-    * @param    string    $search	Directory or file to look for
-    * @param    string    $type		Type (file or dir) from /testpackage
-    * @return   bool      $ret		If directory or file exists or creation was successful
+    * @param    string    $search    Directory or file to look for
+    * @param    string    $type        Type (file or dir) from /testpackage
+    * @return   bool      $ret        If directory or file exists or creation was successful
     *
     */
     public function getFileDir($search, $type) {
@@ -271,9 +271,9 @@ class Tests
 
     /*
     * Updates master log of tests run with last-run test, creates dir and file if not exist
-	* @param    int     $testid	Test ID to add to log
-    * @param    string  $today	Date to write with test
-    * @return   bool	$ret    Whether the update was successful or not
+    * @param    int     $testid    Test ID to add to log
+    * @param    string  $today    Date to write with test
+    * @return   bool    $ret    Whether the update was successful or not
     *
     */
     public function updateMasterLog($testid = '', $today = '') {
@@ -295,10 +295,10 @@ class Tests
     
     /*
     * Writes test to master log in format Date, TestId (the result of time())
-	* @param 	path	Path to masterlog.txt
-	* @param    int     $testid	Test ID to add to log
-    * @param    string  $today	Date to write with test
-    * @return	bool	$ret    If write was successful
+    * @param     path    Path to masterlog.txt
+    * @param    int     $testid    Test ID to add to log
+    * @param    string  $today    Date to write with test
+    * @return    bool    $ret    If write was successful
     */
     public function writeMasterLog($path, $testid, $today) {
         $file = "masterlog.txt";
@@ -308,52 +308,52 @@ class Tests
         fclose($handle);
         return $ret;
     }
-	
-	/*
+    
+    /*
     * Deletes test logs from master log and folder
-	* @param 	path	Path to masterlog.txt
-	* @param    int     $testid	Test ID to add to log
-    * @return	bool	$ret    If write was successful
+    * @param     path    Path to masterlog.txt
+    * @param    int     $testid    Test ID to add to log
+    * @return    bool    $ret    If write was successful
     */
     public function deleteMasterLog($path, $testid) {
         $file = "masterlog.txt";
         $handle = fopen($path.$file, 'w') or die("There was a problem opening master log");
-		$entries = $this->getFiles();		
-		unset($entries[(array_search($testid, $entries))]);
+        $entries = $this->getFiles();        
+        unset($entries[(array_search($testid, $entries))]);
         $ret = fwrite($handle, $entries);
         fclose($handle);
         return $ret;
     }
     
-	/*
+    /*
     * Reads master logs into list for GUI
-    * @param    int     $offset		Test position to begin returning at
-	*								(defaults to last test in log)
-    * @param    int     $howMany	How many tests to return (defaults to 1)
-    * @return   array   $ret		Formatted HTML list
+    * @param    int     $offset        Test position to begin returning at
+    *                                (defaults to last test in log)
+    * @param    int     $howMany    How many tests to return (defaults to 1)
+    * @return   array   $ret        Formatted HTML list
     *
     */
-	public function displayLogList($offset = 1, $howMany = 1) {
-		$ret = array();
-		$logs = array();
-		$offset = '-'.$offset;
+    public function displayLogList($offset = 1, $howMany = 1) {
+        $ret = array();
+        $logs = array();
+        $offset = '-'.$offset;
 
-		$logs = $this->readMasterLog($offset, $howMany);
-		
-		foreach($logs as $test) {
-			if($test['testid']) {
-				$ret[] = '<li><input id=\'logs\' type=\'checkbox\' name=\'logs[]\' 
-				value=\''.$test['testid'].'\'>'.$test['testtime'].'</li>';
-			}			
-		}
-		
-		if(empty($ret)) {
-			$ret[] = '<i>There are no logs to display.</i>';
-		}
-		
-		return $ret;
-	}
-	
+        $logs = $this->readMasterLog($offset, $howMany);
+        
+        foreach($logs as $test) {
+            if($test['testid']) {
+                $ret[] = '<li><input id=\'logs\' type=\'checkbox\' name=\'logs[]\' 
+                value=\''.$test['testid'].'\'>'.$test['testtime'].'</li>';
+            }            
+        }
+        
+        if(empty($ret)) {
+            $ret[] = '<i>There are no logs to display.</i>';
+        }
+        
+        return $ret;
+    }
+    
     /*
     * Reads and returns test information from master log. Can return by position, or
     * return by testid.
@@ -366,15 +366,15 @@ class Tests
         $ret = array();
         $path = getPath('tests').'logs/';        
         $arr = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
-		
-		$i = 0;
-		while($i < $howMany) {
-			$test = array_slice($arr, $offset - $i);
-			$testid = substr($test[0], 0, 10);
-           	$ret[] = array(
-				'testid' => $testid,
-        		'testtime' => date("F j, Y, g:i a", $testid));
-			$i++;
+        
+        $i = 0;
+        while($i < $howMany) {
+            $test = array_slice($arr, $offset - $i);
+            $testid = substr($test[0], 0, 10);
+               $ret[] = array(
+                'testid' => $testid,
+                'testtime' => date("F j, Y, g:i a", $testid));
+            $i++;
         }
         return $ret;        
     }    
