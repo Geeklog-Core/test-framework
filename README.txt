@@ -18,7 +18,15 @@ I. INTRODUCTION
 
 
 II. INSTALLATION
-    (ADD HOW TO INSTALL PHPUnit)
+
+- Installing PHPUnit
+
+Before you can use the Geeklog PHPUnit test package, you need to install PHPUnit. I'm using Windows 7 RC with xampplite, and these instructions worked perfectly: http://blog.airness.de/2008/11/12/installing-phpunit-in-xampp/. If you receive an error saying your PEAR installer is out of date, enter 'pear upgrade --force PEAR' in your console, then proceed through the installation. 
+
+You can also find more information on installing PHPUnit at http://www.phpunit.de/manual/. 
+	
+- Installing Test Package
+
 1. Download the test package by going to http://project.geeklog.net/cgi-bin/hgwebdir.cgi/gsoc-2009-sclark/, and click the 'gz' link.
 
 2. Unzip the files.
@@ -45,16 +53,8 @@ III. USE
 the command line. 
     Note: You will need to have javascript enabled to use the GUI.
 
-    To use the GUI, navigate with your browser to the tests folder in your Geeklog site (i.e: http://localhost/public_html/tests). On 
-the left of the page is a folder tree displaying the test directories. Notice that the directory is a copy of the Geeklog file structure, 
-except with test classes rather than the original file. Click on a directory to open it, click it again to close it. Click the checkbox 
-next to a file to have it included in your round of tests. Clicking a folder will automatically include all tests inside. 
-    Once you have chosen the tests to run, click 'Test Files'. A box saying 'Results' will appear on the right side of the screen, 
-showing the default PHPUnit console output. (ADD MORE INFORMATION ON WHERE TO FIND CONSOLE OUTPUT). Detailed results will also show up 
-underneath, showing each test run, the result (pass or fail), the time taken to run, the line of the test class the test appears on, the 
-assertions made by each test, and the error message (if any). 
+    To use the GUI, navigate with your browser to the tests folder in your Geeklog site (i.e: http://localhost/public_html/tests). If you have javascript enabled, you should see the Geeklog PHPUnit GUI. 
 
-(ADD INFORMATION ABOUT LIMITATIONS AND BUGS).
 
     To your tests using your console, open the console and navigate to the public_html/tests folder. From here, you can type 'phpunit 
 (path/to/testclass/testname)', and the test you specify will be run, with the results displayed in the console. If you specify a folder, 

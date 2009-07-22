@@ -3,7 +3,8 @@ body, html {
 	margin: 0;
 	padding: 0;
 }
-#browse {
+#clear {
+	clear:both;
 }
 #head {
 	background: url(images/header-bg.png) repeat-x;
@@ -21,45 +22,26 @@ body, html {
 	position:relative;
 	width:960px;
 }
-#resultswrapper {
+#browse {
+	float:left;
+	width:450px;
 	overflow:visible;
-	width:480px;
 }
-#simpleresults {
-}
-#advresults {
-	margin-top:50px;
-}
-#logslist {
-	position:absolute;
-	top:60px;
-	right:60px;
+#viewLogs {
+	float:right;
+	width:450px;
+	overflow:visible;
 }
 .right {
 	float:right;
 	height:85px;
 }
+fieldset {
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background-color:#F8F8FD;
+}
 /* Styles */
-
-h1 {
-	color:#fff;
-	font:28px/60px Arial, Helvetica, sans-serif;
-}
-h2 {
-	color: #333;
-	font:20px/23px Arial, Helvetica, sans-serif;
-}
-h3 {
-	color:#333;
-	font:15px/18px Arial, Helvetica, sans-serif;
-}
-.output {
-	border-bottom:1px solid #CCC;
-	border-right:1px solid #EEE;
-	border-left:1px solid #EEE;
-	border-top:1px solid #B6B6B6;
-	padding:10px;
-}
 a:link {
 	color: #333;
 	text-decoration:none;
@@ -75,6 +57,32 @@ a:active {
 a:hover {
 	color:#fff;
 	text-decoration:underline;
+}
+h1 {
+	color:#fff;
+	font:28px/60px Arial, Helvetica, sans-serif;
+}
+h2 {
+	color: #333;
+	font:20px/23px Arial, Helvetica, sans-serif;
+}
+.h2 {
+	color: #333;
+	font:20px/23px Arial, Helvetica, sans-serif;
+}
+h3 {
+	color:#333;
+	font:15px/18px Arial, Helvetica, sans-serif;
+}
+ul {
+	list-style:none;
+}
+.output {
+	border-bottom:1px solid #CCC;
+	border-right:1px solid #EEE;
+	border-left:1px solid #EEE;
+	border-top:1px solid #B6B6B6;
+	padding:10px;
 }
 /* Specific Table */
 .test_results {
@@ -114,7 +122,6 @@ td {
 /* Specific FileTree */
 .php-file-tree {
 	font-family: Verdana, Helvetica, Arial;
-	font-size: 14px;
 	line-height: 20px;
 }
 .php-file-tree A {
