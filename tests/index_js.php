@@ -100,13 +100,14 @@ $("input#logs_submit").click(function() {
 
 // Deletes logs from history 
 $("input#logs_delete").click(function() {
-    $("span#logs_button").hide();
     $("span#logs_loader").show();
     $.post("deleteLogs.php", $("#logs").serialize(), function(json){
-        var success = 1;    
+															  alert(json);
     });
+	
     $.post("showLogList.php", $("#howMany").serialize(), function(logsList){    
-        $("span#logs_loader").hide();            
+        $("span#logs_loader").hide();  
+		$("span#logs_button").show();
         $("#logslist").html(logsList);
     });
 });
@@ -124,13 +125,23 @@ $("input#howMany").keyup(function() {
 $("input#runTests_submit").click(function() {
     $("span#runTests_button").hide();
     $("span#runTests_loader").show();
-    $.post("runTests.php", $("#runTests").serialize(), function(data){    
+    $.post("runTests.php", $("#runTests").serialize(), function(data){
         $("span#runTests_loader").hide();    
         $("span#runTests_button").show();
         var results = eval("(" + data + ")");
+		$("div#tabs-2").html();
         $("div#tabs-2").html(results.simple);
+		$("div#tabs-3").html();
         $("div#tabs-3").html(results.advanced);
-        $tabs.tabs('select', 1);
+		if($("input#consoleOutput").serialize() == 'consoleOutput=1') {
+        	$tabs.tabs('select', 1);
+		} else if($("input#logResults").serialize() == 'logResults=1') {
+        	$tabs.tabs('select', 2);
+		}  
+			$.post("showLogList.php", $("#howMany").serialize(), function(logsList){    
+				$("span#logs_loader").hide();            
+				$("#logslist").html(logsList);
+			});
         });
 });
 </script>
