@@ -105,7 +105,7 @@ class Tests
     
      /*
     * Parses JSON logs to PHP array
-    * @param    string    $test       Test position in log to load (i.e: 1 is last test run),                                                     *    *                             	  defaults to 1
+    * @param    string    $test       Test position in log to load (i.e: 1 is last test run),                                                     *    *                                   defaults to 1
     * @param    string    $howMany     How many tests to get results for, defaults to 1
     * @param    string    $testid     (Optional) specific test id to load file for
     * @return   array     $parsedXML  Parsed data from JSON file
@@ -165,8 +165,8 @@ class Tests
     * @return   string  $retval    HTML table showing results
     *
     */
-	/*
-	* Structured like:
+    /*
+    * Structured like:
     * $suites => array('calendarClass' => array(23, array(7)( 'event' => 'test',
     *                                                         'suite => 'calendarClass',
     *                                                         'test' => 'test_isRollingModeIsFalse(calendarClass)',
@@ -174,7 +174,7 @@ class Tests
     *                                                         'time' => 0.00179195404053,
     *                                                         'trace' => array(),
     *                                                         'message' => 'Some message')));
-	*/
+    */
     public function createTable($suites) {        
         $retval = '';
         // Create tables
@@ -232,8 +232,8 @@ class Tests
                         if(!empty($prefix) && substr_count($file, $prefix) != 0) {
                             $ret[] = $file;
                         } elseif (empty($prefix)) { // Return all files
-							$ret[] = $file;
-						}
+                            $ret[] = $file;
+                        }
                     }
                 }            
                 closedir($handle);
@@ -249,19 +249,19 @@ class Tests
     /*
     * Checks if directory exists if no directory creates it, 
     * if no file, returns false
-    * @param    string    $search	Directory or file to look for
-    * @param    string    $type		Type (file or dir) from /testpackage
-    * @return   bool      $ret		If directory or file exists or creation was successful
+    * @param    string    $search    Directory or file to look for
+    * @param    string    $type        Type (file or dir) from /testpackage
+    * @return   bool      $ret        If directory or file exists or creation was successful
     *
     */
     public function getFileDir($search, $type) {
         $path = getPath('tests').$search;
         if($type == 'dir') {            
             if(is_dir($path)) {
-				$ret = true;
+                $ret = true;
             } else {
                 $ret = mkdir($path, 0700);
-	
+    
             }                    
         } elseif($type == 'file') {
             $ret = file_exists($path);
@@ -306,51 +306,47 @@ class Tests
         $entry = "$testid - $today\n";
         $ret = fwrite($handle, $entry);
         fclose($handle);
-		$var = $this->readMasterLog();
-		if($var[0] == ' - ') {
-			exit('There was an error writing to the master log.');
-		}
-		
+        $var = $this->readMasterLog();
+        if($var[0] == ' - ') {
+            exit('There was an error writing to the master log.');
+        }
+        
         return $ret;
     }
     
     /*
     * Deletes test logs from masterlog and folder
-    * @param	string	$path		Path to masterlog.txt
-    * @param    array   $tests		Test ID to add to log
-    * @return   bool    $ret		If write was successful
+    * @param    array   $tests        Test ID to add to log
+    * @return   bool    $ret        If write was successful
     */
     public function deleteLogs($tests) {
         $file = "masterlog.txt";
-		$path = getPath('tests').'logs/';
-		// Read log into array and remove entries selected       
+        $path = getPath('tests').'logs/';
+        // Read log into array and remove entries selected       
         $entries = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
-		var_dump($entries);
-		
-		foreach($tests as $testid) {
-			$key = array_search($testid.' - '.date("F j, Y, g:i a", $testid), $entries);
-			unset($entries[$key]);
-		}
-		
-		// Write edited array back into log
-		$handle = fopen($path.$file, 'w') or die("There was a problem opening masterlog.txt."); 
-		foreach($entries as $entry) {
-       		$string .= $entry."\n";
-		}
-		$ret = fwrite($handle, $string);
+        
+        foreach($tests as $testid) {
+            $key = array_search($testid.' - '.date("F j, Y, g:i a", $testid), $entries);
+            unset($entries[$key]);
+        }
+        
+        // Write edited array back into log
+        $handle = fopen($path.$file, 'w') or die("There was a problem opening masterlog.txt."); 
+        foreach($entries as $entry) {
+               $string .= $entry."\n";
+        }
+        $ret = fwrite($handle, $string);
         fclose($handle);
-		
-		// Remove logs from logs folder
-		$logFiles = $this->getFiles();
-		
-		foreach($logFiles as $logFile) {
-			foreach($tests as $testid) {
-				if(substr_count($logFile, $testid) != 0) {
-					unlink($path.$logFile);
-				}
-			}
-		}
-		
+        
+        // Remove logs from logs folder
+        $logFiles = $this->getFiles();        
+        foreach($logFiles as $logFile) {
+            foreach($tests as $testid) {
+                if(substr_count($logFile, $testid) != 0) {
+                    unlink($path.$logFile);
+                }
+            }
+        }        
         return $ret;
     }
     
@@ -366,27 +362,27 @@ class Tests
         $ret = array();
         $logs = array();
         $offset = '-'.$offset;
-		if($this->getFileDir('logs', 'dir')) {
-			// Creates masterlog.txt if not exist
-			if($this->getFileDir('logs/masterlog.txt', 'file') == false) {
-				fclose(fopen(getPath('tests').'logs/masterlog.txt',"x"));
-			}
-			
-			$logs = $this->readMasterLog($offset, $howMany);
-				
-			foreach($logs as $test) {
-				if($test['testid']) {
-					$ret[] = '<li><input id=\'logs\' type=\'checkbox\' name=\'logs[]\' 
-					value=\''.$test['testid'].'\'>'.$test['testtime'].'</li>';
-				}            
-			}
-			
-			if(empty($ret)) {
-				$ret[] = '<i>There are no logs to display.</i>';
-			}
-		} else {
-			$ret[] = '<i>There was a problem creating directory or masterlog.txt.</i>';
-		}
+        if($this->getFileDir('logs', 'dir')) {
+            // Creates masterlog.txt if not exist
+            if($this->getFileDir('logs/masterlog.txt', 'file') == false) {
+                fclose(fopen(getPath('tests').'logs/masterlog.txt',"x"));
+            }
+            
+            $logs = $this->readMasterLog($offset, $howMany);
+                
+            foreach($logs as $test) {
+                if($test['testid']) {
+                    $ret[] = '<li><input id=\'logs\' type=\'checkbox\' name=\'logs[]\' 
+                    value=\''.$test['testid'].'\'>'.$test['testtime'].'</li>';
+                }            
+            }
+            
+            if(empty($ret)) {
+                $ret[] = '<i>There are no logs to display.</i>';
+            }
+        } else {
+            $ret[] = '<i>There was a problem creating directory or masterlog.txt.</i>';
+        }
         return $ret;
     }
     
