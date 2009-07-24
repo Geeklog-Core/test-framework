@@ -43,9 +43,9 @@ class Tests
     /*
     * Runs tests, returns console output. Log name is Unix time at time run.
     * @param    array   $data            Test files to run, defaults to $POST
-    * @param    int     $JSONresults    Flag if XML results should be collected and displayed,                                                     default on
-    * @param    int     $consoleOutput  Flag if console output should be collected and displayed,                                        default on
-    * @return   array   $retval            Formatted PHPUnit console output and JSON results (if                                        requested)
+    * @param    int     $JSONresults    Flag if XML results should be collected and displayed, default on
+    * @param    int     $consoleOutput  Flag if console output should be collected and displayed, default on
+    * @return   array   $retval            Formatted PHPUnit console output and JSON results (if requested)
     *
     */
     public function runTests($data = '', $JSONresults = 1, $consoleOutput = 1) {   
@@ -151,11 +151,12 @@ class Tests
                 && substr_count($test_results['suite'], 'suite') == 0) {
                 $suites[$test_results['suite']];                    
             } elseif($test_results['event'] == 'test') {
-                // If array is test, put under corresponding suite (i.e:                                 $suites['calendarclass'][1] = array(test info))
+                // If array is test, put under corresponding suite 
+				// (i.e: $suites['calendarclass'][1] = array(test info))
                 $suites[$test_results['suite']][] = $test_results;
             }
         }
-        
+		
         return $suites;
     }
 
@@ -177,41 +178,81 @@ class Tests
     */
     public function createTable($suites) {        
         $retval = '';
+		$info = '';
+		$allAnchors = '';
+		$allTests = 0;
+		$allTime = 0;
+		$allFail = 0;
+		$allError = 0;
+		$allPass = 0;
         // Create tables
         $i=0;
         foreach($suites as $name => $suite) {
-            $i++;
-            $retval .= '<table cellspacing="0" class="test_results">
-                            <thead>
-                            <tr><th>'.$name.'</th></tr>                         
-                                    <th>Test Name</th>
-                                    <th>Status</th>
-                                    <th>Time</th>
-                                    <th>Message</th>
-                                </tr>
-                            </thead>
-                            <tbody>';
-                        
-            foreach($suite as $test) {
-                static $n = 0;
-                $n++;
-                    $retval .= '<tr>
-                    <td><div class="width"><strong>'.$n.'</strong> '.wordwrap($test['test'], 47, "<br />\n", true).'</div></td>';
-                    if($test['status'] == 'fail') {
-                        $retval .= '<td class="test_fail"/>';
-                    } elseif($test['status'] == 'error') {
-                        $retval .= '<td class="test_error"/>';
-                    } else {
-                        $retval .= '<td class="test_pass"/>';
-                    }
-                    $retval .= '
-                    <td>'.$test['time'].'</td>
-                    <td>'.wordwrap($test['message'], 47, "<br />\n", true).'</td>
-                    </tr>';
-            }
+			$i++;
+			$allAnchors .= '<li><a class="anchor" href="#'.$name.'">'.$name.'</a></li>';
+			$retval .= '<table cellspacing="0" class="test_results">
+							  <thead>
+								<tr>
+							  		<th><a name="'.$name.'">'.$name.'</a></th>
+								</tr>
+								<tr>
+									<th>Test Name</th>
+									<th>Status</th>
+									<th>Time</th>
+									<th>Message</th>
+								</tr>
+							  </thead>
+							  <tbody>';
+						  
+			foreach($suite as $test) {
+				$allTests = $allTests + 1;
+				$allTime = $allTime + $test['time'];
+				  static $n = 0;
+				  $n++;
+					  $retval .= '<tr>
+					  <td><div class="width"><strong>'.$n.'</strong> '.wordwrap($test['test'], 47, "<br />\n", true).'</div></td>';
+					  if($test['status'] == 'fail') {
+						  $allFail = $allFail + 1;
+						  $retval .= '<td class="test_fail"/>';
+					  } elseif($test['status'] == 'error') {
+						  $allError = $allError + 1;
+						  $retval .= '<td class="test_error"/>';
+					  } else {
+						  $allPass = $allPass + 1;
+						  $retval .= '<td class="test_pass"/>';
+					  }
+					  $retval .= '
+					  <td>'.$test['time'].'</td>
+					  <td>'.wordwrap($test['message'], 47, "<br />\n", true).'</td>
+					  </tr>';
+			  }
             $retval .= '</tbody></table>';
         }
-        
+        $info .= '<div id="about" class="output">
+					<table>
+						<thead>Test information</thead>
+						<tbody>
+							<tr><td class="def">Tests run</td><td>'.$suite['testCount'].'</td></tr>
+							<tr><td class="def">Time</td><td>'.$allTime.'</td></tr>
+							<tr><td class="def">Pass</td><td>'.$allPass.'</td></tr>
+							<tr><td class="def">Failures</td><td>'.$allFail.'</td></tr>
+							<tr><td class="def">Errors</td><td>'.$allError.'</td></tr>
+					</table>
+				</div>
+				<div id="anchors" class="output">
+					<table>
+						<thead>Test classes</thead>
+						<tbody>
+							<ol> 
+								'.$allAnchors.'
+							</ol>
+						</tbody>
+					</table>
+				</div>
+				<div id="clear"></div>';
+					
+		$retval = $info.$retval;
+		
         return $retval;
     }
     
