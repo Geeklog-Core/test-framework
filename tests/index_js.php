@@ -81,13 +81,13 @@ var $tabs = $('#tabs').tabs();
 
 $(document).ready(function(){ 
     $("span#runTests_loader").hide();
-	$("span#logs_button").hide();
-	$("span#logs_loader").show();
-	$.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
+    $("span#logs_button").hide();
+    $("span#logs_loader").show();
+    $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
         $("span#logs_loader").hide();  
         $("span#logs_button").show();
         $("#logslist").html(logsList);
-		
+        
     });
 });
 
@@ -96,6 +96,7 @@ $("input#logs_submit").click(function() {
     $("span#logs_button").hide();
     $("span#logs_loader").show();
     $.post("gui/jobs/viewLogs.php", $("#logs").serialize(), function(json){
+																	 alert(json);
         $("span#logs_loader").hide();    
         $("span#logs_button").show();
         var table = eval("(" + json + ")");    
@@ -108,23 +109,23 @@ $("input#logs_submit").click(function() {
 $("input#logs_delete").click(function() {
     $("span#logs_loader").show();
     $.post("gui/jobs/deleteLogs.php", $("#logs").serialize(), function(json){
-		$.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){ 
-			$("span#logs_loader").hide();  
-			$("span#logs_button").show();
-			$("#logslist").html(logsList);
-			
-    	});
+        $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){ 
+            $("span#logs_loader").hide();  
+            $("span#logs_button").show();
+            $("#logslist").html(logsList);
+            
+        });
     });    
 });
 
 // Choose how many existing logs to list
 $("input#howMany").keyup(function() {
-	$("span#logs_loader").show();
-   	$.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){															   
+    $("span#logs_loader").show();
+       $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){                                                               
         $("span#logs_loader").hide();  
         $("span#logs_button").show();
         $("#logslist").html(logsList);
-		
+        
     });
 });
 
@@ -145,12 +146,12 @@ $("input#runTests_submit").click(function() {
         } else if($("input#logResults").serialize() == 'logResults=1') {
             $tabs.tabs('select', 2);
         }  
-		$("span#logs_loader").show();
+        $("span#logs_loader").show();
         $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){
-			$("span#logs_loader").hide(); 
-			$("span#logs_button").show();
-			$("#logslist").html(logsList);			
-		});
+            $("span#logs_loader").hide(); 
+            $("span#logs_button").show();
+            $("#logslist").html(logsList);            
+        });
     });
 });
 </script>

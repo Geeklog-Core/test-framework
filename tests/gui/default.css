@@ -47,15 +47,15 @@ body, html {
 	text-decoration:none;
 }
 #browse a:visited {
-	color: #fff;
+	color: #333;
 	text-decoration:none;
 }
 #browse a:active {
-	color: #fff;
+	color: #999;
 	text-decoration:none;
 }
 #browse a:hover {
-	color:#fff;
+	color:#666;
 	text-decoration:underline;
 }
 h1 {
@@ -83,6 +83,7 @@ ul {
 	border-left:1px solid #B6B6B6;
 	border-top:1px solid #B6B6B6;
 	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	padding:10px;
 }
@@ -96,6 +97,7 @@ ul {
 }
 fieldset {
 	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	background-color:#F8F8FD;
 }
