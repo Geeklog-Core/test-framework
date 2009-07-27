@@ -25,11 +25,11 @@ $_CONF['site_enabled'] = true;
 // $_CONF['rootdebug'] = true;
 
 // If you want to enable the PHPUnit test package, comment out this line...
-//$_CONF['path'] = 'c:/xampplite/htdocs/geeklog/';
+$_CONF['path'] = '/path/to/Geeklog/';
 
-// ... and uncomment this line, replacing path/to/package with the path to
+// ... and uncomment this line, replacing path/to/package with the absolute path to
 // your PHPUnit testpackage root (path/to/testpackage/files/dummy/).
-$_CONF['path'] = 'c:/xampplite/htdocs/geeklog/public_html/tests/testpackage/files/dummy/';
+//$_CONF['path'] = 'path/to/testpackage/files/dummy/';
 
 $_CONF['path_system'] = $_CONF['path'] . 'system/';
 

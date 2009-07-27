@@ -73,7 +73,6 @@ require_once getPath('tests').'files/classes/tests.class.php';
   </div>
 </div>
 <script type="text/javascript"> 
-
 $(function() {
     $("#tabs").tabs();
 });
@@ -81,8 +80,15 @@ $(function() {
 var $tabs = $('#tabs').tabs();
 
 $(document).ready(function(){ 
-    $("span#logs_loader").hide();
     $("span#runTests_loader").hide();
+	$("span#logs_button").hide();
+	$("span#logs_loader").show();
+	$.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
+        $("span#logs_loader").hide();  
+        $("span#logs_button").show();
+        $("#logslist").html(logsList);
+		
+    });
 });
 
 // Renders logs from history 
@@ -102,22 +108,24 @@ $("input#logs_submit").click(function() {
 $("input#logs_delete").click(function() {
     $("span#logs_loader").show();
     $.post("gui/jobs/deleteLogs.php", $("#logs").serialize(), function(json){
-    });
-    
-    $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
+		$.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){ 
+			$("span#logs_loader").hide();  
+			$("span#logs_button").show();
+			$("#logslist").html(logsList);
+			
+    	});
+    });    
+});
+
+// Choose how many existing logs to list
+$("input#howMany").keyup(function() {
+	$("span#logs_loader").show();
+   	$.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){															   
         $("span#logs_loader").hide();  
         $("span#logs_button").show();
         $("#logslist").html(logsList);
+		
     });
-});
-
-// Choose many existing logs to list
-$("input#howMany").keyup(function() {
-    $("span#logs_loader").show();
-    $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
-        $("span#logs_loader").hide();            
-        $("#logslist").html(logsList);
-        });
 });
 
 // Run selected tests and return results
@@ -137,11 +145,13 @@ $("input#runTests_submit").click(function() {
         } else if($("input#logResults").serialize() == 'logResults=1') {
             $tabs.tabs('select', 2);
         }  
-            $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
-                $("span#logs_loader").hide();            
-                $("#logslist").html(logsList);
-            });
-        });
+		$("span#logs_loader").show();
+        $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){
+			$("span#logs_loader").hide(); 
+			$("span#logs_button").show();
+			$("#logslist").html(logsList);			
+		});
+    });
 });
 </script>
 </body>

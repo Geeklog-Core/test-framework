@@ -387,7 +387,8 @@ class Tests
                     unlink($path.$logFile);
                 }
             }
-        }        
+        }    
+		var_dump($ret);
         return $ret;
     }
     

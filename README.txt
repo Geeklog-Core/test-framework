@@ -28,9 +28,9 @@ You can find more information on installing PHPUnit at http://www.phpunit.de/man
 Note: the testpackage folder can go anywhere, but it is not reccomended to have it in an web-accessible directory for security.
 
 4. Open testpackage/config.php. Here are the three paths you need to configure. 
-    A. Under case 'public', enter the path to Geeklog's public_html folder, i.e: 'c:/xampplite/htdocs/public_html/'.
-    B. Under case 'root', enter the path to Geeklog's root folder, where the main Geeklog files reside, i.e: 'c:/xampplite/geeklog/'.
-    C. Under case 'tests', enter the path to the testpackage folder you just placed,     i.e: 'c:/xampplite/geeklog/testpackage/'.
+    A. Under case 'public', enter the path to Geeklog's public_html folder, e.g: 'c:/xampplite/htdocs/public_html/'.
+    B. Under case 'root', enter the path to Geeklog's root folder, where the main Geeklog files reside, e.g: 'c:/xampplite/geeklog/'.
+    C. Under case 'tests', enter the path to the testpackage folder you just placed, e.g: 'c:/xampplite/geeklog/testpackage/'.
     Note: Use absolute paths!
 
 5. Open public_html/tests/config.php. Change the require_once path to /path/to/testpackage/config.php.
@@ -43,7 +43,7 @@ III. USE
     1. Running tests
     You have two ways you can run your tests. One is by using a simple GUI included with the test package, and the second is by using the command line. 
     Note: The GUI only fully supports Firefox >3 with javascript enabled. The barest of functionality is offered without javascript enabled in tests/gui/index.php, but it is ugly. Be warned!
-    To use the GUI, navigate with your browser to the tests folder in your Geeklog site (i.e: http://localhost/public_html/tests). You should be at a page called index_js.php (if you have javascript turned off, index.php). Under the left panel titled 'Run Tests' is a tree structure of all available tests for the Geeklog test framework. Select any number of tests you like (if you choose a folder, all the tests inside will be included), choose to have the console output returned and logs created (reccomended), and click 'Run Tests'. It may take a few minutes, so be patient.
+    To use the GUI, navigate with your browser to the tests folder in your Geeklog site (e.g: http://localhost/public_html/tests). You should be at a page called index_js.php (if you have javascript turned off, index.php). Under the left panel titled 'Run Tests' is a tree structure of all available tests for the Geeklog test framework. Select any number of tests you like (if you choose a folder, all the tests inside will be included), choose to have the console output returned and logs created (reccomended), and click 'Run Tests'. It may take a few minutes, so be patient.
     To your tests using your console, open the console and navigate to the public_html/tests folder. From here, you can type 'phpunit (path/to/testclass/testname)', and the test you specify will be run, with the results displayed in the console. If you specify a folder, all tests inside will be run. 
 Note: this will only work if you are in the tests root folder (with config.php). This is because of the path structure.
 You can find more information in the PHPUnit manual, at http://www.phpunit.de/manual/3.3/en/textui.html.
@@ -57,7 +57,7 @@ IV. DETAILS
         -files
             -classes (Geeklog test framework classes)
             -databases (XML 'dummy' databases for testing use)
-            -dummy (Dummy file structure, this makes the test framework run on Geeklog files             without Geeklog needing to be installed)
+            -dummy (Dummy file structure, this makes the test framework run on Geeklog files without Geeklog needing to be installed)
         -logs (Logs of tests run)
         -suite (This is where all the test classes are actually stored)
             -geeklog
@@ -76,10 +76,10 @@ IV. DETAILS
     This test package is designed to work with or without a Geeklog install. It does this by using the configuration paths you specified in the installation, and by using a XML version of Geeklog's SQL database. To write tests for a file requiring database calls, first ensure that default.xml exists (in testpackage/files/databases). This is the XML version of Geeklog's database, as appears after a fresh install. The class that handles the operations (done with simpleXML and xPath) on the database is xmldb.class.php, under testpackage/files/databases. 
     
     You can use xmldb.class.php in three steps.
-    1. Require config.php, i.e: require_once 'config.php'. You should be doing this anyway.
-    2. Require the file, i.e: require_once getPath('tests').'/files/databases/xmldb.class.php'. 
-    3. Create an object, i.e: $this->xml = new Xmldb;
-    4. Call the function you want, providing the database you want to load as the parameter, i.e: $_CONF = $this->xml->get_CONF('database'). If you don't specify a database, it will load default.xml.
+    1. Require config.php, e.g: require_once 'config.php'. You should be doing this anyway.
+    2. Require the file, e.g: require_once getPath('tests').'/files/databases/xmldb.class.php'. 
+    3. Create an object, e.g: $this->xml = new Xmldb;
+    4. Call the function you want, providing the database you want to load as the parameter, e.g: $_CONF = $this->xml->get_CONF('database'). If you don't specify a database, it will load default.xml.
     
     3. Adding tests
     This will integrate new PHPUnit tests with the Geeklog test framework, (for example, if you wanted to write your own tests for Geeklog files and add them to the suite).
@@ -91,7 +91,7 @@ IV. DETAILS
         
     These will implement the PHPUnit framework and Geeklog's framework config file.
 
-3) Now, require the class you are writing a test for, i.e:
+3) Now, require the class you are writing a test for, e.g:
     require_once getPath('root').'system/lib-mbyte.php';
         
     If you are using the XML database, add this line:
