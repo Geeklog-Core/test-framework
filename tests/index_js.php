@@ -23,15 +23,22 @@ require_once TestConfig::$tests.'files/classes/tests.class.php';
 <div id="wrapper">
   <div id="tabs">
     <ul id="tablinks">
+    <?php if(TestConfig::$access == 1 || TestConfig::$access == 2) : ?>
       <li><a href="#tabs-1">Choose Files</a></li>
-      <li><a href="#tabs-2">Console Output</a></li>
-      <li><a href="#tabs-3">Log Output</a></li>
+    <?php endif; ?>
+    <?php if(TestConfig::$access == 1 || TestConfig::$access == 2) : ?>
+      <li><a href="#tabs-2">Log Output</a></li>
+    <?php endif; ?>
+    <?php if(TestConfig::$access == 1) : ?>
+      <li><a href="#tabs-3">Console Output</a></li>
+    <?php endif; ?>
     </ul>
     <div id="tabs-1">
       <div id="browse">
         <form id="runTests" name="runTests" id="runTests">
             <fieldset>
               <legend class="h2">Run Tests</legend>
+              <?php if(TestConfig::$access == 1 || TestConfig::$access == 3) : ?>
               <span id="runTests_button">
               <input type="button" value="Test Files" id="runTests_submit"/>
               </span> 
@@ -42,6 +49,7 @@ require_once TestConfig::$tests.'files/classes/tests.class.php';
               Console output
               <h3>Selecting a folder will include all tests inside</h3>
               <?php echo php_file_tree(TestConfig::$tests.'suite/', "[link]"); ?>
+              <? else: echo '<span class="disabled">This feature has been disabled.</span>'; endif;?>
             </fieldset>
           </form>
       </div>
@@ -49,6 +57,7 @@ require_once TestConfig::$tests.'files/classes/tests.class.php';
         <form id="logs" name="logs">
           <fieldset>
           <legend class="h2">Logs</legend>
+          <?php if(TestConfig::$access == 1 || TestConfig::$access == 2) : ?>
           <label for"howMany">Show:</label>
           <input id="howMany" type="text" name="howMany" value="5" size="2" />
           <span id="logs_button">
@@ -57,12 +66,18 @@ require_once TestConfig::$tests.'files/classes/tests.class.php';
           </span> <span id="logs_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Logs are loading...'></span>
           <ul id="logslist">
           </ul>
+          <? else: echo '<span class="disabled">This feature has been disabled.</span>'; endif;?>
+          </fieldset>
         </form>
       </div>
       <div id="clear"></div>
     </div>
+    <?php if(TestConfig::$access == 1) : ?>
     <div id="tabs-2"></div>
+    <? endif;?>
+    <?php if(TestConfig::$access == 1 || TestConfig::$access == 2) : ?>
     <div id="tabs-3"></div>
+    <?  endif;?>
   </div>
 </div>
 <script type="text/javascript"> 
@@ -76,14 +91,17 @@ $(document).ready(function(){
     $("span#runTests_loader").hide();
     $("span#logs_button").hide();
     $("span#logs_loader").show();
-    $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
-        $("span#logs_loader").hide();  
-        $("span#logs_button").show();
-        $("#logslist").html(logsList);
-        
-    });
 });
+</script>
+<?php if(TestConfig::$access == 1 || TestConfig::$access == 2) : ?>
+<script type="text/javascript"> 
+// Read features
 
+$.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){    
+    $("span#logs_loader").hide();  
+    $("span#logs_button").show();
+    $("#logslist").html(logsList);        
+});
 // Renders logs from history 
 $("input#logs_submit").click(function() {
     $("span#logs_button").hide();
@@ -92,11 +110,25 @@ $("input#logs_submit").click(function() {
         $("span#logs_loader").hide();    
         $("span#logs_button").show();
         var table = eval("(" + json + ")");    
-        $("div#tabs-3").html(table);
-        $tabs.tabs('select', 2);
+        $("div#tabs-2").html(table);
+        $tabs.tabs('select', 1);
         });
 });
 
+// Choose how many existing logs to list
+$("input#howMany").keyup(function() {
+    $("span#logs_loader").show();
+    $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){        
+        $("span#logs_loader").hide();  
+          $("span#logs_button").show();
+          $("#logslist").html(logsList);        
+    });
+});
+</script>
+<? endif;?>
+<?php if(TestConfig::$access == 1 || TestConfig::$access == 3) : ?>
+<script type="text/javascript"> 
+// Write features
 // Deletes logs from history 
 $("input#logs_delete").click(function() {
     $("span#logs_loader").show();
@@ -109,15 +141,6 @@ $("input#logs_delete").click(function() {
     });    
 });
 
-// Choose how many existing logs to list
-$("input#howMany").keyup(function() {
-    $("span#logs_loader").show();
-    $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){        
-        $("span#logs_loader").hide();  
-          $("span#logs_button").show();
-          $("#logslist").html(logsList);        
-    });
-});
 
 // Run selected tests and return results
 $("input#runTests_submit").click(function() {
@@ -128,13 +151,13 @@ $("input#runTests_submit").click(function() {
         $("span#runTests_button").show();
         var results = eval("(" + data + ")");
         $("div#tabs-2").html();
-        $("div#tabs-2").html(results.simple);
+        $("div#tabs-2").html(results.advanced);
         $("div#tabs-3").html();
-        $("div#tabs-3").html(results.advanced);
+        $("div#tabs-3").html(results.simple);
         if($("input#consoleOutput").serialize() == 'consoleOutput=1') {
-            $tabs.tabs('select', 1);
-        } else if($("input#logResults").serialize() == 'logResults=1') {
             $tabs.tabs('select', 2);
+        } else if($("input#logResults").serialize() == 'logResults=1') {
+            $tabs.tabs('select', 1);
         }  
         $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){                
             $("#logslist").html(logsList);
@@ -142,5 +165,6 @@ $("input#runTests_submit").click(function() {
     });
 });
 </script>
+<? endif;?>
 </body>
 </html>

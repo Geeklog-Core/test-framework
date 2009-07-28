@@ -38,6 +38,9 @@ class Tests
     public $data;
     
     public function tests() {
+		if(TestConfig::$access == 5) {
+			exit('No operations are authorized');	
+		}	
     }    
         
     /*
