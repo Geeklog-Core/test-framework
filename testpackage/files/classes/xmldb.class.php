@@ -60,31 +60,31 @@ class Xmldb {
             // Meanwhile, use switch statements to overwrite necessary config values now.
             switch((string) $value->name) {
                 case 'rdf_file':
-                    $_CONF[(string) $value->name] = getPath('public').'backend/geeklog.rss';
+                    $_CONF[(string) $value->name] = TestConfig::$public.'backend/geeklog.rss';
                     break;
                 case 'path_html':
-                    $_CONF[(string) $value->name] = getPath('public').'';
+                    $_CONF[(string) $value->name] = TestConfig::$public.'';
                     break;
                 case 'path_log':
-                    $_CONF[(string) $value->name] = getPath('root').'logs/';
+                    $_CONF[(string) $value->name] = TestConfig::$root.'logs/';
                     break;
                 case 'path_language':
-                    $_CONF[(string) $value->name] = getPath('root').'language/';
+                    $_CONF[(string) $value->name] = TestConfig::$root.'language/';
                     break;
                 case 'backup_path':
-                    $_CONF[(string) $value->name] = getPath('root').'backups/';
+                    $_CONF[(string) $value->name] = TestConfig::$root.'backups/';
                     break;
                 case 'path_data':
-                    $_CONF[(string) $value->name] = getPath('root').'data/';
+                    $_CONF[(string) $value->name] = TestConfig::$root.'data/';
                     break;
                 case 'path_images':
-                    $_CONF[(string) $value->name] = getPath('public').'images/';
+                    $_CONF[(string) $value->name] = TestConfig::$public.'images/';
                     break;
                 case 'path_pear':
-                    $_CONF[(string) $value->name] = getPath('root').'system/pear/';
+                    $_CONF[(string) $value->name] = TestConfig::$root.'system/pear/';
                     break;
                 case 'path_themes':
-                    $_CONF[(string) $value->name] = getPath('public').'layout/';
+                    $_CONF[(string) $value->name] = TestConfig::$public.'layout/';
                     break;
                 default:                
                     $_CONF[(string) $value->name] = unserialize((string) $value->value);
@@ -123,7 +123,7 @@ class Xmldb {
     */
     function loadDb($db = 'default') {
         $db .= '.xml';
-        $xml = simplexml_load_file(getPath('tests').'files/databases/'.$db) or die ('Unable to load XML file '.$db);
+        $xml = simplexml_load_file(TestConfig::$tests.'files/databases/'.$db) or die ('Unable to load XML file '.$db);
         return $xml;
     }
 	

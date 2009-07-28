@@ -1,7 +1,7 @@
 <?php 
 require_once 'config.php';
 require_once 'gui/php_file_tree.php';
-require_once getPath('tests').'files/classes/tests.class.php';
+require_once TestConfig::$tests.'files/classes/tests.class.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -41,9 +41,9 @@ require_once getPath('tests').'files/classes/tests.class.php';
               <input type="checkbox" id="consoleOutput" name="consoleOutput" value="1" checked="checked"/>
               Console output
               <h3>Selecting a folder will include all tests inside</h3>
-              <?php echo php_file_tree(getPath('tests').'suite/', "[link]"); ?>
+              <?php echo php_file_tree(TestConfig::$tests.'suite/', "[link]"); ?>
             </fieldset>
-        </form>
+          </form>
       </div>
       <div id="viewLogs">
         <form id="logs" name="logs">
@@ -56,13 +56,6 @@ require_once getPath('tests').'files/classes/tests.class.php';
           <input type="button" value="Delete" id="logs_delete"/>
           </span> <span id="logs_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Logs are loading...'></span>
           <ul id="logslist">
-            <?php 
-                    $tests = new Tests;
-                    $loglist = $tests->displayLogList(1,5);
-                    foreach($loglist as $v) {
-                        echo $v;
-                    }
-                ?>
           </ul>
         </form>
       </div>
@@ -96,7 +89,6 @@ $("input#logs_submit").click(function() {
     $("span#logs_button").hide();
     $("span#logs_loader").show();
     $.post("gui/jobs/viewLogs.php", $("#logs").serialize(), function(json){
-																	 alert(json);
         $("span#logs_loader").hide();    
         $("span#logs_button").show();
         var table = eval("(" + json + ")");    
@@ -112,8 +104,7 @@ $("input#logs_delete").click(function() {
         $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){ 
             $("span#logs_loader").hide();  
             $("span#logs_button").show();
-            $("#logslist").html(logsList);
-            
+            $("#logslist").html(logsList);            
         });
     });    
 });
@@ -121,11 +112,10 @@ $("input#logs_delete").click(function() {
 // Choose how many existing logs to list
 $("input#howMany").keyup(function() {
     $("span#logs_loader").show();
-       $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){                                                               
+    $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){        
         $("span#logs_loader").hide();  
-        $("span#logs_button").show();
-        $("#logslist").html(logsList);
-        
+          $("span#logs_button").show();
+          $("#logslist").html(logsList);        
     });
 });
 
@@ -146,11 +136,8 @@ $("input#runTests_submit").click(function() {
         } else if($("input#logResults").serialize() == 'logResults=1') {
             $tabs.tabs('select', 2);
         }  
-        $("span#logs_loader").show();
-        $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){
-            $("span#logs_loader").hide(); 
-            $("span#logs_button").show();
-            $("#logslist").html(logsList);            
+        $.post("gui/jobs/showLogList.php", $("#howMany").serialize(), function(logsList){                
+            $("#logslist").html(logsList);
         });
     });
 });

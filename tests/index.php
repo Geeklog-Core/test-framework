@@ -1,7 +1,7 @@
 <?php 
 require_once 'config.php';
 require_once 'gui/php_file_tree.php';
-require_once getPath('tests').'files/classes/tests.class.php';
+require_once TestConfig::$tests.'files/classes/tests.class.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,7 +27,7 @@ window.location = "index_js.php"
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
         <h3>Selecting a folder will include all tests inside</h3>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST" name='testfiles'>
-            <?php echo php_file_tree(getPath('tests').'suite/', "[link]"); ?>
+            <?php echo php_file_tree(TestConfig::$tests.'suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST" name='logs'>
@@ -53,7 +53,7 @@ window.location = "index_js.php"
     } else { 
 
         require_once('config.php');
-        require_once getPath('tests').'files/classes/tests.class.php';
+        require_once TestConfig::$tests.'files/classes/tests.class.php';
 
         $tests = new Tests;
         // Outputs array with results
@@ -64,7 +64,7 @@ window.location = "index_js.php"
         <h2><strong>1.</strong> Choose files or folders to be tested</h2>
         <h3>Selecting a folder will include all tests inside</h3>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST">
-            <?php echo php_file_tree(getPath('tests').'suite/', "[link]"); ?>
+            <?php echo php_file_tree(TestConfig::$tests.'suite/', "[link]"); ?>
             <input type = "submit" name="testfiles" value="Test Files" />
         </form>
         <form action = "<?php echo $_SERVER['PHP_SELF']; ?>" method = "POST" name='logs'>

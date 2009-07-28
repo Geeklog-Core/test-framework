@@ -67,7 +67,7 @@ class Tests
                     $suffix = '_'.substr($file, strrpos($file, '/')+1);
                 }
 
-                $switch = '--log-json '.getPath('tests').'logs/'.$testid.$suffix.'.json ';
+                $switch = '--log-json '.TestConfig::$tests.'logs/'.$testid.$suffix.'.json ';
             }
 
             $output[] = shell_exec('phpunit '.$switch.$file);
@@ -126,7 +126,7 @@ class Tests
         $parsedJSON = array();
         // We can't use json_decode because of PHPUnit's JSON logging method
         foreach($logs as $log) {
-            $file = getPath('tests').'logs/'.$log;
+            $file = TestConfig::$tests.'logs/'.$log;
             $json = file_get_contents($file);
             $ret = true;
             while($ret) {
@@ -231,11 +231,11 @@ class Tests
                     <table>
                         <thead>Test information</thead>
                         <tbody>
-							<tr><td class="def">Time</td><td>'.$allTime.'</td></tr>
+                            <tr><td class="def">Time</td><td>'.$allTime.'</td></tr>
                             <tr><td class="def">Tests run</td><td>'.$allTests.'</td></tr>
-                            <tr><td class="def">Pass</td><td>'.$allPass.'</td></tr>
-                            <tr><td class="def">Failures</td><td>'.$allFail.'</td></tr>
-                            <tr><td class="def">Errors</td><td>'.$allError.'</td></tr>
+                            <tr><td class="test_pass">Pass</td><td>'.$allPass.'</td></tr>
+                            <tr><td class="test_fail">Failures</td><td>'.$allFail.'</td></tr>
+                            <tr><td class="test_error">Errors</td><td>'.$allError.'</td></tr>
                     </table>
                 </div>
                 <div id="anchors" class="output">
@@ -265,7 +265,7 @@ class Tests
 
         $ret = array();
         if($this->getFileDir('logs', 'dir')) {            
-            if($handle = opendir(getPath('tests').'logs')) {
+            if($handle = opendir(TestConfig::$tests.'logs')) {
                 // Loop over directory
                 while (false !== ($file = readdir($handle))) {
                     if(substr($file, 0, 1) != '.' && $file != 'masterlog.txt') { 
@@ -296,7 +296,7 @@ class Tests
     *
     */
     public function getFileDir($search, $type) {
-        $path = getPath('tests').$search;
+        $path = TestConfig::$tests.$search;
         if($type == 'dir') {            
             if(is_dir($path)) {
                 $ret = true;
@@ -318,7 +318,7 @@ class Tests
     *
     */
     public function updateMasterLog($testid = '', $today = '') {
-        $path = getPath('tests').'logs/';
+        $path = TestConfig::$tests.'logs/';
         if(is_dir($path)) {
             if(empty($testid)) {
                 $testid = time();
@@ -362,7 +362,7 @@ class Tests
     */
     public function deleteLogs($tests) {
         $file = "masterlog.txt";
-        $path = getPath('tests').'logs/';
+        $path = TestConfig::$tests.'logs/';
         // Read log into array and remove entries selected       
         $entries = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
         
@@ -407,7 +407,7 @@ class Tests
         if($this->getFileDir('logs', 'dir')) {
             // Creates masterlog.txt if not exist
             if($this->getFileDir('logs/masterlog.txt', 'file') == false) {
-                fclose(fopen(getPath('tests').'logs/masterlog.txt',"x"));
+                fclose(fopen(TestConfig::$tests.'logs/masterlog.txt',"x"));
             }
             
             $logs = $this->readMasterLog($offset, $howMany);
@@ -438,7 +438,7 @@ class Tests
     */
     public function readMasterLog($offset = 1, $howMany = 1) {
         $ret = array();
-        $path = getPath('tests').'logs/';        
+        $path = TestConfig::$tests.'logs/';        
         $arr = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
         $arrSize = count($arr);
         $i = 0;

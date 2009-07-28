@@ -3,31 +3,33 @@
 Configuration for PHPUnit tests
 */
 
-/**
-* Sets paths for PHPUnit, as tests need to be able to run without
-* an install, but local setups can differ.
-*
-* @param    string  $location   set root folder for public_html, 
-*                                main geeklog install, or admin
-* @return   string  $path       username or empty string
-*
-*/
+class TestConfig {
+	
+	/**
+	* Permissions for suite
+	* 1 - Everything is enabled
+	* 2 - GUI is read-only (logs can be loaded in GUI)
+	* 3 - GUI is write-only (tests can be run, but no results viewed)
+	* 4 - GUI is disabled
+	* 5 - Entire suite is disabled
+	*/
+	public static $access = 5;
+	
+	/**
+	* /path/to/public_html root
+	*/
+	public static $public = 'c:/xampplite/htdocs/geeklog/public_html/';
+	
+	/**
+	* path/to/geeklog/root
+	*/
+	public static $root = 'c:/xampplite/htdocs/geeklog/';
+	
+	/**
+	* path/to/testpackage
+	*/
+	public static $tests = 'c:/xampplite/htdocs/geeklog/public_html/tests/testpackage/';
 
-function getPath($location) {
-    switch($location) {
-        case 'public':
-            // Should be /path/to/public_html root
-            $path = 'c:/xampplite/htdocs/geeklog/public_html/';
-            return $path;
-        case 'root':
-            // Should be /path/to/geeklog/root. 
-            $path = 'c:/xampplite/htdocs/geeklog/';
-            return $path;
-        case 'tests':
-            //Should be path/to/testpackage (with children files, logs, and suite)
-            $path = 'c:/xampplite/htdocs/geeklog/public_html/tests/testpackage/';
-            return $path;
-    }
 }
 
 ?>

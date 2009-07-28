@@ -1,347 +1,356 @@
 /* Layout */
 body, html {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 #about {
-	float:left;
+    float:left;
 }
 #anchors {
-	float:left;
-	max-height:131px;
-	min-width:200px;
-	overflow:scroll;
+    float:left;
+    max-height:131px;
+    min-width:200px;
+    overflow:scroll;
 }
 #clear {
-	clear:both;
+    clear:both;
 }
 #head {
-	background: url(images/header-bg.png) repeat-x;
-	height:85px;
+    background: url(images/header-bg.png) repeat-x;
+    height:85px;
 }
 #headwrapper {
-	margin:0 auto;
-	position:relative;
-	width:960px;
+    margin:0 auto;
+    position:relative;
+    width:960px;
 }
 #wrapper {
-	color:#333;
-	font:13px/16px Verdana, Geneva, sans-serif;
-	margin:0 auto;
-	position:relative;
-	width:960px;
+    color:#333;
+    font:13px/16px Verdana, Geneva, sans-serif;
+    margin:0 auto;
+    position:relative;
+    width:960px;
 }
 #browse {
-	float:left;
-	width:450px;
-	overflow:visible;
+    float:left;
+    width:450px;
+    overflow:visible;
 }
 #viewLogs {
-	float:right;
-	width:450px;
-	overflow:visible;
+    float:right;
+    width:450px;
+    overflow:visible;
 }
 /* Styles */
 #browse a:link {
-	color: #333;
-	text-decoration:none;
+    color: #333;
+    text-decoration:none;
 }
 #browse a:visited {
-	color: #333;
-	text-decoration:none;
+    color: #333;
+    text-decoration:none;
 }
 #browse a:active {
-	color: #999;
-	text-decoration:none;
+    color: #999;
+    text-decoration:none;
 }
 #browse a:hover {
-	color:#666;
-	text-decoration:underline;
+    color:#666;
+    text-decoration:underline;
 }
 h1 {
-	color:#fff;
-	font:28px/60px Arial, Helvetica, sans-serif;
+    color:#fff;
+    font:28px/60px Arial, Helvetica, sans-serif;
 }
 h2 {
-	color: #333;
-	font:20px/23px Arial, Helvetica, sans-serif;
+    color: #333;
+    font:20px/23px Arial, Helvetica, sans-serif;
 }
 .h2 {
-	color: #333;
-	font:20px/23px Arial, Helvetica, sans-serif;
+    color: #333;
+    font:20px/23px Arial, Helvetica, sans-serif;
 }
 h3 {
-	color:#333;
-	font:15px/18px Arial, Helvetica, sans-serif;
+    color:#333;
+    font:15px/18px Arial, Helvetica, sans-serif;
 }
 ul {
-	list-style:none;
+    list-style:none;
 }
 .output {
-	border-bottom:1px solid #DDD;
-	border-right:1px solid #DDD;
-	border-left:1px solid #B6B6B6;
-	border-top:1px solid #B6B6B6;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
-	padding:10px;
+    border-bottom:1px solid #DDD;
+    border-right:1px solid #DDD;
+    border-left:1px solid #B6B6B6;
+    border-top:1px solid #B6B6B6;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    padding:10px;
 }
 .def {
-	font:bold;
-	color:#333;
+    font:bold;
+    color:#333;
 }
 .right {
-	float:right;
-	height:85px;
+    float:right;
+    height:85px;
 }
 fieldset {
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
-	background-color:#F8F8FD;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    background-color:#F8F8FD;
 }
 .anchor {
-	display:block;
-	font:underline Verdana, Geneva, sans-serif;
-	color:#006;
+    display:block;
+    font:underline Verdana, Geneva, sans-serif;
+    color:#006;
 }
 /* Specific Tables */
 table {
-	border-collapse: collapse;
+    border-collapse: collapse;
 
-	margin: 0;
-	margin-top: 1em;
+    margin: 0;
+    margin-top: 1em;
 }
 thead {
-	font:bold 14px Verdana, Geneva, sans-serif;
-	margin-bottom:20px;
+    font:bold 14px Verdana, Geneva, sans-serif;
+    margin-bottom:20px;
 }
 td {
-	border: 1px solid #ccc;
-	margin: 0;
-	height:20px;
-	padding-left: 5px;
-	padding-right: 5px;
+    border: 1px solid #ccc;
+    margin: 0;
+    height:20px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 .test_pass {
-	background: url(images/pass.gif) no-repeat 12px 5px;
-	border-right: 4px solid #73B65A;
+    background: url(images/pass.gif) no-repeat 12px 5px;
+    border-right: 4px solid #73B65A;
+	padding-left:40px;
+	font:bold;
+    color:#333;
 }
 .test_fail {
-	background: url(images/fail.gif) no-repeat 12px 5px;
-	border-right: 4px solid #E75C58;
+    background: url(images/fail.gif) no-repeat 12px 5px;
+    border-right: 4px solid #E75C58;    
+	padding-left:40px;
+	font:bold;
+    color:#333;
 }
 .test_error {
-	background: url(images/error.gif) no-repeat 12px 5px;
-	border-right: 4px solid #dca42d;
+    background: url(images/error.gif) no-repeat 12px 5px;
+    border-right: 4px solid #dca42d;
+	padding-left:40px;
+	font:bold;
+    color:#333;
 }
 .assertions {
-	color: #73B65A;
+    color: #73B65A;
 }
 .failures {
-	color: #E75C58;
+    color: #E75C58;
 }
 .errors {
-	color: #ff1111;
+    color: #ff1111;
 }
 /* Specific FileTree */
 .php-file-tree {
-	font-family: Verdana, Helvetica, Arial;
-	line-height: 20px;
+    font-family: Verdana, Helvetica, Arial;
+    line-height: 20px;
 }
 .php-file-tree A {
-	color: #000000;
-	text-decoration: none;
+    color: #000000;
+    text-decoration: none;
 }
 .php-file-tree A:hover {
-	color: #666666;
+    color: #666666;
 }
 .php-file-tree .open {
-	font-style: italic;
+    font-style: italic;
 }
 .php-file-tree .closed {
-	font-style: normal;
+    font-style: normal;
 }
 .php-file-tree .pft-directory {
-	list-style-image: url(images/directory.png);
+    list-style-image: url(images/directory.png);
 }
 /* Default file */
     .php-file-tree LI.pft-file {
-	list-style-image: url(images/file.png);
+    list-style-image: url(images/file.png);
 }
 /* Additional file types */
     .php-file-tree LI.ext-3gp {
-	list-style-image: url(images/film.png);
+    list-style-image: url(images/film.png);
 }
 .php-file-tree LI.ext-afp {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-afpa {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-asp {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-aspx {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-avi {
-	list-style-image: url(images/film.png);
+    list-style-image: url(images/film.png);
 }
 .php-file-tree LI.ext-bat {
-	list-style-image: url(images/application.png);
+    list-style-image: url(images/application.png);
 }
 .php-file-tree LI.ext-bmp {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-c {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-cfm {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-cgi {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-com {
-	list-style-image: url(images/application.png);
+    list-style-image: url(images/application.png);
 }
 .php-file-tree LI.ext-cpp {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-css {
-	list-style-image: url(images/css.png);
+    list-style-image: url(images/css.png);
 }
 .php-file-tree LI.ext-doc {
-	list-style-image: url(images/doc.png);
+    list-style-image: url(images/doc.png);
 }
 .php-file-tree LI.ext-exe {
-	list-style-image: url(images/application.png);
+    list-style-image: url(images/application.png);
 }
 .php-file-tree LI.ext-gif {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-fla {
-	list-style-image: url(images/flash.png);
+    list-style-image: url(images/flash.png);
 }
 .php-file-tree LI.ext-h {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-htm {
-	list-style-image: url(images/html.png);
+    list-style-image: url(images/html.png);
 }
 .php-file-tree LI.ext-html {
-	list-style-image: url(images/html.png);
+    list-style-image: url(images/html.png);
 }
 .php-file-tree LI.ext-jar {
-	list-style-image: url(images/java.png);
+    list-style-image: url(images/java.png);
 }
 .php-file-tree LI.ext-jpg {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-jpeg {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-js {
-	list-style-image: url(images/script.png);
+    list-style-image: url(images/script.png);
 }
 .php-file-tree LI.ext-lasso {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-log {
-	list-style-image: url(images/txt.png);
+    list-style-image: url(images/txt.png);
 }
 .php-file-tree LI.ext-m4p {
-	list-style-image: url(images/music.png);
+    list-style-image: url(images/music.png);
 }
 .php-file-tree LI.ext-mov {
-	list-style-image: url(images/film.png);
+    list-style-image: url(images/film.png);
 }
 .php-file-tree LI.ext-mp3 {
-	list-style-image: url(images/music.png);
+    list-style-image: url(images/music.png);
 }
 .php-file-tree LI.ext-mp4 {
-	list-style-image: url(images/film.png);
+    list-style-image: url(images/film.png);
 }
 .php-file-tree LI.ext-mpg {
-	list-style-image: url(images/film.png);
+    list-style-image: url(images/film.png);
 }
 .php-file-tree LI.ext-mpeg {
-	list-style-image: url(images/film.png);
+    list-style-image: url(images/film.png);
 }
 .php-file-tree LI.ext-ogg {
-	list-style-image: url(images/music.png);
+    list-style-image: url(images/music.png);
 }
 .php-file-tree LI.ext-pcx {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-pdf {
-	list-style-image: url(images/pdf.png);
+    list-style-image: url(images/pdf.png);
 }
 .php-file-tree LI.ext-php {
-	list-style-image: url(images/php.png);
+    list-style-image: url(images/php.png);
 }
 .php-file-tree LI.ext-png {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-ppt {
-	list-style-image: url(images/ppt.png);
+    list-style-image: url(images/ppt.png);
 }
 .php-file-tree LI.ext-psd {
-	list-style-image: url(images/psd.png);
+    list-style-image: url(images/psd.png);
 }
 .php-file-tree LI.ext-pl {
-	list-style-image: url(images/script.png);
+    list-style-image: url(images/script.png);
 }
 .php-file-tree LI.ext-py {
-	list-style-image: url(images/script.png);
+    list-style-image: url(images/script.png);
 }
 .php-file-tree LI.ext-rb {
-	list-style-image: url(images/ruby.png);
+    list-style-image: url(images/ruby.png);
 }
 .php-file-tree LI.ext-rbx {
-	list-style-image: url(images/ruby.png);
+    list-style-image: url(images/ruby.png);
 }
 .php-file-tree LI.ext-rhtml {
-	list-style-image: url(images/ruby.png);
+    list-style-image: url(images/ruby.png);
 }
 .php-file-tree LI.ext-rpm {
-	list-style-image: url(images/linux.png);
+    list-style-image: url(images/linux.png);
 }
 .php-file-tree LI.ext-ruby {
-	list-style-image: url(images/ruby.png);
+    list-style-image: url(images/ruby.png);
 }
 .php-file-tree LI.ext-sql {
-	list-style-image: url(images/db.png);
+    list-style-image: url(images/db.png);
 }
 .php-file-tree LI.ext-swf {
-	list-style-image: url(images/flash.png);
+    list-style-image: url(images/flash.png);
 }
 .php-file-tree LI.ext-tif {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-tiff {
-	list-style-image: url(images/picture.png);
+    list-style-image: url(images/picture.png);
 }
 .php-file-tree LI.ext-txt {
-	list-style-image: url(images/txt.png);
+    list-style-image: url(images/txt.png);
 }
 .php-file-tree LI.ext-vb {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-wav {
-	list-style-image: url(images/music.png);
+    list-style-image: url(images/music.png);
 }
 .php-file-tree LI.ext-wmv {
-	list-style-image: url(images/film.png);
+    list-style-image: url(images/film.png);
 }
 .php-file-tree LI.ext-xls {
-	list-style-image: url(images/xls.png);
+    list-style-image: url(images/xls.png);
 }
 .php-file-tree LI.ext-xml {
-	list-style-image: url(images/code.png);
+    list-style-image: url(images/code.png);
 }
 .php-file-tree LI.ext-zip {
-	list-style-image: url(images/zip.png);
+    list-style-image: url(images/zip.png);
 }

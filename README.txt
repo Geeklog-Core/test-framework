@@ -28,9 +28,9 @@ You can find more information on installing PHPUnit at http://www.phpunit.de/man
 Note: the testpackage folder can go anywhere, but it is not reccomended to have it in an web-accessible directory for security.
 
 4. Open testpackage/config.php. Here are the three paths you need to configure. 
-    A. Under case 'public', enter the path to Geeklog's public_html folder, e.g: 'c:/xampplite/htdocs/public_html/'.
-    B. Under case 'root', enter the path to Geeklog's root folder, where the main Geeklog files reside, e.g: 'c:/xampplite/geeklog/'.
-    C. Under case 'tests', enter the path to the testpackage folder you just placed, e.g: 'c:/xampplite/geeklog/testpackage/'.
+    A. Under $public, enter the path to Geeklog's public_html folder, e.g: 'c:/xampplite/htdocs/public_html/'.
+    B. Under $root, enter the path to Geeklog's root folder, where the main Geeklog files reside, e.g: 'c:/xampplite/geeklog/'.
+    C. Under $tests, enter the path to the testpackage folder you just placed, e.g: 'c:/xampplite/geeklog/testpackage/'.
     Note: Use absolute paths!
 
 5. Open public_html/tests/config.php. Change the require_once path to /path/to/testpackage/config.php.
@@ -92,10 +92,10 @@ IV. DETAILS
     These will implement the PHPUnit framework and Geeklog's framework config file.
 
 3) Now, require the class you are writing a test for, e.g:
-    require_once getPath('root').'system/lib-mbyte.php';
+    require_once TestConfig::$root.'system/lib-mbyte.php';
         
     If you are using the XML database, add this line:
-        require_once getPath('tests').'files/classes/xmldb.class.php';
+        require_once TestConfig::$tests.'files/classes/xmldb.class.php';
                 
     Your test should be ready to run!
 
@@ -103,7 +103,7 @@ IV. DETAILS
     With a few lines of code, you can interact with the Geeklog test framework's test running and logging system. These scripts are typically stored under tests/gui/jobs. You can browse through the existing scripts and tests.class.php to see how they work and are implemented. Let's take 'tests/gui/jobs/runAll.php' as an example.    
 1) These two lines at the beginning of the script include Geeklog's test framework config file and tests class:
     require_once 'config.php';
-    require_once getPath('tests').'files/classes/tests.class.php';
+    require_once TestConfig::$tests.'files/classes/tests.class.php';
 2) This creates an instance of tests.class.php:
     $tests = new Tests;
 3) Now we can perform any action on the test framework already scripted in tests.class.php, if you need to do something not already provided in this class, add it if you think it may be useful to other people. If it's something that will only be used once, just put it in the script. In this example, we tell $tests->runTests() to run tests on all files under 'suite', create a JSON log for the output, and discard the console output. A cronjob could be pointed at this and run it on a specified schedule.
