@@ -141,7 +141,6 @@ $("input#runTests_submit").click(function() {
     $("span#runTests_button").hide();
     $("span#runTests_loader").show();
     $.post(path+"runSelectedTests.php", $("#runTests").serialize(), function(data){
-                                                                             alert(data);
         $("span#runTests_loader").hide();    
         $("span#runTests_button").show();
         var results = eval("(" + data + ")");

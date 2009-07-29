@@ -89,7 +89,7 @@ if (function_exists('set_error_handler')) {
 * Configuration Include:
 * You do NOT need to modify anything here any more!
 */
-require_once 'sitetst.class.php';
+require_once 'siteconfig.php';
 
 /**
 * Configuration class

@@ -176,7 +176,7 @@ $_LI_DEFAULT['category_permissions'] = array (3, 2, 2, 2);
 *
 * Creates the database entries for the configuation if they don't already
 * exist. Initial values will be taken from $_LI_CONF if available (e.g. from
-* an old tst.class.php), uses $_LI_DEFAULT otherwise.
+* an old config.php), uses $_LI_DEFAULT otherwise.
 *
 * @return   boolean     true: success; false: an error occurred
 *

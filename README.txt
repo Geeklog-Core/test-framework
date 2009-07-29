@@ -27,7 +27,7 @@ You can find more information on installing PHPUnit at http://www.phpunit.de/man
 3. Place the folder 'testpackage' in your Geeklog root, and the folder 'tests' under Geeklog's public_html folder.
 Note: the testpackage folder can go anywhere, but it is not reccomended to have it in an web-accessible directory for security.
 
-4. Open testpackage/config.php. Here are the three paths you need to configure. 
+4. Open testpackage/tst.class.php. Here are the three paths you need to configure. 
     A. Under $public, enter the path to Geeklog's public_html folder, e.g: 'c:/xampplite/htdocs/public_html/'.
     B. Under $root, enter the path to Geeklog's root folder, where the main Geeklog files reside, e.g: 'c:/xampplite/geeklog/'.
     C. Under $tests, enter the path to the testpackage folder you just placed, e.g: 'c:/xampplite/geeklog/testpackage/'.
@@ -35,9 +35,11 @@ Note: the testpackage folder can go anywhere, but it is not reccomended to have 
 	E. Under $disabledMessage, enter a message you would like to have displayed when suite features are disabled.
     Note: Use absolute paths!
 
-5. Open public_html/tests/config.php. Change the require_once path to /path/to/testpackage/config.php.
+5. Open public_html/tests/tst.class.php. Change the require_once path to /path/to/testpackage/config.php.
 
-6. WHILE IN DEVELOPMENT: replace the files in your geeklog installation with the files in 'replace'. This will probably either be taken care of by an install script in the future, or be permanently changed in Geeklog. For now, just copy and paste (you may want to back up your original files). 
+6. Confirm that you have the PEAR package from Geeklog under system/pear, as it is required by some tests. If you don't have it, you can download it here: http://project.geeklog.net/nightly/geeklog-pear.tar.gz.
+
+7. WHILE IN DEVELOPMENT: replace the files in your geeklog installation with the files in 'replace'. This will probably either be taken care of by an install script in the future, or be permanently changed in Geeklog. For now, just copy and paste (you may want to back up your original files). 
 
  
 III. USE
@@ -47,7 +49,7 @@ III. USE
     Note: The GUI only fully supports Firefox >3 with javascript enabled. The barest of functionality is offered without javascript enabled in tests/gui/index.php, but it is ugly. Be warned!
     To use the GUI, navigate with your browser to the tests folder in your Geeklog site (e.g: http://localhost/public_html/tests). You should be at a page called index_js.php (if you have javascript turned off, index.php). Under the left panel titled 'Run Tests' is a tree structure of all available tests for the Geeklog test framework. Select any number of tests you like (if you choose a folder, all the tests inside will be included), choose to have the console output returned and logs created (reccomended), and click 'Run Tests'. It may take a few minutes, so be patient.
     To your tests using your console, open the console and navigate to the public_html/tests folder. From here, you can type 'phpunit (path/to/testclass/testname)', and the test you specify will be run, with the results displayed in the console. If you specify a folder, all tests inside will be run. 
-Note: this will only work if you are in the tests root folder (with config.php). This is because of the path structure.
+Note: this will only work if you are in the tests root folder (with tst.class.php). This is because of the path structure.
 You can find more information in the PHPUnit manual, at http://www.phpunit.de/manual/3.3/en/textui.html.
 
 2. Viewing logs
@@ -78,8 +80,8 @@ IV. DETAILS
     This test package is designed to work with or without a Geeklog install. It does this by using the configuration paths you specified in the installation, and by using a XML version of Geeklog's SQL database. To write tests for a file requiring database calls, first ensure that default.xml exists (in testpackage/files/databases). This is the XML version of Geeklog's database, as appears after a fresh install. The class that handles the operations (done with simpleXML and xPath) on the database is xmldb.class.php, under testpackage/files/databases. 
     
     You can use xmldb.class.php in three steps.
-    1. Require config.php, e.g: require_once 'config.php'. You should be doing this anyway.
-    2. Require the file, e.g: require_once getPath('tests').'/files/databases/xmldb.class.php'. 
+    1. Require tst.class.php, e.g: require_once 'tst.class.php'. You should be doing this anyway.
+    2. Require the file, e.g: require_once Tst::$tests.'/files/databases/xmldb.class.php'. 
     3. Create an object, e.g: $this->xml = new Xmldb;
     4. Call the function you want, providing the database you want to load as the parameter, e.g: $_CONF = $this->xml->get_CONF('database'). If you don't specify a database, it will load default.xml.
     
@@ -89,23 +91,23 @@ IV. DETAILS
     
 2)     Add these lines at the beginning of your file:
         require_once 'PHPUnit/Framework.php';
-        require_once 'config.php';
+        require_once 'tst.class.php';
         
     These will implement the PHPUnit framework and Geeklog's framework config file.
 
 3) Now, require the class you are writing a test for, e.g:
-    require_once TestConfig::$root.'system/lib-mbyte.php';
+    require_once Tst::$root.'system/lib-mbyte.php';
         
     If you are using the XML database, add this line:
-        require_once TestConfig::$tests.'files/classes/xmldb.class.php';
+        require_once Tst::$tests.'files/classes/xmldb.class.php';
                 
     Your test should be ready to run!
 
 4. Adding jobs
     With a few lines of code, you can interact with the Geeklog test framework's test running and logging system. These scripts are typically stored under tests/gui/jobs. You can browse through the existing scripts and tests.class.php to see how they work and are implemented. Let's take 'tests/gui/jobs/runAll.php' as an example.    
 1) These two lines at the beginning of the script include Geeklog's test framework config file and tests class:
-    require_once 'config.php';
-    require_once TestConfig::$tests.'files/classes/tests.class.php';
+    require_once 'tst.class.php';
+    require_once Tst::$tests.'files/classes/tests.class.php';
 2) This creates an instance of tests.class.php:
     $tests = new Tests;
 3) Now we can perform any action on the test framework already scripted in tests.class.php, if you need to do something not already provided in this class, add it if you think it may be useful to other people. If it's something that will only be used once, just put it in the script. In this example, we tell $tests->runTests() to run tests on all files under 'suite', create a JSON log for the output, and discard the console output. A cronjob could be pointed at this and run it on a specified schedule.

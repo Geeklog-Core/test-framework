@@ -132,7 +132,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
     }
     
     public function testCheckHTMLWithBothCodeTags() {
-        // Line 2923
+        // Line 2896
         $this->assertEquals('<pre><code>&lt;!-- string --&gt;&#36;var&#92;n&#92;</code></pre>', 
                             COM_checkHTML('<!-- string -->[cODe]<!-- string -->$var\n\\[/coDE]'));
     }

@@ -215,7 +215,9 @@ class Tests
 					  static $n = 0;
 					  $n++;
 						  $retval .= '<tr>
-						  <td><div class="width"><strong>'.$n.'</strong> '.wordwrap($test['test'], 47, "<br />\n", true).'</div></td>';
+						  <td><div class="width"><strong>'.$n.'</strong> '.wordwrap(
+						 substr($test['test'],0,strpos($test['test'],'('.$name.')'))
+						 , 47, "<br />\n", true).'</div></td>';
 						  if($test['status'] == 'fail') {
 							  $allFail = $allFail + 1;
 							  $retval .= '<td class="test_fail"/>';
@@ -289,7 +291,7 @@ class Tests
         if(!empty($ret)) {
             return $ret;
         } else {
-            exit ('There were no log files to read');
+            exit ('Tests.class.php line 292: There were no log files to read, possible error running tests.');
         }
     }
     
