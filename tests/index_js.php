@@ -23,50 +23,49 @@ require_once Tst::$tests.'files/classes/tests.class.php';
 <div id="wrapper">
   <div id="tabs">
     <ul id="tablinks">
-    <?php if(Tst::access(array(3))): ?>
+      <?php if(Tst::access(array(3))): ?>
       <li><a href="#tabs-1">Choose Files</a></li>
-    <?php endif; ?>
-    <?php if(Tst::access(array(1,3))): ?>
+      <?php endif; ?>
+      <?php if(Tst::access(array(1,3))): ?>
       <li><a href="#tabs-2">Log Output</a></li>
-    <?php endif; ?>
-    <?php if(Tst::access(array(1,2,3))): ?>
+      <?php endif; ?>
+      <?php if(Tst::access(array(1,2,3))): ?>
       <li><a href="#tabs-3">Console Output</a></li>
-    <?php endif; ?>
+      <?php endif; ?>
     </ul>
     <div id="tabs-1">
       <div id="browse">
         <form id="runTests" name="runTests" id="runTests">
-            <fieldset>
-              <legend class="h2">Run Tests</legend>
-              <?php if(Tst::access(array(2,3))): ?>
-              <span id="runTests_button">
-              <input type="button" value="Test Files" id="runTests_submit"/>
-              </span> 
-              <span id="runTests_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Tests are loading...'></span>
-              <input type="checkbox" id="logResults" name="logResults" value="1" checked="checked"/>
-              Log results
-              <input type="checkbox" id="consoleOutput" name="consoleOutput" value="1" checked="checked"/>
-              Console output
-              <h3>Selecting a folder will include all tests inside</h3>
-              <?php echo php_file_tree(Tst::$tests.'suite/', "[link]"); ?>
-              <? else: echo '<span class="disabled">'.Tst::$disabledMessage.'</span>'; endif;?>
-            </fieldset>
-          </form>
+        <fieldset>
+          <legend class="h2">Run Tests</legend>
+          <?php if(Tst::access(array(2,3))): ?>
+          <span id="runTests_button">
+          <input type="button" value="Test Files" id="runTests_submit"/>
+          </span> <span id="runTests_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Tests are loading...'></span>
+          <input type="checkbox" id="logResults" name="logResults" value="1" checked="checked"/>
+          Log results
+          <input type="checkbox" id="consoleOutput" name="consoleOutput" value="1" checked="checked"/>
+          Console output
+          <h3>Selecting a folder will include all tests inside</h3>
+          <?php echo php_file_tree(Tst::$tests.'suite/', "[link]"); ?>
+          <? else: echo '<span class="disabled">'.Tst::$disabledMessage.'</span>'; endif;?>
+        </fieldset>
+        </form>
       </div>
       <div id="viewLogs">
         <form id="logs" name="logs">
           <fieldset>
-          <legend class="h2">Logs</legend>
-          <?php if(Tst::access(array(1,3))): ?>
-          <label for"howMany">Show:</label>
-          <input id="howMany" type="text" name="howMany" value="5" size="2" />
-          <span id="logs_button">
-          <input type="button" value="View" id="logs_submit"/>
-          <input type="button" value="Delete" id="logs_delete"/>
-          </span> <span id="logs_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Logs are loading...'></span>
-          <ul id="logslist">
-          </ul>
-          <? else: echo '<span class="disabled">'.Tst::$disabledMessage.'</span>'; endif;?>
+            <legend class="h2">Logs</legend>
+            <?php if(Tst::access(array(1,3))): ?>
+            <label for"howMany">Show:</label>
+            <input id="howMany" type="text" name="howMany" value="5" size="2" />
+            <span id="logs_button">
+            <input type="button" value="View" id="logs_submit"/>
+            <input type="button" value="Delete" id="logs_delete"/>
+            </span> <span id="logs_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Logs are loading...'></span>
+            <ul id="logslist">
+            </ul>
+            <? else: echo '<span class="disabled">'.Tst::$disabledMessage.'</span>'; endif;?>
           </fieldset>
         </form>
       </div>
@@ -86,24 +85,20 @@ $(function() {
 });
 
 var $tabs = $('#tabs').tabs();
-var path = "<?php echo Tst::$tests.'files/jobs/'; ?>";
-alert(path+"runAll.php");
+var path = "jobs/";
 
 $(document).ready(function(){ 
     $("span#runTests_loader").hide();
     $("span#logs_button").hide();
     $("span#logs_loader").show();
+    $.post(path+"showLogList.php", $("#howMany").serialize(), function(logsList){    
+        $("span#logs_loader").hide();  
+        $("span#logs_button").show();
+        $("#logslist").html(logsList);        
+    });
 });
-</script>
-<?php if(Tst::access(array(1,3))): ?>
-<script type="text/javascript"> 
-// Read features
 
-$.post(path+"showLogList.php", $("#howMany").serialize(), function(logsList){    
-    $("span#logs_loader").hide();  
-    $("span#logs_button").show();
-    $("#logslist").html(logsList);        
-});
+// Read features
 // Renders logs from history 
 $("input#logs_submit").click(function() {
     $("span#logs_button").hide();
@@ -126,10 +121,7 @@ $("input#howMany").keyup(function() {
           $("#logslist").html(logsList);        
     });
 });
-</script>
-<? endif;?>
-<?php if(Tst::access(array(2,3))): ?>
-<script type="text/javascript"> 
+
 // Write features
 // Deletes logs from history 
 $("input#logs_delete").click(function() {
@@ -149,6 +141,7 @@ $("input#runTests_submit").click(function() {
     $("span#runTests_button").hide();
     $("span#runTests_loader").show();
     $.post(path+"runSelectedTests.php", $("#runTests").serialize(), function(data){
+                                                                             alert(data);
         $("span#runTests_loader").hide();    
         $("span#runTests_button").show();
         var results = eval("(" + data + ")");
@@ -167,6 +160,5 @@ $("input#runTests_submit").click(function() {
     });
 });
 </script>
-<? endif;?>
 </body>
 </html>

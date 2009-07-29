@@ -73,7 +73,6 @@ class Tests
             } else {
 				$switch = '';
 			}
-
             $output[] = shell_exec('phpunit '.$switch.$file);
         }
  
@@ -270,7 +269,6 @@ class Tests
     *
     */
     public function getFiles($prefix = '') {
-		
         $ret = array();
         if($this->getFileDir('logs', 'dir')) {            
             if($handle = opendir(Tst::$tests.'logs')) {
@@ -329,18 +327,16 @@ class Tests
 		$ret = '';
 		if(Tst::access(array(2))) {
 			$path = Tst::$tests.'logs/';
-			if(is_dir($path)) {
-				if(empty($testid)) {
+			if(empty($testid)) {
 					$testid = time();
 				}
-				if (empty($today)) {
-					$today = date("F j, Y, g:i a");
-				}
-				$ret = $this->writeMasterLog($path, $testid, $today);
-			} else {
-				mkdir($path, 0700);
-				$ret = $this->writeMasterLog($path);
+			if(empty($today)) {
+				$today = date("F j, Y, g:i a");
 			}
+			if(!is_dir($path)) {
+				mkdir($path, 0700);
+			}
+			$ret = $this->writeMasterLog($path, $testid, $today);
 		}
         return $ret;
     }
