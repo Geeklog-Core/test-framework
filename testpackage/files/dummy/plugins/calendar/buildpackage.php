@@ -19,7 +19,7 @@ $glDir = realpath(dirname(__FILE__).'/../../');
 /**
  * Calendar configuration file
  */
-require $packagedir . '/config.php';
+require $packagedir . '/tst.class.php';
 
 //print $glDir; exit;
 

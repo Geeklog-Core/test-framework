@@ -34,16 +34,16 @@ class Xmldb {
     private $xml;
     
     /**
-    * Constructor, requires config.php for paths
+    * Constructor, requires tst.class.php for paths
     *
     */    
     function xmldb() {
-        require_once 'config.php';
+        require_once 'tst.class.php';
     }
     
     /**
     * Retrieves configuration values from XML database. Also overwrite paths with user-configured
-    * paths found in config.php for PHPUnit test package.
+    * paths found in tst.class.php for PHPUnit test package.
     *
     * @param    string  $db      XML database to retrieved CONF values from, defaults to default.xml
     * @return   array   $_CONF   Array of CONF values
@@ -60,31 +60,31 @@ class Xmldb {
             // Meanwhile, use switch statements to overwrite necessary config values now.
             switch((string) $value->name) {
                 case 'rdf_file':
-                    $_CONF[(string) $value->name] = TestConfig::$public.'backend/geeklog.rss';
+                    $_CONF[(string) $value->name] = Tst::$public.'backend/geeklog.rss';
                     break;
                 case 'path_html':
-                    $_CONF[(string) $value->name] = TestConfig::$public.'';
+                    $_CONF[(string) $value->name] = Tst::$public.'';
                     break;
                 case 'path_log':
-                    $_CONF[(string) $value->name] = TestConfig::$root.'logs/';
+                    $_CONF[(string) $value->name] = Tst::$root.'logs/';
                     break;
                 case 'path_language':
-                    $_CONF[(string) $value->name] = TestConfig::$root.'language/';
+                    $_CONF[(string) $value->name] = Tst::$root.'language/';
                     break;
                 case 'backup_path':
-                    $_CONF[(string) $value->name] = TestConfig::$root.'backups/';
+                    $_CONF[(string) $value->name] = Tst::$root.'backups/';
                     break;
                 case 'path_data':
-                    $_CONF[(string) $value->name] = TestConfig::$root.'data/';
+                    $_CONF[(string) $value->name] = Tst::$root.'data/';
                     break;
                 case 'path_images':
-                    $_CONF[(string) $value->name] = TestConfig::$public.'images/';
+                    $_CONF[(string) $value->name] = Tst::$public.'images/';
                     break;
                 case 'path_pear':
-                    $_CONF[(string) $value->name] = TestConfig::$root.'system/pear/';
+                    $_CONF[(string) $value->name] = Tst::$root.'system/pear/';
                     break;
                 case 'path_themes':
-                    $_CONF[(string) $value->name] = TestConfig::$public.'layout/';
+                    $_CONF[(string) $value->name] = Tst::$public.'layout/';
                     break;
                 default:                
                     $_CONF[(string) $value->name] = unserialize((string) $value->value);
@@ -123,7 +123,7 @@ class Xmldb {
     */
     function loadDb($db = 'default') {
         $db .= '.xml';
-        $xml = simplexml_load_file(TestConfig::$tests.'files/databases/'.$db) or die ('Unable to load XML file '.$db);
+        $xml = simplexml_load_file(Tst::$tests.'files/databases/'.$db) or die ('Unable to load XML file '.$db);
         return $xml;
     }
 	

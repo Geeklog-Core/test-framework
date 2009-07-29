@@ -89,7 +89,7 @@ if (function_exists('set_error_handler')) {
 * Configuration Include:
 * You do NOT need to modify anything here any more!
 */
-require_once 'siteconfig.php';
+require_once 'sitetst.class.php';
 
 /**
 * Configuration class
@@ -97,7 +97,7 @@ require_once 'siteconfig.php';
 require_once $_CONF['path_system'] . 'classes/config.class.php';
 
 $config =& config::get_instance();
-$config->set_configfile($_CONF['path'] . 'db-config.php');
+$config->set_configfile($_CONF['path'] . 'db-tst.class.php');
 $config->load_baseconfig();
 $config->initConfig();
 
@@ -6597,7 +6597,7 @@ function COM_truncate( $text, $maxlen, $filler = '', $endchars = 0 )
 *
 * Uses (if available, and in this order)
 * - $LANG_CHARSET (from the current language file)
-* - $_CONF['default_charset'] (from siteconfig.php)
+* - $_CONF['default_charset'] (from sitetst.class.php)
 * - 'iso-8859-1' (hard-coded fallback)
 *
 * @return   string      character set, e.g. 'utf-8'

@@ -5,8 +5,8 @@
 */
 
 require_once 'PHPUnit/Framework.php';
-require_once 'config.php';
-require_once TestConfig::$root.'system/classes/plugin.class.php';
+require_once 'tst.class.php';
+require_once Tst::$root.'system/classes/plugin.class.php';
 
 class pluginClass extends PHPUnit_Framework_TestCase 
 {

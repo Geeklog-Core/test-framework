@@ -31,6 +31,8 @@ Note: the testpackage folder can go anywhere, but it is not reccomended to have 
     A. Under $public, enter the path to Geeklog's public_html folder, e.g: 'c:/xampplite/htdocs/public_html/'.
     B. Under $root, enter the path to Geeklog's root folder, where the main Geeklog files reside, e.g: 'c:/xampplite/geeklog/'.
     C. Under $tests, enter the path to the testpackage folder you just placed, e.g: 'c:/xampplite/geeklog/testpackage/'.
+	D. Under $access, enter the permissions level you would like the framework to use. This can be changed at any time.
+	E. Under $disabledMessage, enter a message you would like to have displayed when suite features are disabled.
     Note: Use absolute paths!
 
 5. Open public_html/tests/config.php. Change the require_once path to /path/to/testpackage/config.php.

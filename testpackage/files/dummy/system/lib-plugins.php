@@ -39,8 +39,8 @@
 *
 */
 
-require_once('config.php');
-require_once TestConfig::$tests.'files/classes/xmldb.class.php';
+require_once('tst.class.php');
+require_once Tst::$tests.'files/classes/xmldb.class.php';
 
 if (strpos(strtolower($_SERVER['PHP_SELF']), 'lib-plugins.php') !== false) {
     die('This file can not be used on its own!');
@@ -49,7 +49,7 @@ if (strpos(strtolower($_SERVER['PHP_SELF']), 'lib-plugins.php') !== false) {
 /**
 * Include plugin class
 */
-require_once TestConfig::$root.'system/classes/plugin.class.php';
+require_once Tst::$root.'system/classes/plugin.class.php';
 
 /**
 * Response codes for the service invocation PLG_invokeService(). Note that
@@ -71,7 +71,7 @@ $PLG_buffered = false;
 */
 $xplug = new Xmldb;
 $_PLUGINS = $xplug->get_PLUGINS();
-$_CONF['path_system'] = TestConfig::$root.'system/';
+$_CONF['path_system'] = Tst::$root.'system/';
 
 // Keep DB problems away (in future replace with SQL -> xPath translator possibly)
 function DB_query(){}

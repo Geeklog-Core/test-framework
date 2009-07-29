@@ -5,9 +5,9 @@
 */
 
 require_once 'PHPUnit/Framework.php';
-require_once 'config.php';
-require_once TestConfig::$root.'system/lib-mbyte.php';
-require_once TestConfig::$tests.'files/classes/xmldb.class.php';
+require_once 'tst.class.php';
+require_once Tst::$root.'system/lib-mbyte.php';
+require_once Tst::$tests.'files/classes/xmldb.class.php';
 
 class libmbyteWithMB extends PHPUnit_Framework_TestCase 
 {

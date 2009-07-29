@@ -5,9 +5,9 @@
 */
 
 require_once 'PHPUnit/Framework.php';
-require_once 'config.php';
-require_once TestConfig::$tests.'files/classes/xmldb.class.php';
-require_once TestConfig::$public.'lib-common.php';
+require_once 'tst.class.php';
+require_once Tst::$tests.'files/classes/xmldb.class.php';
+require_once Tst::$public.'lib-common.php';
 
 class libcommonTest extends PHPUnit_Framework_TestCase 
 {    

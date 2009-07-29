@@ -1,7 +1,7 @@
 <?php
 
-require_once '../../config.php';
-require_once TestConfig::$tests.'files/classes/tests.class.php';
+require_once '../../tst.class.php';
+require_once Tst::$tests.'files/classes/tests.class.php';
 
 $tests = new Tests;
 $loglist = $tests->displayLogList(1,$_POST['howMany']);

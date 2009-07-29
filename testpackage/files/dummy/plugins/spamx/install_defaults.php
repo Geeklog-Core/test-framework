@@ -74,7 +74,7 @@ $_SPX_DEFAULT['timeout'] = 5; // in seconds
 *
 * Creates the database entries for the configuation if they don't already
 * exist. Initial values will be taken from $_SPX_CONF if available (e.g. from
-* an old config.php), uses $_SPX_DEFAULT otherwise.
+* an old tst.class.php), uses $_SPX_DEFAULT otherwise.
 *
 * @return   boolean     true: success; false: an error occurred
 * @see      plugin_load_configuration_spamx

@@ -4,8 +4,8 @@
 */
 
 require_once 'PHPUnit/Framework.php';
-require_once 'config.php';
-require_once TestConfig::$root.'system/classes/searchcriteria.class.php';
+require_once 'tst.class.php';
+require_once Tst::$root.'system/classes/searchcriteria.class.php';
 
 class searchcriteriaClass extends PHPUnit_Framework_TestCase 
 {	

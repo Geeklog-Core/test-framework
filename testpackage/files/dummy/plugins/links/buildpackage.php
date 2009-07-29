@@ -18,7 +18,7 @@ $glDir = realpath(dirname(__FILE__).'/../../');
 /**
  * Link configuration file
  */
-require $packagedir . '/config.php';
+require $packagedir . '/tst.class.php';
 
 $channel     = 'pear.geeklog.net';
 $category    = 'Geeklog Plugins';

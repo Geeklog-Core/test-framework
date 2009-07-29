@@ -105,14 +105,14 @@ class config {
     {
         global $_TABLES;
         
-        require_once 'config.php';
-        require_once TestConfig::$tests.'files/classes/xmldb.class.php';
+        require_once 'tst.class.php';
+        require_once Tst::$tests.'files/classes/xmldb.class.php';
         
         $this->x = new Xmldb;
         global $_CONF;
         $this->config_array['Core'] = $this->x->get_CONF();
-        $this->config_array['Core']['path_system'] = TestConfig::$tests.'files/dummy/system/';
-		$this->config_array['Core']['path'] = TestConfig::$tests.'files/dummy/';
+        $this->config_array['Core']['path_system'] = Tst::$tests.'files/dummy/system/';
+		$this->config_array['Core']['path'] = Tst::$tests.'files/dummy/';
         $this->_post_configuration();
 
         return $this->config_array;
