@@ -1,0 +1,10 @@
+Switch:
+lib-common.php
+lib-mbyte.php
+
+Cronjob add/modify:
+lib-custom.php
+siteconfig.php
+
+Confirm existence:
+PEAR package

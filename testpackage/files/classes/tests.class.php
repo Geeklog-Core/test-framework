@@ -38,9 +38,9 @@ class Tests
     public $data;
     
     public function tests() {
-		if(!Tst::access(array(1,2))) {
-			exit('No operations are authorized');	
-		}	
+        if(!Tst::access(array(1,2))) {
+            exit('<span class="disabled">'.Tst::$disabledMessage.'</span>');    
+        }    
     }    
         
     /*
@@ -52,7 +52,7 @@ class Tests
     *
     */
     public function runTests($data = '', $JSONresults = 1, $consoleOutput = 1) { 
-		Tst::access(array(2),1);
+        Tst::access(array(2),1);
         $retval = array();        
 
         $testid = time();
@@ -69,10 +69,10 @@ class Tests
                 } else {
                     $suffix = '_'.substr($file, strrpos($file, '/')+1);
                 }
-				$switch = '--log-json '.Tst::$tests.'logs/'.$testid.$suffix.'.json ';
+                $switch = '--log-json '.Tst::$tests.'logs/'.$testid.$suffix.'.json ';
             } else {
-				$switch = '';
-			}
+                $switch = '';
+            }
             $output[] = shell_exec('phpunit '.$switch.$file);
         }
  
@@ -97,14 +97,14 @@ class Tests
     *
     */    
     public function getConsoleOutput($output) {
-		$retval = '';
-		if(Tst::access(array(1))) {
-			foreach($output as $k => $v) {
-				$testnum = $k + 1;
-				$retval .= '<div class="output"><strong>'.$testnum.'</strong><br /><strong>Results</strong><pre>'.$v.'</pre></div>';
-			 }
-		}			
-		return $retval;
+        $retval = '';
+        if(Tst::access(array(1))) {
+            foreach($output as $k => $v) {
+                $testnum = $k + 1;
+                $retval .= '<div class="output"><strong>'.$testnum.'</strong><br /><strong>Results</strong><pre>'.$v.'</pre></div>';
+             }
+        }            
+        return $retval;
     }
     
      /*
@@ -115,53 +115,53 @@ class Tests
     * @return   array     $parsedXML  Parsed data from JSON file
     *
     */     
-    public function getJSONResults($test = 1, $howMany = 1, $testid = '') {		
-		if(Tst::access(array(1))) {
-			$testentry = array();
-			if(empty($testid)) {
-				$testentries = $this->readMasterLog($test, $howMany); 
-				foreach($testentries as $entry) {
-					$testentry[] = $entry;
-				}
-			} elseif(!empty($testid)) {
-				$testentry['testid'] = $testid;
-				$testentry['testtime'] = date("F j, Y, g:i a", $testid);            
-			}
-			$logs = $this->getFiles($testentry['testid']);
-			$parsedJSON = array();
-			// We can't use json_decode because of PHPUnit's JSON logging method
-			foreach($logs as $log) {
-				$file = Tst::$tests.'logs/'.$log;
-				$json = file_get_contents($file);
-				$ret = true;
-				while($ret) {
-					$start = strpos($json, '{');
-					$length = strpos($json, '}')+1;
-					$segment = substr($json, $start, $length);
-					$json = str_replace($segment, '', $json);
-					if(!empty($segment)) {
-						$parsedJSON[] = json_decode($segment, true);
-					} else {
-						$ret = false;
-					}
-				}
-			}
-			// Make into nicely formatted array
-			$suites = array();
-			foreach($parsedJSON as $test_results) {
-				// Get distinct suites into array (i.e: '$suites['calendarclass'] = array(23))
-				if($test_results['event'] == 'suiteStart' 
-					&& !array_key_exists($test_results['suite'], $suites) 
-					&& substr_count($test_results['suite'], 'suite') == 0) {
-					$suites[$test_results['suite']];                    
-				} elseif($test_results['event'] == 'test') {
-					// If array is test, put under corresponding suite 
-					// (i.e: $suites['calendarclass'][1] = array(test info))
-					$suites[$test_results['suite']][] = $test_results;
-				}
-			}
-			return $suites;
-		}
+    public function getJSONResults($test = 1, $howMany = 1, $testid = '') {        
+        if(Tst::access(array(1))) {
+            $testentry = array();
+            if(empty($testid)) {
+                $testentries = $this->readMasterLog($test, $howMany); 
+                foreach($testentries as $entry) {
+                    $testentry[] = $entry;
+                }
+            } elseif(!empty($testid)) {
+                $testentry['testid'] = $testid;
+                $testentry['testtime'] = date("F j, Y, g:i a", $testid);            
+            }
+            $logs = $this->getFiles($testentry['testid']);
+            $parsedJSON = array();
+            // We can't use json_decode because of PHPUnit's JSON logging method
+            foreach($logs as $log) {
+                $file = Tst::$tests.'logs/'.$log;
+                $json = file_get_contents($file);
+                $ret = true;
+                while($ret) {
+                    $start = strpos($json, '{');
+                    $length = strpos($json, '}')+1;
+                    $segment = substr($json, $start, $length);
+                    $json = str_replace($segment, '', $json);
+                    if(!empty($segment)) {
+                        $parsedJSON[] = json_decode($segment, true);
+                    } else {
+                        $ret = false;
+                    }
+                }
+            }
+            // Make into nicely formatted array
+            $suites = array();
+            foreach($parsedJSON as $test_results) {
+                // Get distinct suites into array (i.e: '$suites['calendarclass'] = array(23))
+                if($test_results['event'] == 'suiteStart' 
+                    && !array_key_exists($test_results['suite'], $suites) 
+                    && substr_count($test_results['suite'], 'suite') == 0) {
+                    $suites[$test_results['suite']];                    
+                } elseif($test_results['event'] == 'test') {
+                    // If array is test, put under corresponding suite 
+                    // (i.e: $suites['calendarclass'][1] = array(test info))
+                    $suites[$test_results['suite']][] = $test_results;
+                }
+            }
+            return $suites;
+        }
     }
 
     /*
@@ -181,85 +181,85 @@ class Tests
     *                                                         'message' => 'Some message')));
     */
     public function createTable($suites) { 
-		$retval = '';
-		if(Tst::access(array(1))) {
-			$info = '';
-			$allAnchors = '';
-			$allTests = 0;
-			$allTime = 0;
-			$allFail = 0;
-			$allError = 0;
-			$allPass = 0;
-			// Create tables
-			$i=0;
-			foreach($suites as $name => $suite) {
-				$i++;
-				$allAnchors .= '<li><a class="anchor" href="#'.$name.'">'.$name.'</a></li>';
-				$retval .= '<table cellspacing="0" class="test_results">
-								  <thead>
-									<tr>
-										  <th><a name="'.$name.'">'.$name.'</a></th>
-									</tr>
-									<tr>
-										<th>Test Name</th>
-										<th>Status</th>
-										<th>Time</th>
-										<th>Message</th>
-									</tr>
-								  </thead>
-								  <tbody>';
-							  
-				foreach($suite as $test) {
-					$allTests = $allTests + 1;
-					$allTime = $allTime + $test['time'];
-					  static $n = 0;
-					  $n++;
-						  $retval .= '<tr>
-						  <td><div class="width"><strong>'.$n.'</strong> '.wordwrap(
-						 substr($test['test'],0,strpos($test['test'],'('.$name.')'))
-						 , 47, "<br />\n", true).'</div></td>';
-						  if($test['status'] == 'fail') {
-							  $allFail = $allFail + 1;
-							  $retval .= '<td class="test_fail"/>';
-						  } elseif($test['status'] == 'error') {
-							  $allError = $allError + 1;
-							  $retval .= '<td class="test_error"/>';
-						  } else {
-							  $allPass = $allPass + 1;
-							  $retval .= '<td class="test_pass"/>';
-						  }
-						  $retval .= '
-						  <td>'.$test['time'].'</td>
-						  <td>'.wordwrap($test['message'], 47, "<br />\n", true).'</td>
-						  </tr>';
-				  }
-				$retval .= '</tbody></table>';
-			}
-			$info .= '<div id="about" class="output">
-						<table>
-							<thead>Test information</thead>
-							<tbody>
-								<tr><td class="def">Time</td><td>'.$allTime.'</td></tr>
-								<tr><td class="def">Tests run</td><td>'.$allTests.'</td></tr>
-								<tr><td class="test_pass">Pass</td><td>'.$allPass.'</td></tr>
-								<tr><td class="test_fail">Failures</td><td>'.$allFail.'</td></tr>
-								<tr><td class="test_error">Errors</td><td>'.$allError.'</td></tr>
-						</table>
-					</div>
-					<div id="anchors" class="output">
-						<table>
-							<thead>Test classes</thead>
-							<tbody>
-								<ol> 
-									'.$allAnchors.'
-								</ol>
-							</tbody>
-						</table>
-					</div>
-					<div id="clear"></div>';
-						
-			$retval = $info.$retval;
-		}
+        $retval = '';
+        if(Tst::access(array(1))) {
+            $info = '';
+            $allAnchors = '';
+            $allTests = 0;
+            $allTime = 0;
+            $allFail = 0;
+            $allError = 0;
+            $allPass = 0;
+            // Create tables
+            $i=0;
+            foreach($suites as $name => $suite) {
+                $i++;
+                $allAnchors .= '<li><a class="anchor" href="#'.$name.'">'.$name.'</a></li>';
+                $retval .= '<table cellspacing="0" class="test_results">
+                                  <thead>
+                                    <tr>
+                                          <th><a name="'.$name.'">'.$name.'</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Test Name</th>
+                                        <th>Status</th>
+                                        <th>Time</th>
+                                        <th>Message</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>';
+                              
+                foreach($suite as $test) {
+                    $allTests = $allTests + 1;
+                    $allTime = $allTime + $test['time'];
+                      static $n = 0;
+                      $n++;
+                          $retval .= '<tr>
+                          <td><div class="width"><strong>'.$n.'</strong> '.wordwrap(
+                         substr($test['test'],0,strpos($test['test'],'('.$name.')'))
+                         , 47, "<br />\n", true).'</div></td>';
+                          if($test['status'] == 'fail') {
+                              $allFail = $allFail + 1;
+                              $retval .= '<td class="test_fail"/>';
+                          } elseif($test['status'] == 'error') {
+                              $allError = $allError + 1;
+                              $retval .= '<td class="test_error"/>';
+                          } else {
+                              $allPass = $allPass + 1;
+                              $retval .= '<td class="test_pass"/>';
+                          }
+                          $retval .= '
+                          <td>'.$test['time'].'</td>
+                          <td>'.wordwrap($test['message'], 47, "<br />\n", true).'</td>
+                          </tr>';
+                  }
+                $retval .= '</tbody></table>';
+            }
+            $info .= '<div id="about" class="output">
+                        <table>
+                            <thead>Test information</thead>
+                            <tbody>
+                                <tr><td class="def">Time</td><td>'.$allTime.'</td></tr>
+                                <tr><td class="def">Tests run</td><td>'.$allTests.'</td></tr>
+                                <tr><td class="test_pass">Pass</td><td>'.$allPass.'</td></tr>
+                                <tr><td class="test_fail">Failures</td><td>'.$allFail.'</td></tr>
+                                <tr><td class="test_error">Errors</td><td>'.$allError.'</td></tr>
+                        </table>
+                    </div>
+                    <div id="anchors" class="output">
+                        <table>
+                            <thead>Test classes</thead>
+                            <tbody>
+                                <ol> 
+                                    '.$allAnchors.'
+                                </ol>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="clear"></div>';
+                        
+            $retval = $info.$retval;
+        }
         
         return $retval;
     }
@@ -326,20 +326,20 @@ class Tests
     *
     */
     public function updateMasterLog($testid = '', $today = '') {
-		$ret = '';
-		if(Tst::access(array(2))) {
-			$path = Tst::$tests.'logs/';
-			if(empty($testid)) {
-					$testid = time();
-				}
-			if(empty($today)) {
-				$today = date("F j, Y, g:i a");
-			}
-			if(!is_dir($path)) {
-				mkdir($path, 0700);
-			}
-			$ret = $this->writeMasterLog($path, $testid, $today);
-		}
+        $ret = '';
+        if(Tst::access(array(2))) {
+            $path = Tst::$tests.'logs/';
+            if(empty($testid)) {
+                    $testid = time();
+                }
+            if(empty($today)) {
+                $today = date("F j, Y, g:i a");
+            }
+            if(!is_dir($path)) {
+                mkdir($path, 0700);
+            }
+            $ret = $this->writeMasterLog($path, $testid, $today);
+        }
         return $ret;
     }
     
@@ -351,19 +351,19 @@ class Tests
     * @return    bool    $ret    If write was successful
     */
     public function writeMasterLog($path, $testid, $today) {
-		$ret = '';
-		if(Tst::access(array(2))) {
-			$file = "masterlog.txt";
-			$handle = fopen($path.$file, 'a') or die("There was a problem opening master log");
-			$entry = "$testid - $today\n";
-			$ret = fwrite($handle, $entry);
-			fclose($handle);
-			$var = $this->readMasterLog();
-			if($var[0] == ' - ') {
-				exit('There was an error writing to the master log.');
-			}
-		}
-		return $ret;
+        $ret = '';
+        if(Tst::access(array(2))) {
+            $file = "masterlog.txt";
+            $handle = fopen($path.$file, 'a') or die("There was a problem opening master log");
+            $entry = "$testid - $today\n";
+            $ret = fwrite($handle, $entry);
+            fclose($handle);
+            $var = $this->readMasterLog();
+            if($var[0] == ' - ') {
+                exit('There was an error writing to the master log.');
+            }
+        }
+        return $ret;
     }
     
     /*
@@ -372,36 +372,36 @@ class Tests
     * @return   bool    $ret        If write was successful
     */
     public function deleteLogs($tests) {
-		$ret = '';
-		if(Tst::access(array(2))) {
-			$file = "masterlog.txt";
-			$path = Tst::$tests.'logs/';
-			// Read log into array and remove entries selected       
-			$entries = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
-			
-			foreach($tests as $testid) {
-				$key = array_search($testid.' - '.date("F j, Y, g:i a", $testid), $entries);
-				unset($entries[$key]);
-			}
-			
-			// Write edited array back into log
-			$handle = fopen($path.$file, 'w') or die("There was a problem opening masterlog.txt."); 
-			foreach($entries as $entry) {
-				   $string .= $entry."\n";
-			}
-			$ret = fwrite($handle, $string);
-			fclose($handle);
-			
-			// Remove logs from logs folder
-			$logFiles = $this->getFiles();        
-			foreach($logFiles as $logFile) {
-				foreach($tests as $testid) {
-					if(substr_count($logFile, $testid) != 0) {
-						unlink($path.$logFile);
-					}
-				}
-			}
-		}
+        $ret = '';
+        if(Tst::access(array(2))) {
+            $file = "masterlog.txt";
+            $path = Tst::$tests.'logs/';
+            // Read log into array and remove entries selected       
+            $entries = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
+            
+            foreach($tests as $testid) {
+                $key = array_search($testid.' - '.date("F j, Y, g:i a", $testid), $entries);
+                unset($entries[$key]);
+            }
+            
+            // Write edited array back into log
+            $handle = fopen($path.$file, 'w') or die("There was a problem opening masterlog.txt."); 
+            foreach($entries as $entry) {
+                   $string .= $entry."\n";
+            }
+            $ret = fwrite($handle, $string);
+            fclose($handle);
+            
+            // Remove logs from logs folder
+            $logFiles = $this->getFiles();        
+            foreach($logFiles as $logFile) {
+                foreach($tests as $testid) {
+                    if(substr_count($logFile, $testid) != 0) {
+                        unlink($path.$logFile);
+                    }
+                }
+            }
+        }
         return $ret;
     }
     
@@ -415,31 +415,31 @@ class Tests
     */
     public function displayLogList($offset = 1, $howMany = 1) {
         $ret = array();
-		if(Tst::access(array(1))) {
-			$logs = array();
-			$offset = '-'.$offset;
-			if($this->getFileDir('logs', 'dir')) {
-				// Creates masterlog.txt if not exist
-				if($this->getFileDir('logs/masterlog.txt', 'file') == false) {
-					fclose(fopen(Tst::$tests.'logs/masterlog.txt',"x"));
-				}
-				
-				$logs = $this->readMasterLog($offset, $howMany);
-					
-				foreach($logs as $test) {
-					if($test['testid']) {
-						$ret[] = '<li><input id=\'logs\' type=\'checkbox\' name=\'logs[]\' 
-						value=\''.$test['testid'].'\'>'.$test['testtime'].'</li>';
-					}            
-				}
-				
-				if(empty($ret)) {
-					$ret[] = '<i>There are no logs to display.</i>';
-				}
-			} else {
-				$ret[] = '<i>There was a problem creating directory or masterlog.txt.</i>';
-			}
-		}
+        if(Tst::access(array(1))) {
+            $logs = array();
+            $offset = '-'.$offset;
+            if($this->getFileDir('logs', 'dir')) {
+                // Creates masterlog.txt if not exist
+                if($this->getFileDir('logs/masterlog.txt', 'file') == false) {
+                    fclose(fopen(Tst::$tests.'logs/masterlog.txt',"x"));
+                }
+                
+                $logs = $this->readMasterLog($offset, $howMany);
+                    
+                foreach($logs as $test) {
+                    if($test['testid']) {
+                        $ret[] = '<li><input id=\'logs\' type=\'checkbox\' name=\'logs[]\' 
+                        value=\''.$test['testid'].'\'>'.$test['testtime'].'</li>';
+                    }            
+                }
+                
+                if(empty($ret)) {
+                    $ret[] = '<i>There are no logs to display.</i>';
+                }
+            } else {
+                $ret[] = '<i>There was a problem creating directory or masterlog.txt.</i>';
+            }
+        }
         return $ret;
     }
     
@@ -452,21 +452,21 @@ class Tests
     *
     */
     public function readMasterLog($offset = 1, $howMany = 1) {
-		$ret = array();
-		if(Tst::access(array(1))) {
-			$path = Tst::$tests.'logs/';        
-			$arr = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
-			$arrSize = count($arr);
-			$i = 0;
-			while($i < $howMany && $i < $arrSize) {
-				$test = array_slice($arr, $offset - $i);
-				$testid = substr($test[0], 0, 10);
-				   $ret[] = array(
-					'testid' => $testid,
-					'testtime' => date("F j, Y, g:i a", $testid));
-				$i++;
-			}
-		}
+        $ret = array();
+        if(Tst::access(array(1))) {
+            $path = Tst::$tests.'logs/';        
+            $arr = file($path.'masterlog.txt', FILE_IGNORE_NEW_LINES);
+            $arrSize = count($arr);
+            $i = 0;
+            while($i < $howMany && $i < $arrSize) {
+                $test = array_slice($arr, $offset - $i);
+                $testid = substr($test[0], 0, 10);
+                   $ret[] = array(
+                    'testid' => $testid,
+                    'testtime' => date("F j, Y, g:i a", $testid));
+                $i++;
+            }
+        }
         return $ret;        
     }    
 }

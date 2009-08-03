@@ -4,7 +4,7 @@
 // +---------------------------------------------------------------------------+
 // | Geeklog 1.6                                                               |
 // +---------------------------------------------------------------------------+
-// | lib-common.php                                                                |
+// | lib-common.php                                                            |
 // |                                                                           |
 // | Geeklog common library.                                                   |
 // +---------------------------------------------------------------------------+
@@ -53,7 +53,7 @@ error_reporting( E_ERROR | E_WARNING | E_PARSE | E_COMPILE_ERROR );
 * Turn this on to get various debug messages from the code in this library
 * @global Boolean $_COM_VERBOSE
 */
-$_COM_VERBOSE = true;
+$_COM_VERBOSE = false;
 
 /**
 * Prevent getting any surprise values. But we should really stop
@@ -70,8 +70,7 @@ $_REQUEST = array_merge($_GET, $_POST);
 *
 * Must make sure that the function hasn't been disabled before calling it.
 *
-*/
-
+*/ 
 if (function_exists('set_error_handler')) {
     if (PHP_VERSION >= 5) {
         /* Tell the error handler to use the default error reporting options.
@@ -97,7 +96,7 @@ require_once 'siteconfig.php';
 require_once $_CONF['path_system'] . 'classes/config.class.php';
 
 $config =& config::get_instance();
-$config->set_configfile($_CONF['path'] . 'db-tst.class.php');
+$config->set_configfile($_CONF['path'] . 'db-config.php');
 $config->load_baseconfig();
 $config->initConfig();
 
@@ -159,6 +158,7 @@ if (! $_CONF['have_pear']) {
         COM_errorLog('set_include_path failed - there may be problems using the PEAR classes.', 1);
     }
 }
+
 /**
 * Include plugin class.
 * This is a poorly implemented class that was not very well thought out.
@@ -457,12 +457,12 @@ function COM_getBlockTemplate( $blockname, $which, $position='' )
     {
         COM_errorLog( "_BLOCK_TEMPLATE[$blockname] = " . $_BLOCK_TEMPLATE[$blockname], 1 );
     }
-    
+
     if( !empty( $_BLOCK_TEMPLATE[$blockname] ))
-    { 
+    {
         $templates = explode( ',', $_BLOCK_TEMPLATE[$blockname] );
         if( $which == 'header' )
-        { 
+        {
             if( !empty( $templates[0] ))
             {
                 $template = $templates[0];
@@ -473,7 +473,7 @@ function COM_getBlockTemplate( $blockname, $which, $position='' )
             }
         }
         else
-        { 
+        {
             if( !empty( $templates[1] ))
             {
                 $template = $templates[1];
@@ -485,7 +485,7 @@ function COM_getBlockTemplate( $blockname, $which, $position='' )
         }
     }
     else
-    { 
+    {
         if( $which == 'header' )
         {
             $template = 'blockheader.thtml';
@@ -508,14 +508,14 @@ function COM_getBlockTemplate( $blockname, $which, $position='' )
         if( file_exists( $_CONF['path_layout'] . $positionSpecific ) )
         {
             $template = $positionSpecific;
-            
         }
     }
-    
+
     if( $_COM_VERBOSE )
     {
         COM_errorLog( "Block template for the $which of $blockname is: $template", 1 );
     }
+
     return $template;
 }
 
@@ -536,6 +536,7 @@ function COM_getThemes( $all = false )
     $index = 1;
 
     $themes = array();
+
     // If users aren't allowed to change their theme then only return the default theme
 
     if(( $_CONF['allow_user_themes'] == 0 ) && !$all )
@@ -582,9 +583,8 @@ function COM_renderMenu( &$header, $plugin_menu )
     $menuCounter = 0;
     $allowedCounter = 0;
     $counter = 0;
-echo 'here';
-    $num_plugins = sizeof( $plugin_menu );
 
+    $num_plugins = sizeof( $plugin_menu );
     if( ( $num_plugins == 0 ) && in_array( 'plugins', $_CONF['menu_elements'] ))
     {
         $key = array_search( 'plugins', $_CONF['menu_elements'] );
@@ -617,7 +617,7 @@ echo 'here';
         {
             case 'contribute':
                 if( empty( $topic ))
-                { 
+                {
                     $url = $_CONF['site_url'] . '/submit.php?type=story';
                     $header->set_var( 'current_topic', '' );
                 }
@@ -1074,7 +1074,7 @@ function COM_siteHeader( $what = 'menu', $pagetitle = '', $headercode = '' )
 
     // Get plugin menu options
     $plugin_menu = PLG_getMenuItems();
-    
+
     if( $_COM_VERBOSE )
     {
         COM_errorLog( 'num plugin menu items in header = ' . count( $plugin_menu ), 1 );
@@ -1791,41 +1791,23 @@ function COM_checkList($table, $selection, $where = '', $selected = '', $fieldna
 * under the GPL.  This is not used very much in the code but you can use it
 * if you see fit
 *
-* @param    array   $A      Array to loop through and print values for
-* @return   string  $retval	Formatted HTML List
+* @param    array   $array    Array to loop through and print values for
+* @return   string  $retval    Formatted HTML List
 *
 */
 
 function COM_debug($array)
 {
-	$retval = '';	
+    $retval = '';    
     if(!empty($array)) {
         $retval = '<ul><pre><p>---- DEBUG ----</p>';
         foreach($array as $k => $v) { 
             $retval .= sprintf("<li>%13s [%s]</li>\n", $k, $v);
         }
         $retval .= '<p>---------------</p></pre></ul>';
-    }	
+    }    
     return $retval;
 }
-
-/* REPLACED
-function COM_debug( $A )
-{
-    if( !empty( $A ))
-    {
-        $retval .= LB . '<pre><p>---- DEBUG ----</p>';
-
-        for( reset( $A ); $k = key( $A ); next( $A ))
-        { 
-            $retval .= sprintf( "<li>%13s [%s]</li>\n", $k, $A[$k] );
-        }
-
-        $retval .= '<p>---------------</p></pre>' . LB;
-    }
-    return $retval;
-}
-*/
 
 /**
 *
@@ -2422,7 +2404,7 @@ function COM_userMenu( $help='', $title='', $position='' )
 */
 function COM_adminMenu( $help = '', $title = '', $position = '' )
 {
-    global $_TABLES, $_USER, $_CONF, $LANG01, $_BLOCK_TEMPLATE,
+    global $_TABLES, $_USER, $_CONF, $LANG01, $LANG_ADMIN, $_BLOCK_TEMPLATE,
            $_DB_dbms, $config;
 
     $retval = '';
@@ -2633,7 +2615,7 @@ function COM_adminMenu( $help = '', $title = '', $position = '' )
             $url = $_CONF['site_admin_url'] . '/mail.php';
             $adminmenu->set_var( 'option_url', $url );
             $adminmenu->set_var( 'option_label', $LANG01[105] );
-            $adminmenu->set_var( 'option_count', 'N/A' );
+            $adminmenu->set_var( 'option_count', $LANG_ADMIN['na'] );
 
             $menu_item = $adminmenu->parse( 'item',
                     ( $thisUrl == $url ) ? 'current' : 'option' );
@@ -2666,7 +2648,7 @@ function COM_adminMenu( $help = '', $title = '', $position = '' )
             }
             else
             {
-                $adminmenu->set_var( 'option_count', 'N/A' );
+                $adminmenu->set_var( 'option_count', $LANG_ADMIN['na'] );
             }
 
             $menu_item = $adminmenu->parse( 'item',
@@ -2698,7 +2680,7 @@ function COM_adminMenu( $help = '', $title = '', $position = '' )
 
             if( empty( $plg->numsubmissions ))
             {
-                $adminmenu->set_var( 'option_count', 'N/A' );
+                $adminmenu->set_var( 'option_count', $LANG_ADMIN['na'] );
             }
             else
             {
@@ -2719,7 +2701,7 @@ function COM_adminMenu( $help = '', $title = '', $position = '' )
             $url = $_CONF['site_admin_url'] . '/database.php';
             $adminmenu->set_var( 'option_url', $url );
             $adminmenu->set_var( 'option_label', $LANG01[103] );
-            $adminmenu->set_var( 'option_count', 'N/A' );
+            $adminmenu->set_var( 'option_count', $LANG_ADMIN['na'] );
 
             $menu_item = $adminmenu->parse( 'item',
                     ( $thisUrl == $url ) ? 'current' : 'option' );
@@ -2737,7 +2719,7 @@ function COM_adminMenu( $help = '', $title = '', $position = '' )
                                     . '/docs/english/index.html');
             }
             $adminmenu->set_var('option_label', $LANG01[113]);
-            $adminmenu->set_var('option_count', 'N/A');
+            $adminmenu->set_var('option_count', $LANG_ADMIN['na']);
             $menu_item = $adminmenu->parse('item', 'option');
             $link_array[$LANG01[113]] = $menu_item;
         }
@@ -2814,49 +2796,52 @@ function COM_userComments( $sid, $title, $type='article', $order='', $mode='', $
 *
 * This will replace 'bad words' with something more appropriate
 *
-* @param	string	$message  String to check
+* @param        string      $Message        String to check
 * @see function COM_checkHTML
-* @return   string	$editedMessage	Edited $message
+* @return   string  Edited $Message
 *
 */
 
-function COM_checkWords($message )
+function COM_checkWords( $Message )
 {
     global $_CONF;
 
-    $editedMessage = $message;
+    $EditedMessage = $Message;
 
-    if($_CONF['censormode'] != 0 && is_array($_CONF['censorlist'])) {
-
-		$replacement = $_CONF['censorreplace'];
-		
-        switch($_CONF['censormode'])
+    if( $_CONF['censormode'] != 0 )
+    {
+        if( is_array( $_CONF['censorlist'] ))
         {
-        	case 1: # Exact match
-            	$RegExPrefix = '(\s*)';
-                $RegExSuffix = '(\W*)';
-                break;
+            $Replacement = $_CONF['censorreplace'];
 
-            case 2: # Word beginning
-                $RegExPrefix = '(\s*)';
-                $RegExSuffix = '(\w*)';
-                break;
+            switch( $_CONF['censormode'])
+            {
+                case 1: # Exact match
+                    $RegExPrefix = '(\s*)';
+                    $RegExSuffix = '(\W*)';
+                    break;
 
-            case 3: # Word fragment
-                $RegExPrefix   = '(\w*)';
-                $RegExSuffix   = '(\w*)';
-                break;
-        }
+                case 2: # Word beginning
+                    $RegExPrefix = '(\s*)';
+                    $RegExSuffix = '(\w*)';
+                    break;
 
-        foreach ($_CONF['censorlist'] as $c) {
-           if (!empty($c)) {
-                $editedMessage = MBYTE_eregi_replace($RegExPrefix . $c
-                . $RegExSuffix, "\\1$replacement\\2", $editedMessage);
-           }
+                case 3: # Word fragment
+                    $RegExPrefix   = '(\w*)';
+                    $RegExSuffix   = '(\w*)';
+                    break;
+            }
+
+            foreach ($_CONF['censorlist'] as $c) {
+                if (!empty($c)) {
+                    $EditedMessage = MBYTE_eregi_replace($RegExPrefix . $c
+                        . $RegExSuffix, "\\1$Replacement\\2", $EditedMessage);
+                }
+            }
         }
     }
-	
-    return $editedMessage;
+
+    return $EditedMessage;
 }
 
 /**
@@ -2873,9 +2858,9 @@ function COM_checkWords($message )
 *
 */
 
-function COM_killJS($message)
+function COM_killJS( $Message )
 {
-    return(preg_replace('/(\s)+[oO][nN](\w*) ?=/', '\1in\2=', $message));
+    return( preg_replace( '/(\s)+[oO][nN](\w*) ?=/', '\1in\2=', $Message ));
 }
 
 /**
@@ -2887,14 +2872,14 @@ function COM_killJS($message)
 * @see     COM_checkHTML
 *
 */
-function COM_handleCode($str)
+function COM_handleCode( $str )
 {
     $search  = array( '&',     '\\',    '<',    '>',    '[',     ']'     );
     $replace = array( '&amp;', '&#92;', '&lt;', '&gt;', '&#91;', '&#93;' );
 
-    $str = str_replace($search, $replace, $str);
+    $str = str_replace( $search, $replace, $str );
 
-    return($str);
+    return( $str );
 }
 
 /**
@@ -2925,7 +2910,6 @@ function COM_checkHTML( $str, $permissions = 'story.edit' )
     {
         $start_pos = MBYTE_strpos( MBYTE_strtolower( $str ), '[code]' );
         if( $start_pos !== false )
-		
         {
             $end_pos = MBYTE_strpos( MBYTE_strtolower( $str ), '[/code]' );
             if( $end_pos !== false )
@@ -2941,7 +2925,7 @@ function COM_checkHTML( $str, $permissions = 'story.edit' )
                 // Treat the rest of the text as code (so as not to lose any
                 // special characters). However, the calling entity should
                 // better be checking for missing [/code] before calling this
-                // function ... 
+                // function ...
                 $encoded = COM_handleCode( MBYTE_substr( $str, $start_pos + 6 ));
                 $encoded = '<pre><code>' . $encoded . '</code></pre>';
                 $str = MBYTE_substr( $str, 0, $start_pos ) . $encoded;
@@ -2997,16 +2981,15 @@ function COM_checkHTML( $str, $permissions = 'story.edit' )
     if( isset( $_CONF['allowed_protocols'] ) && is_array( $_CONF['allowed_protocols'] ) && ( sizeof( $_CONF['allowed_protocols'] ) > 0 ))
     {
         $filter->SetProtocols( $_CONF['allowed_protocols'] );
-		//var_dump($filter->allowed_protocols);
     }
     else
-    { 
+    {
         $filter->SetProtocols( array( 'http:', 'https:', 'ftp:' ));
     }
 
     if( empty( $permissions) || !SEC_hasRights( $permissions ) ||
             empty( $_CONF['admin_html'] ))
-    { 
+    {
         $html = $_CONF['user_html'];
     }
     else
@@ -3085,10 +3068,10 @@ function COM_makesid()
 *
 * @param    string    $email   Email address to verify
 * @return   boolean            True if valid otherwise false
-*	
+*
 */
 function COM_isEmail( $email )
-{ 
+{
     require_once( 'Mail/RFC822.php' );
 
     $rfc822 = new Mail_RFC822;
@@ -3976,9 +3959,9 @@ function COM_getDisplayName( $uid = '', $username='', $fullname='', $remoteusern
         }
 
         if( $_CONF['show_servicename'] )
-    {
-        return "$remoteusername@$remoteservice";
-    }
+        {
+            return "$remoteusername@$remoteservice";
+        }
         else
         {
             return $remoteusername;
@@ -4832,7 +4815,8 @@ function phpblock_whosonline()
         // note that we're overwriting the contents of $retval here
         if( $num_reg > 0 )
         {
-            $retval = $LANG01[112] . ': ' . $num_reg . '<br' . XHTML . '>';
+            $retval = $LANG01[112] . ': ' . COM_numberFormat($num_reg)
+                    . '<br' . XHTML . '>';
         }
         else
         {
@@ -4842,7 +4826,8 @@ function phpblock_whosonline()
 
     if( $num_anon > 0 )
     {
-        $retval .= $LANG01[41] . ': ' . $num_anon . '<br' . XHTML . '>';
+        $retval .= $LANG01[41] . ': ' . COM_numberFormat($num_anon)
+                . '<br' . XHTML . '>';
     }
 
     return $retval;
@@ -6597,7 +6582,7 @@ function COM_truncate( $text, $maxlen, $filler = '', $endchars = 0 )
 *
 * Uses (if available, and in this order)
 * - $LANG_CHARSET (from the current language file)
-* - $_CONF['default_charset'] (from sitetst.class.php)
+* - $_CONF['default_charset'] (from siteconfig.php)
 * - 'iso-8859-1' (hard-coded fallback)
 *
 * @return   string      character set, e.g. 'utf-8'
@@ -6714,6 +6699,7 @@ function COM_handleError($errno, $errstr, $errfile='', $errline=0, $errcontext='
             }
         }
     }
+
     // if we do not throw the error back to an admin, still log it in the error.log
     COM_errorLog("$errno - $errstr @ $errfile line $errline", 1);
 
@@ -6930,6 +6916,40 @@ function COM_output($display)
     }
 
     echo $display;
+}
+
+/**
+* Turn a piece of HTML into continuous(!) plain text
+*
+* This function removes HTML tags, line breaks, etc. and returns one long
+* line of text. This is useful for word counts (do an explode() on the result)
+* and for text excerpts.
+*
+* @param    string  $text   original text, including HTML and line breaks
+* @return   string          continuous plain text
+* 
+*/
+function COM_getTextContent($text)
+{
+    // replace <br> with spaces so that Text<br>Text becomes two words
+    $text = preg_replace('/\<br(\s*)?\/?\>/i', ' ', $text);
+
+    // add extra space between tags, e.g. <p>Text</p><p>Text</p>
+    $text = str_replace('><', '> <', $text);
+
+    // only now remove all HTML tags
+    $text = strip_tags($text);
+
+    // replace all tabs, newlines, and carrriage returns with spaces
+    $text = str_replace(array("\011", "\012", "\015"), ' ', $text);
+
+    // replace entities with plain spaces
+    $text = str_replace(array('&#20;', '&#160;', '&nbsp;'), ' ', $text);
+
+    // collapse whitespace
+    $text = preg_replace('/\s\s+/', ' ', $text);
+
+    return trim($text);
 }
 
 /**

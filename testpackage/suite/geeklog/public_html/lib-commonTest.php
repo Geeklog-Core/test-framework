@@ -134,25 +134,25 @@ class libcommonTest extends PHPUnit_Framework_TestCase
     public function testCheckHTMLWithBothCodeTags() {
         // Line 2896
         $this->assertEquals('<pre><code>&lt;!-- string --&gt;&#36;var&#92;n&#92;</code></pre>', 
-                            COM_checkHTML('<!-- string -->[cODe]<!-- string -->$var\n\\[/coDE]'));
+                            COM_checkHTML('<!-- string -->[cODe]<!-- string -->$var\\\n\\\[/coDE]'));
     }
     
     public function testCheckHTMLMissingLastCodeTag() {
         // Line 2923
         $this->assertEquals('<pre><code>&lt;!-- string --&gt;&#36;var&#92;n&#92;</code></pre>', 
-                            COM_checkHTML('<!-- string -->[Code]<!-- string -->$var\n\\'));
+                            COM_checkHTML('<!-- string -->[Code]<!-- string -->$var\\\\n\\\\'));
     }
     
     public function testCheckHTMLWithBothRawTags() {
         // Line 2923
         $this->assertEquals('<!--raw--><span class="raw">&lt;!-- string --&gt;&#36;var&#92;n&#92;</span><!--/raw-->', 
-                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\n\\[/RaW]'));
+                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\\\n\\\[/RaW]'));
     }
     
     public function testCheckHTMLMissingLastRawTag() {
         // Line 2923
         $this->assertEquals('<!--raw--><span class="raw">&lt;!-- string --&gt;&#36;var&#92;n&#92;</span><!--/raw-->', 
-                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\n\\'));
+                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\\\n\\\\'));
     }
     
     public function testCheckHTMLWithBothCodeTagsAndCONFSkip_html_filter_for_rootEquals0() {
@@ -161,7 +161,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
         $_CONF['skip_html_filter_for_root'] = 1;
         $_GROUPS['Root'] = 'Root';
         $this->assertEquals('<!-- string --><pre><code>&lt;!-- string --&gt;&amp;#36;var&amp;#092;n&amp;#092;</code></pre>', 
-                            COM_checkHTML('<!-- string -->[cODe]<!-- string -->$var\n\\[/coDE]'));
+                            COM_checkHTML('<!-- string -->[cODe]<!-- string -->$var\\\n\\\\[/coDE]'));
     }
     
     public function testCheckHTMLMissingLastCodeTagCONFSkip_html_filter_for_rootEquals0() {
@@ -170,7 +170,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
         $_CONF['skip_html_filter_for_root'] = 1;
         $_GROUPS['Root'] = 'Root';
         $this->assertEquals('<!-- string --><pre><code>&lt;!-- string --&gt;&amp;#36;var&amp;#092;n&amp;#092;</code></pre>', 
-                            COM_checkHTML('<!-- string -->[Code]<!-- string -->$var\n\\'));
+                            COM_checkHTML('<!-- string -->[Code]<!-- string -->$var\\\n\\\\'));
     }
     
     public function testCheckHTMLWithBothRawTagsCONFSkip_html_filter_for_rootEquals0() {
@@ -179,7 +179,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
         $_CONF['skip_html_filter_for_root'] = 1;
         $_GROUPS['Root'] = 'Root';
         $this->assertEquals('<!-- string -->[raw2]&lt;!-- string --&gt;&amp;#36;var&amp;#092;n&amp;#092;[/raw2]', 
-                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\n\\[/RaW]'));
+                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\\\n\\\[/RaW]'));
     }
     
     public function testCheckHTMLMissingLastRawTagCONFSkip_html_filter_for_rootEquals0() {
@@ -188,7 +188,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
         $_CONF['skip_html_filter_for_root'] = 1;
         $_GROUPS['Root'] = 'Root';
         $this->assertEquals('<!-- string -->[raw2]&lt;!-- string --&gt;&amp;#36;var&amp;#092;n&amp;#092;[/raw2]', 
-                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\n\\'));
+                            COM_checkHTML('<!-- string -->[RAw]<!-- string -->$var\\\n\\\\'));
     }
     
     public function testUndoSpecialChars() {
@@ -268,9 +268,12 @@ class libcommonTest extends PHPUnit_Framework_TestCase
     
     public function testCreateWithHttpsUrl() {
         $url = 'https://www.example.com/image.png';
-        $fixture = '<img src="' . $url . '" alt="">';
+        $alt = 'An image';
+        $attr = array('id'=>'anImage');
+        
+        $result = '<img src="'.$url.'" id="anImage" alt="An image">';
  
-        $this->assertEquals(1, COM_createImage($url));
+        $this->assertEquals($result, COM_createImage($url, $alt, $attr));
     }
  
     public function testCreateWithoutUrl() {

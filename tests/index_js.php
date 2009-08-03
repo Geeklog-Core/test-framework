@@ -96,8 +96,8 @@ $(document).ready(function(){
         $("span#logs_button").show();
         $("#logslist").html(logsList);        
     });
+    
 });
-
 // Read features
 // Renders logs from history 
 $("input#logs_submit").click(function() {
@@ -115,10 +115,10 @@ $("input#logs_submit").click(function() {
 // Choose how many existing logs to list
 $("input#howMany").keyup(function() {
     $("span#logs_loader").show();
-    $.post(path+"showLogList.php", $("#howMany").serialize(), function(logsList){        
-        $("span#logs_loader").hide();  
+    $.post(path+"showLogList.php", $("#howMany").serialize(), function(logsList){         
           $("span#logs_button").show();
-          $("#logslist").html(logsList);        
+          $("#logslist").html(logsList);    
+          $("span#logs_loader").hide(); 
     });
 });
 
@@ -134,7 +134,6 @@ $("input#logs_delete").click(function() {
         });
     });    
 });
-
 
 // Run selected tests and return results
 $("input#runTests_submit").click(function() {
