@@ -37,18 +37,12 @@ class Tests
     */
     public $data;
     
-    public function tests() {
-        if(!Tst::access(array(1,2))) {
-            exit('<span class="disabled">'.Tst::$disabledMessage.'</span>');    
-        }    
-    }    
-        
     /*
     * Runs tests, returns console output. Log name is Unix time at time run.
     * @param    array   $data            Test files to run, defaults to $POST
     * @param    int     $JSONresults    Flag if results should be logged to JSON file, default on
     * @param    int     $consoleOutput  Flag if console output should be collected and displayed, default on
-	* @param    int     $showLogs  		Flag if JSON log should be loaded and displayed after tests are run, default on
+    * @param    int     $showLogs          Flag if JSON log should be loaded and displayed after tests are run, default on
     * @return   array   $retval            Formatted PHPUnit console output and JSON results (if requested)
     *
     */
