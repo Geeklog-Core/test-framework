@@ -46,12 +46,13 @@ class Tests
     /*
     * Runs tests, returns console output. Log name is Unix time at time run.
     * @param    array   $data            Test files to run, defaults to $POST
-    * @param    int     $JSONresults    Flag if XML results should be collected and displayed, default on
+    * @param    int     $JSONresults    Flag if results should be logged to JSON file, default on
     * @param    int     $consoleOutput  Flag if console output should be collected and displayed, default on
+	* @param    int     $showLogs  		Flag if JSON log should be loaded and displayed after tests are run, default on
     * @return   array   $retval            Formatted PHPUnit console output and JSON results (if requested)
     *
     */
-    public function runTests($data = '', $JSONresults = 1, $consoleOutput = 1) { 
+    public function runTests($data = '', $JSONresults = 1, $consoleOutput = 1, $showLogs = 1) { 
         Tst::access(array(2),1);
         $retval = array();        
 
@@ -79,7 +80,7 @@ class Tests
         if(Tst::access(array(1)) && $consoleOutput == 1) {
             $retval['simple'] = $this->getConsoleOutput($output);
         }
-        if(Tst::access(array(1)) && $JSONresults == 1) {                            
+        if(Tst::access(array(1)) && $showLogs == 1) {
             $retval['advanced'] = $this->createTable($this->getJSONResults(1,1,$testid));
         }
         
@@ -291,7 +292,7 @@ class Tests
         if(!empty($ret)) {
             return $ret;
         } else {
-            exit ('Tests.class.php line 292: There were no log files to read, possible error running tests.');
+            exit ('There were no log files to read, possible error running tests. Ensure PHPUnit is functioning correctly, and your folder permissions allow this testpackage and PHPUnit to write logs.');
         }
     }
     

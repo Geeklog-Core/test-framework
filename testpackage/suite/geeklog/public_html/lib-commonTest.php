@@ -233,7 +233,7 @@ class libcommonTest extends PHPUnit_Framework_TestCase
     }
     
     public function testIsEmailReturnFalseForInvalidEmails() {
-        // Line 3090
+        // Line 3075
         // Commented emails should be invalid, 
         // but pass PEAR isValidInetAddress validation.
         $invalidemails = array(
@@ -255,7 +255,44 @@ class libcommonTest extends PHPUnit_Framework_TestCase
             $this->assertFalse(COM_isEmail($invalid), 'Error asserting '.$invalid.' is an invalid email');
         }
     }
+	
+	public function testEmailEscape() {
+		// Line 3090
+		$email = 'johndoe@domain.com';
+		
+		$scenario['CUSTOM_emailEscape'] = function_exists('CUSTOM_emailEscape');
+		$scenario['iconv_mime_encode'] = function_exists('iconv_mime_encode');
+		$scenario['preg_match'] = preg_match('/[^0-9a-z\-\.,:;\?! ]/i', $email);
+		
+		foreach($scenario as $function => $exists) {
+			$escapedEmail = '=?iso-8859-1?B?am9obmRvZUBkb21haW4uY29t?=';
+			if($exists) {
+				$this->assertEquals($escapedEmail, COM_emailEscape($email), 'Error tested using '.$function);
+			}
+		}
+	}
+	
+	public function testFormatEmailAddressUTF8() {
+		// Line 3133
+		$email = COM_formatEmailAddress('John\\ Doe','john.doe@example.com');
+		$formattedEmail = '=?iso-8859-1?B?Sm9oblwgRG9l?= <john.doe@example.com>';
+		$this->assertEquals($formattedEmail, $email);
+	}
+	
+	public function testFormatEmailAddress() {
+		// Line 3133
+		$email = COM_formatEmailAddress('John Doe','john.doe@example.com');
+		$formattedEmail = 'John Doe <john.doe@example.com>';
+		$this->assertEquals($formattedEmail, $email);
+	}
     
+	public function testShowMessageFromParameter() {
+		// Line 4527
+		$_GET['msg'] = 6;
+		$msg = COM_showMessageFromParameter();
+		$this->assertTrue(!empty($msg));
+	}
+	
     public function testCreateWithHttpUrl() {
         $url = 'http://www.example.com/image.png';
         $fixture = '<img src="' . $url . '" alt="">'; 

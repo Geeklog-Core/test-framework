@@ -42,11 +42,21 @@ require_once Tst::$tests.'files/classes/tests.class.php';
           <span id="runTests_button">
           <input type="button" value="Test Files" id="runTests_submit"/>
           </span> <span id="runTests_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Tests are loading...'></span>
-          <input type="checkbox" id="logResults" name="logResults" value="1" checked="checked"/>
-          Log results
-          <input type="checkbox" id="consoleOutput" name="consoleOutput" value="1" checked="checked"/>
-          Console output
-          <h3>Selecting a folder will include all tests inside</h3>
+          <div class="right">
+            <ul id="options">
+              <li>
+                <input type="checkbox" id="logResults" name="logResults" value="1" checked="checked"/>
+                Log results</li>
+              <li>
+                <input type="checkbox" id="consoleOutput" name="consoleOutput" value="1" checked="checked"/>
+                Console output</li>
+              <li>
+                <input type="checkbox" id="showLog" name="showLog" value="1" checked="checked"/>
+                Show log when completed</li>
+            </ul>
+          </div>
+          <h3>Selecting a folder will <br />
+            include all tests inside</h3>
           <?php echo php_file_tree(Tst::$tests.'suite/', "[link]"); ?>
           <? else: echo '<span class="disabled">'.Tst::$disabledMessage.'</span>'; endif;?>
         </fieldset>
@@ -125,6 +135,7 @@ $("input#howMany").keyup(function() {
 // Write features
 // Deletes logs from history 
 $("input#logs_delete").click(function() {
+    alert('Are you sure you want to delete the selected log(s)?');
     $("span#logs_loader").show();
     $.post(path+"deleteLogs.php", $("#logs").serialize(), function(json){
         $.post(path+"showLogList.php", $("#howMany").serialize(), function(logsList){ 
@@ -149,9 +160,10 @@ $("input#runTests_submit").click(function() {
         $("div#tabs-3").html(results.simple);
         if($("input#consoleOutput").serialize() == 'consoleOutput=1') {
             $tabs.tabs('select', 2);
-        } else if($("input#logResults").serialize() == 'logResults=1') {
+        } else if($("input#showLogs").serialize() == 'showLogs=1') {
             $tabs.tabs('select', 1);
-        }  
+        } else {
+        }
         $.post(path+"showLogList.php", $("#howMany").serialize(), function(logsList){                
             $("#logslist").html(logsList);
         });

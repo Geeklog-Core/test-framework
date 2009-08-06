@@ -3,6 +3,10 @@ body, html {
     margin: 0;
     padding: 0;
 }
+#options {
+	margin:0;
+	padding:0;
+}
 #about {
     float:left;
 }

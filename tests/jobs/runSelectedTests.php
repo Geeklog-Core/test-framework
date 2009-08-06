@@ -10,7 +10,7 @@ Tst::access(array(2,3),1);
 require_once Tst::$tests.'files/classes/tests.class.php';
 
 $tests = new Tests;
-$output = json_encode($tests->runTests($_POST['test'], $_POST['logResults'], $_POST['consoleOutput']));
+$output = json_encode($tests->runTests($_POST['test'], $_POST['logResults'], $_POST['consoleOutput'], $_POST['showLogs']));
 echo $output;
 
 ?>
