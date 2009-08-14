@@ -71,7 +71,7 @@ require_once Tst::$tests.'files/classes/tests.class.php';
             <input id="howMany" type="text" name="howMany" value="5" size="2" />
             <span id="logs_button">
             <input type="button" value="View" id="logs_submit"/>
-            <?php if($Tst::acccess(array(2,3)): ?>
+            <?php if(Tst::access(array(2,3))): ?>
             <input type="button" value="Delete" id="logs_delete"/>
             <? endif; ?>
             </span> <span id="logs_loader"><img class='loader' src="gui/images/ajax-loader.gif" alt='Logs are loading...'></span>
@@ -83,10 +83,10 @@ require_once Tst::$tests.'files/classes/tests.class.php';
       </div>
       <div id="clear"></div>
     </div>
-    <?php if(Tst::access(array(1,2,3))): ?>
+    <?php if(Tst::access(array(3))): ?>
     <div id="tabs-2"></div>
     <? endif;?>
-    <?php if(Tst::access(array(1,2,3))): ?>
+    <?php if(Tst::access(array(2,3))): ?>
     <div id="tabs-3"></div>
     <?  endif;?>
   </div>

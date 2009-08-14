@@ -111,7 +111,7 @@ class Tests
     *
     */     
     public function getJSONResults($test = 1, $howMany = 1, $testid = '') {        
-        if(Tst::access(array(1))) {
+        if(Tst::access(array(1,3))) {
             $testentry = array();
             if(empty($testid)) {
                 $testentries = $this->readMasterLog($test, $howMany); 
@@ -176,8 +176,8 @@ class Tests
     *                                                         'message' => 'Some message')));
     */
     public function createTable($suites) { 
-        $retval = '';
-        if(Tst::access(array(1))) {
+        if(Tst::access(array(1,3))) {
+            $retval = '';
             $info = '';
             $allAnchors = '';
             $allTests = 0;
