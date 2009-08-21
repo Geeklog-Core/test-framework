@@ -35,6 +35,8 @@ class Tst {
     
     /**
     * Return true if access level matches parameter provided, else returns false
+    * e.g: if a function should have an enabled GUI and write privileges enabled to be used,
+    * we would put the function inside 'if(Tst::access(array(2,3))) {'.
     * @param    array    $roles    Roles to be checked 
     * @param    array    $exit    (Optional) Whether to exit on failure
     * @return   bool    $retval    Returns true if all roles are allowed

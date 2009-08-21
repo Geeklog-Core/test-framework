@@ -83,10 +83,10 @@ require_once Tst::$tests.'files/classes/tests.class.php';
       </div>
       <div id="clear"></div>
     </div>
-    <?php if(Tst::access(array(1,2,3))): ?>
+    <?php if(Tst::access(array(3))): ?>
     <div id="tabs-2"></div>
     <? endif;?>
-    <?php if(Tst::access(array(1,2,3))): ?>
+    <?php if(Tst::access(array(2,3))): ?>
     <div id="tabs-3"></div>
     <?  endif;?>
   </div>

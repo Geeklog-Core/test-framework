@@ -31,8 +31,8 @@ Note: the testpackage folder can go anywhere, but it is not reccomended to have 
     A. Under $public, enter the path to Geeklog's public_html folder, e.g: 'c:/xampplite/htdocs/public_html/'.
     B. Under $root, enter the path to Geeklog's root folder, where the main Geeklog files reside, e.g: 'c:/xampplite/geeklog/'.
     C. Under $tests, enter the path to the testpackage folder you just placed, e.g: 'c:/xampplite/geeklog/testpackage/'.
-	D. Under $access, enter the permissions level you would like the framework to use. This can be changed at any time.
-	E. Under $disabledMessage, enter a message you would like to have displayed when suite features are disabled.
+    D. Under $access, enter the permissions level you would like the framework to use. This can be changed at any time.
+    E. Under $disabledMessage, enter a message you would like to have displayed when suite features are disabled.
     Note: Use absolute paths!
 
 5. Open public_html/tests/tst.class.php. Change the require_once path to /path/to/testpackage/config.php.
@@ -46,8 +46,8 @@ III. USE
 
     1. Running tests
     You have two ways you can run your tests. One is by using a simple GUI included with the test package, and the second is by using the command line. 
-    Note: The GUI only fully supports Firefox >3 with javascript enabled. The barest of functionality is offered without javascript enabled in tests/gui/index.php, but it is ugly. Be warned!
-    To use the GUI, navigate with your browser to the tests folder in your Geeklog site (e.g: http://localhost/public_html/tests). You should be at a page called index_js.php (if you have javascript turned off, index.php). Under the left panel titled 'Run Tests' is a tree structure of all available tests for the Geeklog test framework. Select any number of tests you like (if you choose a folder, all the tests inside will be included), choose to have the console output returned and logs created (reccomended), and click 'Run Tests'. It may take a few minutes, so be patient.
+    Note: The GUI only fully supports Firefox >3 with javascript enabled.
+    To use the GUI, navigate with your browser to the tests folder in your Geeklog site (e.g: http://localhost/public_html/tests). You should be at a page called index_js.php. Under the left panel titled 'Run Tests' is a tree structure of all available tests for the Geeklog test framework. Select any number of tests you like (if you choose a folder, all the tests inside will be included), choose to have the console output returned and logs created (reccomended), and click 'Run Tests'. It may take a few minutes, so be patient.
     To your tests using your console, open the console and navigate to the public_html/tests folder. From here, you can type 'phpunit (path/to/testclass/testname)', and the test you specify will be run, with the results displayed in the console. If you specify a folder, all tests inside will be run. 
 Note: this will only work if you are in the tests root folder (with tst.class.php). This is because of the path structure.
 You can find more information in the PHPUnit manual, at http://www.phpunit.de/manual/3.3/en/textui.html.
