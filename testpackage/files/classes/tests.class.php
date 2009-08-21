@@ -37,6 +37,12 @@ class Tests
     */
     public $data;
     
+    /**
+    * Any errors encountered will be stored here
+    *
+    */
+    public $error=array();    
+    
     /*
     * Runs tests, returns console output. Log name is Unix time at time run.
     * @param    array   $data            Test files to run, defaults to $POST
@@ -77,12 +83,10 @@ class Tests
         if(Tst::access(array(1)) && $showLogs == 1) {
             $retval['advanced'] = $this->createTable($this->getJSONResults(1,1,$testid));
         }
-        
-        if($success) {
-            return $retval;
-        } else {
-            exit('There was an error updating log');
+        if(!empty($this->error)) {
+            $retval['error'] = implode("\n",$this->error);
         }
+        return $retval;
     }
     
     /*
@@ -283,11 +287,11 @@ class Tests
                 closedir($handle);
             }    
         }
-        if(!empty($ret)) {
-            return $ret;
-        } else {
-            exit ('There were no log files to read, possible error running tests. Ensure PHPUnit is functioning correctly, and your folder permissions allow this testpackage and PHPUnit to write logs.');
+        if(empty($ret)) {
+            $this->error[] = 'getFiles: There were no log files to read, possible error running tests. Ensure PHPUnit is functioning correctly, and your folder permissions allow this testpackage and PHPUnit to write logs.';
         }
+
+        return $ret;
     }
     
     /*
@@ -349,7 +353,10 @@ class Tests
         $ret = '';
         if(Tst::access(array(2))) {
             $file = "masterlog.txt";
-            $handle = fopen($path.$file, 'a') or die("There was a problem opening master log");
+            $handle = fopen($path.$file, 'a');
+            if(!handle) {
+                $this->error[] = 'writeMasterLog: There was a problem opening master log.';
+            }
             $entry = "$testid - $today\n";
             $ret = fwrite($handle, $entry);
             fclose($handle);
@@ -380,7 +387,10 @@ class Tests
             }
             
             // Write edited array back into log
-            $handle = fopen($path.$file, 'w') or die("There was a problem opening masterlog.txt."); 
+            $handle = fopen($path.$file, 'w');
+            if(!handle) {
+                $this->error[] = 'deleteLogs: There was a problem opening masterlog.txt.';
+            }
             foreach($entries as $entry) {
                    $string .= $entry."\n";
             }
@@ -432,7 +442,7 @@ class Tests
                     $ret[] = '<i>There are no logs to display.</i>';
                 }
             } else {
-                $ret[] = '<i>There was a problem creating directory or masterlog.txt.</i>';
+                $this->error[] = '<i>displayLogList: There was a problem creating directory or masterlog.txt.</i>';
             }
         }
         return $ret;

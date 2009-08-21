@@ -160,6 +160,9 @@ $("input#runTests_submit").click(function() {
         $("div#tabs-2").html(results.advanced);
         $("div#tabs-3").html();
         $("div#tabs-3").html(results.simple);
+        if(results.error!=null || typeof(results.error)!="undefined"){
+            alert(results.error);
+        }
         // Which tab to select when data is returned
         if($("input#consoleOutput").serialize() == 'consoleOutput=1') {
             // Prefer console output
