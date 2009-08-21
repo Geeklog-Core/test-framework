@@ -11,7 +11,7 @@ class Tst {
     * 2 - Suite allows write operations (e.g: tests can be run, but no results viewed)
     * 3 - GUI is enabled
     */
-    public static $access = array(1,3);
+    public static $access = array(1,2,3);
     
     /**
     * Message to display when feature is disabled in GUI

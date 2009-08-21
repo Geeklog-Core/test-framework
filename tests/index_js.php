@@ -160,11 +160,13 @@ $("input#runTests_submit").click(function() {
         $("div#tabs-2").html(results.advanced);
         $("div#tabs-3").html();
         $("div#tabs-3").html(results.simple);
+        // Which tab to select when data is returned
         if($("input#consoleOutput").serialize() == 'consoleOutput=1') {
+            // Prefer console output
             $tabs.tabs('select', 2);
-        } else if($("input#showLogs").serialize() == 'showLogs=1') {
+        } else if($("input#showLogs").serialize() == 'showLog=1') {
+            // If they didn't want console output, but wanted logs, we'll show logs
             $tabs.tabs('select', 1);
-        } else {
         }
         $.post(path+"showLogList.php", $("#howMany").serialize(), function(logsList){                
             $("#logslist").html(logsList);
