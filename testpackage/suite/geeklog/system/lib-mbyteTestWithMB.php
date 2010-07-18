@@ -18,7 +18,6 @@ class libmbyteWithMB extends PHPUnit_Framework_TestCase
     }
     
     public function testMBYTE_languageListDefault() {
-		echo $_CONF['path_language'];
         $dummy = array(
                 'afrikaans_utf-8' => 'Afrikaans',
                 'bosnian_utf-8' => 'Bosnian',
