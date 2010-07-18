@@ -301,7 +301,8 @@ class calendarClass extends PHPUnit_Framework_TestCase
     public function testSetCalendarMatrixReturnEmptyStringBeforeMonthStartWkStrtMon() {
         $this->c->_week_start = 'Mon';
         $this->c->setCalendarMatrix(5, 2009);
-        $this->assertEquals('', $this->c->_matrix[6][1]);
+        //$this->assertEquals('', $this->c->_matrix[6][1]);
+        $this->assertFalse(isset($this->c->_matrix[6][1]));
     }
     
     public function testGetDayDataReturnsEmptyStringWithoutMatrixSet() {
