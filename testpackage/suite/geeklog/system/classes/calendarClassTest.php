@@ -173,11 +173,11 @@ class calendarClass extends PHPUnit_Framework_TestCase
             'november'  => 'Noviembre',
             'december'  => 'Diciembre');    
         $this->c->setLanguage($this->lang_days, $this->lang_months);
-        foreach ($this->lang_days as $k) {
+        foreach ($this->lang_days as $k => $v) {
             $this->assertEquals($this->lang_days[$k], $this->c->_lang_days[$k], 
                                 'Error translating _lang_days['.$k.'] to Spanish.');
         }
-        foreach ($this->lang_months as $k) {
+        foreach ($this->lang_months as $k => $v) {
             $this->assertEquals($this->lang_months[$k], $this->c->_lang_months[$k], 
                                 'Error translating _lang_months['.$k.'] to Spanish.');
         }
