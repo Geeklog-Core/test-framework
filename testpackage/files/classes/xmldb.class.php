@@ -7,8 +7,8 @@
 // | xmldb.class.php                                                           |
 // |                                                                           |
 // | Geeklog functions to interact with XML stub database for PHPunit          |
-// +---------------------------------------------------------------------------+                                                    |
-// | Copyright (C) 2009 by the following authors:                              |
+// +---------------------------------------------------------------------------+
+// | Copyright (C) 2009-2010 by the following authors:                         |
 // |                                                                           |
 // | Authors: Sean Clark       - smclark89 AT gmail DOT com                    |
 // +---------------------------------------------------------------------------+
@@ -86,13 +86,15 @@ class Xmldb {
                 case 'path_themes':
                     $_CONF[(string) $value->name] = Tst::$public.'layout/';
                     break;
-                default:                
-                    $_CONF[(string) $value->name] = unserialize((string) $value->value);
+                default:
+                    if ($value->value != 'unset') {
+                        $_CONF[(string) $value->name] = unserialize((string) $value->value);
+                    }
             }
         }
         return $_CONF;
     }
-    
+
 	/**
     * Retrieves Activated plugins from XML database.
     *
