@@ -6,6 +6,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once 'tst.class.php';
+require_once Tst::$root.'system/classes/timezoneconfig.class.php';
 require_once Tst::$root.'system/classes/calendar.class.php';
 
 class calendarClass extends PHPUnit_Framework_TestCase 
@@ -13,6 +14,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
     private $c;
     
     protected function setUp() {
+        TimeZoneConfig::setSystemTimeZone();
         $this->c = new Calendar;
     }
     
@@ -170,7 +172,7 @@ class calendarClass extends PHPUnit_Framework_TestCase
             'october'   => 'Octubre',
             'november'  => 'Noviembre',
             'december'  => 'Diciembre');    
-        $this->c->setLanguage($this->lang_days, $this->lang_month);            
+        $this->c->setLanguage($this->lang_days, $this->lang_months);
         foreach ($this->lang_days as $k) {
             $this->assertEquals($this->lang_days[$k], $this->c->_lang_days[$k], 
                                 'Error translating _lang_days['.$k.'] to Spanish.');
