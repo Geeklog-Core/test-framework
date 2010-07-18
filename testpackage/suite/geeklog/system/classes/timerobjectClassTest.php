@@ -34,7 +34,7 @@ class timerobjectClass extends PHPUnit_Framework_TestCase
     public function testStartTimerReturnsFloat() {
         $this->t->_starttime = 'String';
         $this->t->startTimer();
-        $this->assertType(float, $this->t->_starttime);
+        $this->assertType('float', $this->t->_starttime);
     }
     
     public function testStopTimerEqualsDummy() {
@@ -64,7 +64,7 @@ class timerobjectClass extends PHPUnit_Framework_TestCase
 
     public function testStopTimerReturnsString() {
         $this->t->_starttime = .56;
-        $this->assertType(string, $this->t->stopTimer());
+        $this->assertType('string', $this->t->stopTimer());
     }
     
     public function testRestartResets_Endtime() {
