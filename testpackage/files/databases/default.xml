@@ -2436,9 +2436,9 @@
     <gl_conf_values>
         <name>timezone</name>
         <value>unset</value>
-        <type>text</type>
+        <type>select</type>
         <group_name>Core</group_name>
-        <default_value>s:9:&quot;Etc/GMT-6&quot;;</default_value>
+        <default_value>s:3:&quot;UTC&quot;;</default_value>
         <subgroup>6</subgroup>
         <selectionArray>-1</selectionArray>
         <sort_order>490</sort_order>
