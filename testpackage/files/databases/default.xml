@@ -2940,6 +2940,39 @@
         <fieldset>40</fieldset>
     </gl_conf_values>
     <gl_conf_values>
+        <name>meta_tags</name>
+        <value>i:0;</value>
+        <type>select</type>
+        <group_name>Core</group_name>
+        <default_value>i:0;</default_value>
+        <subgroup>0</subgroup>
+        <selectionArray>23</selectionArray>
+        <sort_order>2000</sort_order>
+        <fieldset>0</fieldset>
+    </gl_conf_values>
+    <gl_conf_values>
+        <name>meta_description</name>
+        <value>s:25:&quot;Geeklog - The secure CMS.&quot;;</value>
+        <type>text</type>
+        <group_name>Core</group_name>
+        <default_value>s:25:&quot;Geeklog - The secure CMS.&quot;;</default_value>
+        <subgroup>0</subgroup>
+        <selectionArray>-1</selectionArray>
+        <sort_order>2010</sort_order>
+        <fieldset>0</fieldset>
+    </gl_conf_values>
+    <gl_conf_values>
+        <name>meta_keywords</name>
+        <value>s:68:&quot;Geeklog, Blog, Content Management System, CMS, Open Source, Security&quot;;</value>
+        <type>text</type>
+        <group_name>Core</group_name>
+        <default_value>s:68:&quot;Geeklog, Blog, Content Management System, CMS, Open Source, Security&quot;;</default_value>
+        <subgroup>0</subgroup>
+        <selectionArray>-1</selectionArray>
+        <sort_order>2020</sort_order>
+        <fieldset>0</fieldset>
+    </gl_conf_values>
+    <gl_conf_values>
         <name>sg_main</name>
         <value>N;</value>
         <type>subgroup</type>
@@ -3872,6 +3905,17 @@
         <subgroup>4</subgroup>
         <selectionArray>-1</selectionArray>
         <sort_order>1684</sort_order>
+        <fieldset>21</fieldset>
+    </gl_conf_values>
+    <gl_conf_values>
+        <name>article_comment_close_enabled</name>
+        <value>i:0;</value>
+        <type>select</type>
+        <group_name>Core</group_name>
+        <default_value>i:0;</default_value>
+        <subgroup>4</subgroup>
+        <selectionArray>0</selectionArray>
+        <sort_order>1685</sort_order>
         <fieldset>21</fieldset>
     </gl_conf_values>
     <gl_conf_values>
@@ -5009,6 +5053,8 @@ Password: &lt;b&gt;password&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;And don't forge
         <postmode>html</postmode>
         <advanced_editor_mode>0</advanced_editor_mode>
         <frontpage>1</frontpage>
+        <meta_description></meta_description>
+        <meta_keywords></meta_keywords>
         <owner_id>2</owner_id>
         <group_id>3</group_id>
         <perm_owner>3</perm_owner>
@@ -5054,6 +5100,8 @@ Password: &lt;b&gt;password&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;And don't forge
         <tid>General</tid>
         <topic>General News</topic>
         <imageurl>/images/topics/topic_news.gif</imageurl>
+        <meta_description></meta_description>
+        <meta_keywords></meta_keywords>
         <sortnum>1</sortnum>
         <limitnews>10</limitnews>
         <is_default>0</is_default>
@@ -5069,6 +5117,8 @@ Password: &lt;b&gt;password&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;And don't forge
         <tid>Geeklog</tid>
         <topic>Geeklog</topic>
         <imageurl>/images/topics/topic_gl.gif</imageurl>
+        <meta_description></meta_description>
+        <meta_keywords></meta_keywords>
         <sortnum>2</sortnum>
         <limitnews>10</limitnews>
         <is_default>0</is_default>
