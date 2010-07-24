@@ -19,8 +19,8 @@ class timerobjectClass extends PHPUnit_Framework_TestCase
     
     public function testSetPrecisionReturnsDecimalPlaces() {
         $this->t->_precision = 0;
-        $this->t->setPrecision(4);
-        $this->assertEquals(4, $this->t->_precision);
+        $this->t->setPrecision(3);
+        $this->assertEquals(3, $this->t->_precision);
     }
 
     public function testStartTimerEqualsDummy() {
@@ -57,8 +57,8 @@ class timerobjectClass extends PHPUnit_Framework_TestCase
         $mtime = microtime();
         $mtime = explode(' ',$mtime);
         $var1 = $mtime[1] + $mtime[0];
-        $var2 = sprintf('%.3f', $var1);        
-        $this->t->_precision = 3;
+        $var2 = sprintf('%.2f', $var1);        
+        $this->t->_precision = 2;
         $this->assertEquals($var2, $this->t->stopTimer());
     }
 
