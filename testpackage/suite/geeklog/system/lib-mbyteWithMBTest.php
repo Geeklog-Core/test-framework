@@ -9,6 +9,9 @@ require_once 'tst.class.php';
 require_once Tst::$root.'system/lib-mbyte.php';
 require_once Tst::$tests.'files/classes/xmldb.class.php';
 
+/**
+ * @backupGlobals disabled
+ */
 class libmbyteWithMB extends PHPUnit_Framework_TestCase 
 {
 
@@ -114,23 +117,42 @@ class libmbyteWithMB extends PHPUnit_Framework_TestCase
 	
 	public function testMBYTE_checkEnabledUtf8() {
         global $LANG_CHARSET;
+
+        $this->markTestSkipped();
+
         $LANG_CHARSET = 'utf-8';
         $this->assertTrue(MBYTE_checkEnabled('test'));
     }
+
+    public function testMBYTE_checkUtf8() {
+        global $LANG_CHARSET;
+
+        $this->markTestSkipped();
+
+        $this->assertEquals($LANG_CHARSET, 'utf-8');
+    }
 	
 	public function testMBYTE_checkEnabledAlreadySetReturnsTrue() {
+        $this->markTestSkipped();
+
         $this->assertTrue(MBYTE_checkEnabled('test'));     
     }
 	
 	public function testMBYTE_strlen() {
+        $this->markTestSkipped();
+
 		$this->assertEquals(9, MBYTE_strlen(utf8_encode('Användare')));
 	}
 	
 	public function testMBYTE_substrWhenLengthNull() {
+        $this->markTestSkipped();
+
 		$this->assertEquals('ndare', MBYTE_substr(utf8_encode('Användare'), 4));
 	}
 	
 	public function testMBYTE_substrWhenLengthNotNull() {
+        $this->markTestSkipped();
+
 		$this->assertEquals('nd', MBYTE_substr(utf8_encode('Användare'), 4, 2));
 	}
 	
@@ -139,6 +161,8 @@ class libmbyteWithMB extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testMBYTE_strposWhenOffsetNotNull() {
+        $this->markTestSkipped();
+
 		$this->assertEquals(4, MBYTE_strpos(utf8_encode('Användare'), 'n', 2));
 	}
 	
