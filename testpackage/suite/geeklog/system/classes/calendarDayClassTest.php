@@ -1,14 +1,14 @@
 <?php
 
 /**
-* Simple tests for COM_createImage
+* Simple tests for the CalendarDay class
 */
 
 require_once 'PHPUnit/Framework.php';
 require_once 'tst.class.php';
 require_once Tst::$root.'system/classes/calendar.class.php';
  
-class CalendarDayTest extends PHPUnit_Framework_TestCase 
+class calendarDayClass extends PHPUnit_Framework_TestCase 
 {
     private $cd;
     
