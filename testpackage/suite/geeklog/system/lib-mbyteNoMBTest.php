@@ -12,11 +12,15 @@ require_once Tst::$root.'system/lib-mbyte.php';
 class libmbyteNoMB extends PHPUnit_Framework_TestCase 
 {
 
+    public static function setUpBeforeClass() {
+        MBYTE_checkEnabled('test-reset');
+    }
+
     protected function setUp() {
         $this->x = new Xmldb;
         $_CONF = $this->x->get_CONF();
     }
-    
+
     public function testMBYTE_languageListDefault() {
         $dummy = array(
                 'afrikaans_utf-8' => 'Afrikaans',
