@@ -456,7 +456,7 @@
     <gl_conf_values>
         <name>site_disabled_msg</name>
         <value>s:44:&quot;Geeklog Site is down. Please come back soon.&quot;;</value>
-        <type>text</type>
+        <type>textarea</type>
         <group_name>Core</group_name>
         <default_value>s:44:&quot;Geeklog Site is down. Please come back soon.&quot;;</default_value>
         <subgroup>0</subgroup>
@@ -1149,11 +1149,11 @@
     <gl_conf_values>
         <name>menu_elements</name>
         <value>a:5:{i:0;s:10:&quot;contribute&quot;;i:1;s:6:&quot;search&quot;;i:2;s:5:&quot;stats&quot;;i:3;s:9:&quot;directory&quot;;i:4;s:7:&quot;plugins&quot;;}</value>
-        <type>%text</type>
+        <type>%select</type>
         <group_name>Core</group_name>
         <default_value>a:5:{i:0;s:10:&quot;contribute&quot;;i:1;s:6:&quot;search&quot;;i:2;s:5:&quot;stats&quot;;i:3;s:9:&quot;directory&quot;;i:4;s:7:&quot;plugins&quot;;}</default_value>
         <subgroup>2</subgroup>
-        <selectionArray>-1</selectionArray>
+        <selectionArray>24</selectionArray>
         <sort_order>200</sort_order>
         <fieldset>10</fieldset>
     </gl_conf_values>
@@ -2238,11 +2238,11 @@
     <gl_conf_values>
         <name>gravatar_rating</name>
         <value>unset</value>
-        <type>text</type>
+        <type>select</type>
         <group_name>Core</group_name>
         <default_value>s:1:&quot;R&quot;;</default_value>
         <subgroup>5</subgroup>
-        <selectionArray>-1</selectionArray>
+        <selectionArray>26</selectionArray>
         <sort_order>1610</sort_order>
         <fieldset>27</fieldset>
     </gl_conf_values>
@@ -2546,7 +2546,7 @@
     <gl_conf_values>
         <name>default_perm_cookie_timeout</name>
         <value>i:28800;</value>
-        <type>text</type>
+        <type>select</type>
         <group_name>Core</group_name>
         <default_value>i:28800;</default_value>
         <subgroup>7</subgroup>
@@ -2612,11 +2612,11 @@
     <gl_conf_values>
         <name>notification</name>
         <value>a:0:{}</value>
-        <type>%text</type>
+        <type>%select</type>
         <group_name>Core</group_name>
         <default_value>a:0:{}</default_value>
         <subgroup>7</subgroup>
-        <selectionArray>-1</selectionArray>
+        <selectionArray>25</selectionArray>
         <sort_order>800</sort_order>
         <fieldset>31</fieldset>
     </gl_conf_values>
@@ -2953,7 +2953,7 @@
     <gl_conf_values>
         <name>meta_description</name>
         <value>s:25:&quot;Geeklog - The secure CMS.&quot;;</value>
-        <type>text</type>
+        <type>textarea</type>
         <group_name>Core</group_name>
         <default_value>s:25:&quot;Geeklog - The secure CMS.&quot;;</default_value>
         <subgroup>0</subgroup>
@@ -2964,7 +2964,7 @@
     <gl_conf_values>
         <name>meta_keywords</name>
         <value>s:68:&quot;Geeklog, Blog, Content Management System, CMS, Open Source, Security&quot;;</value>
-        <type>text</type>
+        <type>textarea</type>
         <group_name>Core</group_name>
         <default_value>s:68:&quot;Geeklog, Blog, Content Management System, CMS, Open Source, Security&quot;;</default_value>
         <subgroup>0</subgroup>
@@ -3842,6 +3842,17 @@
         <fieldset>6</fieldset>
     </gl_conf_values>
     <gl_conf_values>
+        <name>search_def_sort</name>
+        <value>s:9:"hits|desc";</value>
+        <type>select</type>
+        <group_name>Core</group_name>
+        <default_value>s:9:"hits|desc";</default_value>
+        <subgroup>0</subgroup>
+        <selectionArray>27</selectionArray>
+        <sort_order>676</sort_order>
+        <fieldset>6</fieldset>
+    </gl_conf_values>
+    <gl_conf_values>
         <name>search_use_fulltext</name>
         <value>b:0;</value>
         <type>hidden</type>
@@ -4465,6 +4476,12 @@
         <ft_descr>Comments are automatically published</ft_descr>
         <ft_gl_core>1</ft_gl_core>
     </gl_features>
+    <gl_features>
+        <ft_id>32</ft_id>
+        <ft_name>htmlfilter.skip</ft_name>
+        <ft_descr>Skip filtering posts for HTML</ft_descr>
+        <ft_gl_core>1</ft_gl_core>
+    </gl_features>
   <!-- Table gl_frontpagecodes -->
     <gl_frontpagecodes>
         <code>0</code>
@@ -4480,120 +4497,140 @@
         <grp_name>Root</grp_name>
         <grp_descr>Has full access to the site</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>2</grp_id>
         <grp_name>All Users</grp_name>
         <grp_descr>Group that a typical user is added to</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>3</grp_id>
         <grp_name>Story Admin</grp_name>
         <grp_descr>Has full access to story features</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>4</grp_id>
         <grp_name>Block Admin</grp_name>
         <grp_descr>Has full access to block features</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>5</grp_id>
         <grp_name>Links Admin</grp_name>
         <grp_descr>Has full access to links features</grp_descr>
         <grp_gl_core>0</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>6</grp_id>
         <grp_name>Topic Admin</grp_name>
         <grp_descr>Has full access to topic features</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>7</grp_id>
         <grp_name>Calendar Admin</grp_name>
         <grp_descr>Has full access to calendar features</grp_descr>
         <grp_gl_core>0</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>8</grp_id>
         <grp_name>Polls Admin</grp_name>
         <grp_descr>Has full access to polls features</grp_descr>
         <grp_gl_core>0</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>9</grp_id>
         <grp_name>User Admin</grp_name>
         <grp_descr>Has full access to user features</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>10</grp_id>
         <grp_name>Plugin Admin</grp_name>
         <grp_descr>Has full access to plugin features</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>11</grp_id>
         <grp_name>Group Admin</grp_name>
         <grp_descr>Is a User Admin with access to groups, too</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>12</grp_id>
         <grp_name>Mail Admin</grp_name>
         <grp_descr>Can use Mail Utility</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>13</grp_id>
         <grp_name>Logged-in Users</grp_name>
         <grp_descr>All registered members</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>14</grp_id>
         <grp_name>Static Page Admin</grp_name>
         <grp_descr>Can administer static pages</grp_descr>
         <grp_gl_core>0</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>15</grp_id>
         <grp_name>spamx Admin</grp_name>
         <grp_descr>Users in this group can administer the Spam-X plugin</grp_descr>
         <grp_gl_core>0</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>16</grp_id>
         <grp_name>Remote Users</grp_name>
         <grp_descr>Users in this group can have authenticated against a remote server.</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>17</grp_id>
         <grp_name>Syndication Admin</grp_name>
         <grp_descr>Can create and modify web feeds for the site</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>18</grp_id>
         <grp_name>Webservices Users</grp_name>
         <grp_descr>Can use the Webservices API (if restricted)</grp_descr>
         <grp_gl_core>0</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>19</grp_id>
         <grp_name>Comment Admin</grp_name>
         <grp_descr>Can moderate comments</grp_descr>
         <grp_gl_core>1</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
     <gl_groups>
         <grp_id>20</grp_id>
         <grp_name>Comment Submitters</grp_name>
         <grp_descr>Can submit comments</grp_descr>
         <grp_gl_core>0</grp_gl_core>
+        <grp_default>0</grp_default>
     </gl_groups>
   <!-- Table gl_group_assignments -->
     <gl_group_assignments>
@@ -5033,6 +5070,7 @@
         <tid>Geeklog</tid>
         <date>2009-06-11 17:54:17</date>
         <title>Welcome to Geeklog!</title>
+        <page_title></page_title>
         <introtext>&lt;p&gt;Welcome and let me be the first to congratulate you on installing Geeklog. Please take the time to read everything in the &lt;a href=&quot;docs/index.html&quot;&gt;docs directory&lt;/a&gt;. Geeklog now has enhanced, user-based security.  You should thoroughly understand how these work before you run a production Geeklog Site.&lt;/p&gt;
 &lt;p&gt;To log into your new Geeklog site, please use this account:&lt;/p&gt;
 &lt;p&gt;Username: &lt;b&gt;Admin&lt;/b&gt;&lt;br /&gt;
