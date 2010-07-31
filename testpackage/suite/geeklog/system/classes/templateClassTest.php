@@ -18,6 +18,15 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->tp->set_root(Tst::$tests . 'files/templates');
     }
 
+    /***
+    * Helper function: strip all linefeed characters (CR + LF) from a string.
+    * Just in case our reference files are converted to the native linefeed of
+    * the platform we're running on (Unix LF vs. Windows CR+LF).
+    */
+    private function strip_linefeeds($line) {
+        return str_replace(array("\015", "\012"), '', $line);
+    }
+
     public function testGetVarDefault() {
         $tp2 = new Template;
         $this->assertEquals("", $tp2->get_var('test'));
@@ -242,13 +251,37 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->assertEquals($hash, $vars);
     }
 
-    public function testReplaceVariable() {
+    public function testParse() {
         $tp2 = new Template(Tst::$tests . 'files/templates');
         $this->assertTrue($tp2->set_file('testfile', 'replace1.thtml'));
         $tp2->set_var('test', 'replaced');
         $replaced = $tp2->parse('myform', 'testfile');
-        $replaced = rtrim($replaced); // strip whitespace from end of string
+        $replaced = $this->strip_linefeeds($replaced);
         $this->assertEquals('<p>replaced</p>', $replaced);
+        $now = $tp2->get_var('myform');
+        $now = $this->strip_linefeeds($now);
+        $this->assertEquals('<p>replaced</p>', $now);
+    }
+
+    public function testParseAppend() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertTrue($tp2->set_file('testfile', 'replace1.thtml'));
+        $tp2->set_var('test', 'replaced');
+        $replaced = $tp2->parse('myform', 'testfile');
+        $replaced = $this->strip_linefeeds($replaced);
+        $this->assertEquals('<p>replaced</p>', $replaced);
+        $now = $tp2->get_var('myform');
+        $now = $this->strip_linefeeds($now);
+        $this->assertEquals('<p>replaced</p>', $now);
+
+        $tp2->set_var('test', 'appended');
+        $appended = $tp2->parse('myform', 'testfile', true);
+        $appended = $this->strip_linefeeds($appended);
+        $this->assertEquals('<p>appended</p>', $appended);
+
+        $all = $tp2->get_var('myform');
+        $all = $this->strip_linefeeds($all);
+        $this->assertEquals('<p>replaced</p><p>appended</p>', $all);
     }
 
     public function testGetUndefined() {
