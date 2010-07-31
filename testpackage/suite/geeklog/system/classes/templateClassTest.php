@@ -396,6 +396,96 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->assertEquals('<p>replaced:<!-- Template variable test2 undefined --></p>', $finished);
     }
 
+    public function testGetKeep() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $tp2->set_unknowns('keep');
+
+        $this->assertTrue($tp2->set_file('testfile', 'replace2.thtml'));
+        $tp2->set_var('test1', 'replaced');
+        $parsed = $tp2->parse('myform', 'testfile');
+        $parsed = $this->strip_linefeeds($parsed);
+
+        $this->assertEquals('<p>replaced:{test2}</p>', $parsed);
+        $finished = $tp2->get('myform');
+        $finished = $this->strip_linefeeds($finished);
+        $this->assertEquals('<p>replaced:{test2}</p>', $finished);
+    }
+
+    public function testGetRemove() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $tp2->set_unknowns('remove');
+
+        $this->assertTrue($tp2->set_file('testfile', 'replace2.thtml'));
+        $tp2->set_var('test1', 'replaced');
+        $parsed = $tp2->parse('myform', 'testfile');
+        $parsed = $this->strip_linefeeds($parsed);
+
+        $this->assertEquals('<p>replaced:{test2}</p>', $parsed);
+        $finished = $tp2->get('myform');
+        $finished = $this->strip_linefeeds($finished);
+        $this->assertEquals('<p>replaced:</p>', $finished);
+    }
+
+    public function testGetComment() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $tp2->set_unknowns('comment');
+
+        $this->assertTrue($tp2->set_file('testfile', 'replace2.thtml'));
+        $tp2->set_var('test1', 'replaced');
+        $parsed = $tp2->parse('myform', 'testfile');
+        $parsed = $this->strip_linefeeds($parsed);
+
+        $this->assertEquals('<p>replaced:{test2}</p>', $parsed);
+        $finished = $tp2->get('myform');
+        $finished = $this->strip_linefeeds($finished);
+        $this->assertEquals('<p>replaced:<!-- Template variable test2 undefined --></p>', $finished);
+    }
+
+    public function testGetDefault() {
+        // default is "remove", so same result as testGetRemove above
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+
+        $this->assertTrue($tp2->set_file('testfile', 'replace2.thtml'));
+        $tp2->set_var('test1', 'replaced');
+        $parsed = $tp2->parse('myform', 'testfile');
+        $parsed = $this->strip_linefeeds($parsed);
+
+        $this->assertEquals('<p>replaced:{test2}</p>', $parsed);
+        $finished = $tp2->get('myform');
+        $finished = $this->strip_linefeeds($finished);
+        $this->assertEquals('<p>replaced:</p>', $finished);
+    }
+
+    public function testGetCtorKeep() {
+        // set 'keep' in the c'tor
+        $tp2 = new Template(Tst::$tests . 'files/templates', 'keep');
+
+        $this->assertTrue($tp2->set_file('testfile', 'replace2.thtml'));
+        $tp2->set_var('test1', 'replaced');
+        $parsed = $tp2->parse('myform', 'testfile');
+        $parsed = $this->strip_linefeeds($parsed);
+
+        $this->assertEquals('<p>replaced:{test2}</p>', $parsed);
+        $finished = $tp2->get('myform');
+        $finished = $this->strip_linefeeds($finished);
+        $this->assertEquals('<p>replaced:{test2}</p>', $finished);
+    }
+
+    public function testGetCtorComment() {
+        // set 'keep' in the c'tor
+        $tp2 = new Template(Tst::$tests . 'files/templates', 'comment');
+
+        $this->assertTrue($tp2->set_file('testfile', 'replace2.thtml'));
+        $tp2->set_var('test1', 'replaced');
+        $parsed = $tp2->parse('myform', 'testfile');
+        $parsed = $this->strip_linefeeds($parsed);
+
+        $this->assertEquals('<p>replaced:{test2}</p>', $parsed);
+        $finished = $tp2->get('myform');
+        $finished = $this->strip_linefeeds($finished);
+        $this->assertEquals('<p>replaced:<!-- Template variable test2 undefined --></p>', $finished);
+    }
+
 }
 
 ?>
