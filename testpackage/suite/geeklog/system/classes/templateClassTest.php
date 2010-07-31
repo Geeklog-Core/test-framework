@@ -222,6 +222,18 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->assertFalse($tp2->set_file($files));
     }
 
+    public function testFilenameRelative() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertEquals(Tst::$tests . 'files/templates/replace1.thtml',
+                            $tp2->filename('replace1.thtml'));
+    }
+
+    public function testFilenameAbsolute() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertEquals(Tst::$tests . 'files/templates/replace1.thtml',
+                $tp2->filename(Tst::$tests . 'files/templates/replace1.thtml'));
+    }
+
     public function testGetVars() {
         $tp2 = new Template;
         $hash = array('test2' => 'test43', 'test1' => 'test42');
