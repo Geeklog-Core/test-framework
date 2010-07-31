@@ -251,6 +251,25 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->assertEquals($hash, $vars);
     }
 
+    public function testGetVarMultiple() {
+        $tp2 = new Template;
+        $hash = array('test2' => 'test43', 'test1' => 'test42');
+        $tp2->set_var($hash);
+        $vars = array('test1', 'test2');
+        $values = $tp2->get_var($vars);
+        $this->assertEquals($hash, $values);
+    }
+
+    public function testGetVarMultipleUndefined() {
+        $tp2 = new Template;
+        $hash = array('test2' => 'test43', 'test1' => 'test42');
+        $tp2->set_var($hash);
+        $vars = array('test1', 'test3'); // 'test3' should be undefined
+        $values = $tp2->get_var($vars);
+        $expected = array('test1' => 'test42', 'test3' => '');
+        $this->assertEquals($expected, $values);
+    }
+
     public function testParse() {
         $tp2 = new Template(Tst::$tests . 'files/templates');
         $this->assertTrue($tp2->set_file('testfile', 'replace1.thtml'));
