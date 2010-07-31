@@ -29,12 +29,88 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->assertEquals("test42", $tp2->get_var('test'));
     }
 
+    public function testSetVarHash() {
+        $tp2 = new Template;
+        $hash = array('test' => 'test41');
+        $tp2->set_var($hash);
+        $this->assertEquals("test41", $tp2->get_var('test'));
+    }
+
+    public function testSetVarHashMultiple() {
+        $tp2 = new Template;
+        $hash = array('test1' => 'test43', 'test2' => 'test42');
+        $tp2->set_var($hash);
+        $this->assertEquals("test43", $tp2->get_var('test1'));
+        $this->assertEquals("test42", $tp2->get_var('test2'));
+    }
+
     public function testSetVarAppend() {
         $tp2 = new Template;
         $tp2->set_var('test', 'test42');
         $this->assertEquals("test42", $tp2->get_var('test'));
         $tp2->set_var('test', '42test', true);
         $this->assertEquals("test4242test", $tp2->get_var('test'));
+    }
+
+    public function testSetVarHashAppend() {
+        $tp2 = new Template;
+        $hash = array('test' => 'test41');
+        $tp2->set_var($hash);
+        $hash2 = array('test' => '41test');
+        $tp2->set_var($hash2, '', true);
+        $this->assertEquals("test4141test", $tp2->get_var('test'));
+    }
+
+    public function testClearVar() {
+        $tp2 = new Template;
+        $tp2->set_var('test', 'test42');
+        $this->assertEquals("test42", $tp2->get_var('test'));
+        $tp2->clear_var('test');
+        $this->assertEquals("", $tp2->get_var('test'));
+    }
+
+    public function testClearVarNotExist() {
+        $tp2 = new Template;
+        $tp2->clear_var('doesnotexist');
+        $this->assertEquals("", $tp2->get_var('doesnotexist'));
+    }
+
+    public function testClearVarHash() {
+        $tp2 = new Template;
+        $hash = array('test' => 'test43');
+        $tp2->set_var($hash);
+        $this->assertEquals("test43", $tp2->get_var('test'));
+        $tp2->clear_var('test');
+        $this->assertEquals("", $tp2->get_var('test'));
+    }
+
+    public function testClearVarHash2() {
+        $tp2 = new Template;
+        $hash = array('test' => 'test43');
+        $tp2->set_var($hash);
+        $this->assertEquals("test43", $tp2->get_var('test'));
+        $hash2 = array('test');
+        $tp2->clear_var($hash2);
+        $this->assertEquals("", $tp2->get_var('test'));
+    }
+
+    public function testClearVarHashNotExist() {
+        $tp2 = new Template;
+        $hash = array('doesnotexist');
+        $tp2->clear_var($hash);
+        $this->assertEquals("", $tp2->get_var('doesnotexist'));
+    }
+
+    public function testClearVarHashMultiple() {
+        $tp2 = new Template;
+        $hash = array('test1' => 'test41', 'test2' => 'test42');
+        $tp2->set_var($hash);
+        $this->assertEquals("test41", $tp2->get_var('test1'));
+        $this->assertEquals("test42", $tp2->get_var('test2'));
+        $hash2 = array('test1', 'test2');
+        $tp2->clear_var($hash2);
+        $this->assertEquals("", $tp2->get_var('test1'));
+        $this->assertEquals("", $tp2->get_var('test2'));
     }
 
     public function testSetRoot() {
