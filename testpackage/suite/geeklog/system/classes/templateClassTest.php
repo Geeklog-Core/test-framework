@@ -524,6 +524,40 @@ class templateClass extends PHPUnit_Framework_TestCase
                             $finished);
     }
 
+    // thanks to http://ontosys.com/php/templates.html for explaining blocks ...
+
+    public function testSetBlock() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $tp2->set_file(array('blocks' => 'blocks.thtml'));
+        $tp2->set_var('title', 'My Title');
+
+        // 'header' is the first block in blocks.thtml
+        $this->assertTrue($tp2->set_block('blocks', 'header'));
+        $parsed = $tp2->parse('parsed', 'header');
+        $parsed = $this->strip_linefeeds($parsed);
+        $this->assertEquals('<html><head><title>My Title</title></head><body><h1>My Title</h1>', $parsed);
+    }
+
+    public function testSetBlockSecondBlock() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $tp2->set_file(array('blocks' => 'blocks.thtml'));
+        $tp2->set_var('year', '2010');
+
+        // 'footer' is the second block in blocks.thtml
+        $this->assertTrue($tp2->set_block('blocks', 'footer'));
+        $parsed = $tp2->parse('parsed', 'footer');
+        $parsed = $this->strip_linefeeds($parsed);
+        $this->assertEquals('<p>(C) 2010 me</p></body></html>', $parsed);
+    }
+
+    public function testSetBlockNotExist() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $tp2->set_file(array('blocks' => 'blocks.thtml'));
+
+        // there is no block 'body' in blocks.thtml
+        $this->assertFalse($tp2->set_block('blocks', 'body'));
+    }
+
     // tests for private methods ----------------------------------------------
 
     public function testFilenameRelative() {
