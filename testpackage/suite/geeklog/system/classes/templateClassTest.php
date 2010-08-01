@@ -8,7 +8,7 @@ require_once 'PHPUnit/Framework.php';
 require_once 'tst.class.php';
 require_once Tst::$root.'system/classes/template.class.php';
  
-class templateClass extends PHPUnit_Framework_TestCase 
+class templateClass extends PHPUnit_Framework_TestCase
 {
     private $tp;
 
@@ -229,18 +229,6 @@ class templateClass extends PHPUnit_Framework_TestCase
             'testfile2' => ''
         );
         $this->assertFalse($tp2->set_file($files));
-    }
-
-    public function testFilenameRelative() {
-        $tp2 = new Template(Tst::$tests . 'files/templates');
-        $this->assertEquals(Tst::$tests . 'files/templates/replace1.thtml',
-                            $tp2->filename('replace1.thtml'));
-    }
-
-    public function testFilenameAbsolute() {
-        $tp2 = new Template(Tst::$tests . 'files/templates');
-        $this->assertEquals(Tst::$tests . 'files/templates/replace1.thtml',
-                $tp2->filename(Tst::$tests . 'files/templates/replace1.thtml'));
     }
 
     public function testGetVars() {
@@ -505,6 +493,58 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->assertEquals('<p>replaced:<!-- Template variable test2 undefined --></p>', $finished);
     }
 
+    public function testNestedTemplates() {
+        // typical Geeklog use case: nested templates
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertTrue($tp2->set_file(array(
+            'menu'     => 'menu.thtml',
+            'menuitem' => 'menuitem.thtml'
+        )));
+
+        // first menu entry
+        $tp2->set_var('itemtext', 'Text 1');
+        $parsed = $tp2->parse('menu_elements', 'menuitem', true);
+        $parsed = $this->strip_linefeeds($parsed);
+        $this->assertEquals('<span>Text 1</span>', $parsed);
+
+        // second menu entry
+        $tp2->set_var('itemtext', 'Text 2');
+        $parsed = $tp2->parse('menu_elements', 'menuitem', true);
+        $parsed = $this->strip_linefeeds($parsed);
+        $this->assertEquals('<span>Text 2</span>', $parsed);
+
+        // finished menu
+        $parsed = $tp2->parse('parsed', 'menu');
+        $parsed = $this->strip_linefeeds($parsed);
+        $this->assertEquals('<div><span>Text 1</span><span>Text 2</span></div>',
+                            $parsed);
+        $finished = $tp2->finish($parsed);
+        $finished = $this->strip_linefeeds($finished);
+        $this->assertEquals('<div><span>Text 1</span><span>Text 2</span></div>',
+                            $finished);
+    }
+
+    // tests for private methods ----------------------------------------------
+
+    public function testFilenameRelative() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertEquals(Tst::$tests . 'files/templates/replace1.thtml',
+                            $tp2->filename('replace1.thtml'));
+    }
+
+    public function testFilenameAbsolute() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertEquals(Tst::$tests . 'files/templates/replace1.thtml',
+                $tp2->filename(Tst::$tests . 'files/templates/replace1.thtml'));
+    }
+
+    public function testHalt() {
+        // silly halt() test, for completeness
+        $tp2 = new Template;
+        $tp2->halt_on_error = 'no';
+        $this->assertFalse($tp2->halt("This won't stop me!"));
+        $this->assertEquals("This won't stop me!", $tp2->last_error);
+    }
 }
 
 ?>
