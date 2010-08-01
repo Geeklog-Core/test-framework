@@ -528,7 +528,7 @@ class templateClass extends PHPUnit_Framework_TestCase
 
     public function testSetBlock() {
         $tp2 = new Template(Tst::$tests . 'files/templates');
-        $tp2->set_file(array('blocks' => 'blocks.thtml'));
+        $this->assertTrue($tp2->set_file(array('blocks' => 'blocks.thtml')));
         $tp2->set_var('title', 'My Title');
 
         // 'header' is the first block in blocks.thtml
@@ -540,7 +540,7 @@ class templateClass extends PHPUnit_Framework_TestCase
 
     public function testSetBlockSecondBlock() {
         $tp2 = new Template(Tst::$tests . 'files/templates');
-        $tp2->set_file(array('blocks' => 'blocks.thtml'));
+        $this->assertTrue($tp2->set_file(array('blocks' => 'blocks.thtml')));
         $tp2->set_var('year', '2010');
 
         // 'footer' is the second block in blocks.thtml
@@ -552,10 +552,30 @@ class templateClass extends PHPUnit_Framework_TestCase
 
     public function testSetBlockNotExist() {
         $tp2 = new Template(Tst::$tests . 'files/templates');
-        $tp2->set_file(array('blocks' => 'blocks.thtml'));
+        $this->assertTrue($tp2->set_file(array('blocks' => 'blocks.thtml')));
 
         // there is no block 'body' in blocks.thtml
         $this->assertFalse($tp2->set_block('blocks', 'body'));
+    }
+
+    function testSubst() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertTrue($tp2->set_file('testfile', 'replace1.thtml'));
+        $tp2->set_var('test', 'My Test');
+        $sub = $tp2->subst('testfile');
+        $sub = $this->strip_linefeeds($sub);
+        $this->assertEquals('<p>My Test</p>', $sub);
+    }
+
+    function testSubstNotFinished() {
+        $tp2 = new Template(Tst::$tests . 'files/templates');
+        $this->assertTrue($tp2->set_file('testfile', 'replace2.thtml'));
+        $tp2->set_var('test1', 'My Test');
+        $sub = $tp2->subst('testfile');
+        $sub = $this->strip_linefeeds($sub);
+
+        // subst() does not apply the finish rules, so we get back the {test2}
+        $this->assertEquals('<p>My Test:{test2}</p>', $sub);
     }
 
     // tests for private methods ----------------------------------------------
