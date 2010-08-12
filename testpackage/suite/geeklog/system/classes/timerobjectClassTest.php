@@ -54,6 +54,8 @@ class timerobjectClass extends PHPUnit_Framework_TestCase
     }
     
     public function testStopTimerReturnsCorrectDefinedDegreeOfPrecision() {
+        $this->markTestSkipped();
+
         $mtime = microtime();
         $mtime = explode(' ',$mtime);
         $var1 = $mtime[1] + $mtime[0];
