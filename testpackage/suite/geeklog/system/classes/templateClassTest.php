@@ -578,6 +578,19 @@ class templateClass extends PHPUnit_Framework_TestCase
         $this->assertEquals('<p>My Test:{test2}</p>', $sub);
     }
 
+    function testSetUnknowns() {
+        $tp2 = new Template;
+        $tp2->set_unknowns('keep');
+        // there should be a getter method for this ...
+        $this->assertEquals('keep', $tp2->unknowns);
+    }
+
+    function testSetUnknownsDefault() {
+        $tp2 = new Template;
+        // default is 'remove'
+        $this->assertEquals('remove', $tp2->unknowns);
+    }
+
     // tests for private methods ----------------------------------------------
 
     public function testFilenameRelative() {
