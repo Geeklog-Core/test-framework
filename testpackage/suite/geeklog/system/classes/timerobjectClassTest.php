@@ -46,22 +46,16 @@ class timerobjectClass extends PHPUnit_Framework_TestCase
     }
     
     public function testStopTimerReturnsCorrectDefaultDegreeOfPrecision() {
-        $mtime = microtime();
-        $mtime = explode(' ',$mtime);
-        $var1 = $mtime[1] + $mtime[0];
-        $var2 = sprintf('%.2f', $var1);        
-        $this->assertEquals($var2, $this->t->stopTimer());
+        $parts = explode('.', $this->t->stopTimer());
+        $this->assertEquals(2, count($parts));
+        $this->assertEquals($this->t->_precision, strlen($parts[1]));
     }
     
     public function testStopTimerReturnsCorrectDefinedDegreeOfPrecision() {
-        $this->markTestSkipped();
-
-        $mtime = microtime();
-        $mtime = explode(' ',$mtime);
-        $var1 = $mtime[1] + $mtime[0];
-        $var2 = sprintf('%.3f', $var1);        
         $this->t->_precision = 3;
-        $this->assertEquals($var2, $this->t->stopTimer());
+        $parts = explode('.', $this->t->stopTimer());
+        $this->assertEquals(2, count($parts));
+        $this->assertEquals(3, strlen($parts[1]));
     }
 
     public function testStopTimerReturnsString() {
