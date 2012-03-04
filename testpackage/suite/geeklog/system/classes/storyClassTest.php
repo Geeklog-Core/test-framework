@@ -109,12 +109,6 @@ class storyClass extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $st->getAccess());
     }
 
-    public function testSetTid() {
-        $st = new Story();
-        $st->setTid('News');
-        $this->assertEquals('News', $st->_tid); // how about a getTid() method?
-    }
-
 }
 
 ?>
