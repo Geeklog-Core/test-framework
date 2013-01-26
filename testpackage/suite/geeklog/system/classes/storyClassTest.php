@@ -83,20 +83,6 @@ class storyClass extends PHPUnit_Framework_TestCase
         $this->assertEquals("1234567890", $st->getSid());
     }
 
-    public function testGetSidForDb() {
-        $st = new Story();
-        $ar = array('sid' => '1234567890', 'unixdate'  => time());
-        $st->loadFromArray($ar);
-        $this->assertEquals("1234567890", $st->getSid(true));
-    }
-
-    public function testGetSidForDbWithSlashes() {
-        $st = new Story();
-        $ar = array('sid' => "12345'67890", 'unixdate'  => time());
-        $st->loadFromArray($ar);
-        $this->assertEquals("12345\\'67890", $st->getSid(true));
-    }
-
     public function testGetAccessNotSet() {
         $st = new Story();
         $this->assertNull($st->getAccess());
