@@ -7,6 +7,7 @@
 require_once 'PHPUnit/Framework.php';
 require_once 'tst.class.php';
 require_once Tst::$root.'system/classes/template.class.php';
+require_once Tst::$root.'system/lib-template.php';
  
 class templateClass extends PHPUnit_Framework_TestCase
 {
