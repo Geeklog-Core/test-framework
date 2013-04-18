@@ -14,9 +14,11 @@ class templateClass extends PHPUnit_Framework_TestCase
     private $tp;
 
     protected function setUp() {
+        // Reset Template Options so they do not include default vars
+        $TEMPLATE_OPTIONS = array('default_vars' => array());
+        
         // Assign default values
-        $this->tp = new Template;
-        $this->tp->set_root(Tst::$tests . 'files/templates');
+        $this->tp = new Template(Tst::$tests . 'files/templates');
     }
 
     /***
@@ -186,7 +188,7 @@ class templateClass extends PHPUnit_Framework_TestCase
 
     public function testSetRootInConstructors() {
         $tp2 = new Template(Tst::$tests . 'files/templates');
-        $this->assertEquals(Tst::$tests . 'files/templates', $tp2->root);
+        $this->assertEquals(Tst::$tests . 'files/templates', $tp2->root[0]);
     }
 
     public function testSetFile() {
@@ -205,11 +207,8 @@ class templateClass extends PHPUnit_Framework_TestCase
         $tp2 = new Template(Tst::$tests . 'files/templates');
         // we don't want the error handler to kick in, so:
         $tp2->halt_on_error = 'no';
-        // somewhat odd behavior: if halt_on_error is disabled, set_file()
-        // returns with true, even though the file does not exist
-        $this->assertTrue($tp2->set_file('missing', 'doesnotexist.thtml'));
-        $this->assertEquals(Tst::$tests . 'files/templates/doesnotexist.thtml',
-                            $tp2->file['missing']);
+        
+        $this->assertFalse($tp2->set_file('missing', 'doesnotexist.thtml'));
     }
 
     public function testSetFileMultiple() {
@@ -233,6 +232,11 @@ class templateClass extends PHPUnit_Framework_TestCase
     }
 
     public function testGetVars() {
+        global $TEMPLATE_OPTIONS;
+        
+        // Reset Template Options so they do not include default vars
+        $TEMPLATE_OPTIONS = array('default_vars' => array());
+        
         $tp2 = new Template;
         $hash = array('test2' => 'test43', 'test1' => 'test42');
         $tp2->set_var($hash);
@@ -293,6 +297,11 @@ class templateClass extends PHPUnit_Framework_TestCase
     }
 
     public function testGetUndefined() {
+        global $TEMPLATE_OPTIONS;
+        
+        // Reset Template Options so they do not include default vars
+        $TEMPLATE_OPTIONS = array('default_vars' => array());
+        
         $tp2 = new Template(Tst::$tests . 'files/templates');
         $this->assertTrue($tp2->set_file('testfile', 'replace1.thtml'));
         $undef = $tp2->get_undefined('testfile');
@@ -315,6 +324,11 @@ class templateClass extends PHPUnit_Framework_TestCase
     }
 
     public function testFinishKeep() {
+        global $TEMPLATE_OPTIONS;
+        
+        // Reset Template Options so they do not include default vars
+        $TEMPLATE_OPTIONS = array('default_vars' => array());
+        
         $tp2 = new Template(Tst::$tests . 'files/templates');
         $tp2->set_unknowns('keep');
 
