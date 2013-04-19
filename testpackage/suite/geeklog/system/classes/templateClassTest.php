@@ -587,7 +587,9 @@ class templateClass extends PHPUnit_Framework_TestCase
         $sub = $this->strip_linefeeds($sub);
 
         // subst() does not apply the finish rules, so we get back the {test2}
-        $this->assertEquals('<p>My Test:{test2}</p>', $sub);
+        //$this->assertEquals('<p>My Test:{test2}</p>', $sub);
+        // process is done else where now so {test2} variable is not present in this output
+        $this->assertEquals('<p>My Test:</p>', $sub);
     }
 
     function testSetUnknowns() {
